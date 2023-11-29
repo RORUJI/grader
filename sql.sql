@@ -44,7 +44,11 @@ INSERT INTO person(firstname, lastname, birthday, weight, height, genderID) VALU
 ('Security', 'Guard', '1994-08-25', '70.54', '185.64', 1),
 ('Tele', 'Vision', '1985-01-12', '50.18', '157.25', 2),
 ('Smart', 'Phone', '1989-02-15', '49.55', '154.60', 2),
-('Local', 'Host', '1999-05-29', '58.88', '174.95', 1);
+('Local', 'Host', '1999-05-29', '58.88', '174.95', 1),
+('Spring', 'Bounce', '2000-05-05', '59.61', '178.12', 1),
+('Summer', 'ItBurning', '2004-04-19', '48.47', '153.69', 2),
+('Fall', 'Down', '1989-11-11', '45.54', '158.32', 2),
+('Winter', 'SoCold', '1981-01-02', '59.88', '186.99', 1);
 
 CREATE TABLE question (
     questionID INT(3) NOT NULL AUTO_INCREMENT,
