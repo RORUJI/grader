@@ -49,7 +49,8 @@ CREATE TABLE question (
     PRIMARY KEY(questionID)
 ) ENGINE = InnoDB DEFAULT CHARSET = utf8;
 
-INSERT INTO question(question, code) VALUES('จงเรียกข้อมูลทั้งหมดจากตาราง person', "SELECT * FROM person");
+INSERT INTO question(question, code) VALUES('จงเรียกข้อมูลทั้งหมดจากตาราง person', "SELECT * FROM person"),
+('จงเรียก firstname และ lastname ทั้งหมดจากตาราง person', "SELECT firstname, lastname FROM person");
 
 CREATE TABLE score (
     scoreID INT(3) NOT NULL AUTO_INCREMENT,
