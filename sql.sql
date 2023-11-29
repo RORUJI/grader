@@ -52,7 +52,8 @@ CREATE TABLE question (
 INSERT INTO question(question, code) VALUES('จงเรียกข้อมูลทั้งหมดจากตาราง person', "SELECT * FROM person"),
 ('จงเรียกข้อมูลเฉพาะ firstname และ lastname ทั้งหมดจากตาราง person', "SELECT firstname, lastname FROM person"),
 ('จงเรียกข้อมูลจากตาราง person จำนวน 2 แถว', "SELECT * FROM person LIMIT 2"),
-('จงเรียกข้อมูลที่มี firstname เป็น Nitipat จากตาราง person', "SELECT * FROM person WHERE firstname = 'Nitipat'")
+('จงเรียกข้อมูลที่มี firstname เป็น Nitipat จากตาราง person', "SELECT * FROM person WHERE firstname = 'Nitipat'"),
+('จงเรียกข้อมูลทั้งหมดจากตาราง gender', "SELECT * FROM gender");
 
 CREATE TABLE score (
     scoreID INT(3) NOT NULL AUTO_INCREMENT,
