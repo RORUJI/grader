@@ -40,7 +40,11 @@ CREATE TABLE person (
 INSERT INTO person(firstname, lastname, birthday, weight, height, genderID) VALUES
 ('Nitipat', 'Jirapong', '2003-02-14', '52.21', '177.77', 1),
 ('Unknown', 'Personal', '1997-11-12', '69.14', '181.21', 2),
-('Exam', 'Final', '2001-01-05', '100.01', '187.14', 1);
+('Exam', 'Final', '2001-01-05', '100.01', '187.14', 1),
+('Security', 'Guard', '1994-08-25', '70.54', '185.64', 1),
+('Tele', 'Vision', '1985-01-12', '50.18', '157.25', 2),
+('Smart', 'Phone', '1989-02-15', '49.55', '154.60', 2),
+('Local', 'Host', '1999-05-29', '58.88', '174.95', 1);
 
 CREATE TABLE question (
     questionID INT(3) NOT NULL AUTO_INCREMENT,

@@ -44,6 +44,7 @@
                     </span>
                     <a href="system/logout_system.php" id="signout-btn" class="btn btn-danger ms-3">Logout</a>
                 <?php endif; ?>
+                <button type="button" class="btn btn-danger" id="btnBack">Back</button>
             </div>
         </div>
     </nav>
@@ -73,6 +74,12 @@
     </div>
 
     <script>
+        $(document).ready(function() {
+            $('#btnBack').click(function() {
+                history.back();
+            });
+        });
+
         $(document).ready(function () {
             $('#codeForm').submit(function (e) {
                 e.preventDefault();
