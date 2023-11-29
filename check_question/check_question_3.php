@@ -7,7 +7,7 @@
         echo json_encode(array('status' => 'error', 'msg' => 'Please enter your code.'));
     } else {
         try {
-            $questionID = 2;
+            $questionID = 3;
             $sql = "SELECT * FROM question WHERE questionID = '$questionID'";
             $query = mysqli_query($conn, $sql);
             $question = mysqli_fetch_assoc($query);
@@ -23,10 +23,22 @@
                 $count = 1;
 
                 while (($aRow = mysqli_fetch_assoc($aResult)) && ($bRow = mysqli_fetch_assoc($bResult))) {
-                    if ($aRow['firstname'] != $bRow['firstname']) {
+                    if ($aRow['personID'] != $bRow['personID']) {
+                        echo json_encode(array('status' => 'error', 'msg' => 'Your result is incorrect!'));
+                        break;
+                    } else if ($aRow['firstname'] != $bRow['firstname']) {
                         echo json_encode(array('status' => 'error', 'msg' => 'Your result is incorrect!'));
                         break;
                     } else if ($aRow['lastname'] != $bRow['lastname']) {
+                        echo json_encode(array('status' => 'error', 'msg' => 'Your result is incorrect!'));
+                        break;
+                    } else if ($aRow['weight'] != $bRow['weight']) {
+                        echo json_encode(array('status' => 'error', 'msg' => 'Your result is incorrect!'));
+                        break;
+                    } else if ($aRow['height'] != $bRow['height']) {
+                        echo json_encode(array('status' => 'error', 'msg' => 'Your result is incorrect!'));
+                        break;
+                    } else if ($aRow['genderID'] != $bRow['genderID']) {
                         echo json_encode(array('status' => 'error', 'msg' => 'Your result is incorrect!'));
                         break;
                     } else {
