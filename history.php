@@ -1,16 +1,16 @@
 <?php
-    session_start();
+session_start();
 
-    include_once 'dbconnect.php';
+include_once 'dbconnect.php';
 
-    if (!isset($_SESSION['userID'])) {
-        header('location: login.php');
-    } else {
-        $count = 1;
-        $userID = $_SESSION['userID'];
-        $sql = "SELECT * FROM score JOIN question ON score.questionID = question.questionID WHERE userID = '$userID'";
-        $result = mysqli_query($conn, $sql);
-    }
+if (!isset($_SESSION['userID'])) {
+    header('location: login.php');
+} else {
+    $count = 1;
+    $userID = $_SESSION['userID'];
+    $sql = "SELECT * FROM score JOIN question ON score.questionID = question.questionID WHERE userID = '$userID'";
+    $result = mysqli_query($conn, $sql);
+}
 ?>
 
 <!DOCTYPE html>
@@ -70,6 +70,42 @@
                     <td>
                         <?php echo $row['score']; ?>
                     </td>
+                </tr>
+            <?php endwhile; ?>
+        </table>
+
+        <div class="d-flex justify-content-center text-light my-3">
+            <h2>แบบทดสอบที่ยังไม่ได้ทำ</h2>
+        </div>
+
+        <?php
+        $count = 1;
+        $aSql = "SELECT * FROM question";
+        $aResult = mysqli_query($conn, $aSql);
+
+        $bSql = "SELECT * FROM score JOIN question ON score.questionID = question.questionID WHERE userID = '$userID'";
+        $bResult = mysqli_query($conn, $bSql);
+        ?>
+
+        <table class="table table-striped table-bordered shadow-lg">
+            <tr>
+                <th scope="row">#</th>
+                <th scope="row">แบบทดสอบ</th>
+                <th scope="row">คะแนน</th>
+            </tr>
+            <?php while ($aRow = mysqli_fetch_assoc($aResult)): ?>
+                <tr>
+                    <?php while ($bRow = mysqli_fetch_assoc($bResult)): ?>
+                        <td>
+                            <?php echo $count++; ?>
+                        </td>
+                        <td>
+                            <?php echo $aRow['question']; ?>
+                        </td>
+                        <td>
+
+                        </td>
+                    <?php endwhile; ?>
                 </tr>
             <?php endwhile; ?>
         </table>
