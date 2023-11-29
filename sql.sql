@@ -61,7 +61,9 @@ INSERT INTO question(question, code) VALUES('จงเรียกข้อม�
 ('จงเรียกข้อมูลเฉพาะ firstname และ lastname ทั้งหมดจากตาราง person', "SELECT firstname, lastname FROM person"),
 ('จงเรียกข้อมูลจากตาราง person จำนวน 2 แถว', "SELECT * FROM person LIMIT 2"),
 ('จงเรียกข้อมูลที่มี firstname เป็น Nitipat จากตาราง person', "SELECT * FROM person WHERE firstname = 'Nitipat'"),
-('จงเรียกข้อมูลทั้งหมดจากตาราง gender', "SELECT * FROM gender");
+('จงเรียกข้อมูลทั้งหมดจากตาราง gender', "SELECT * FROM gender"),
+('จงเรียกข้อมูลที่ที gender เป็น Female จากตาราง gender', "SELECT * FROM gender WHERE gender = 'Female'"),
+('จงเรียกข้อมูลทั้งหมดจากตาราง person โดยเรียงจาก personID มากไปน้อย', "SELECT * FROM person ORDER BY personID DESC");
 
 CREATE TABLE score (
     scoreID INT(3) NOT NULL AUTO_INCREMENT,
