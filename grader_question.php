@@ -57,7 +57,7 @@
                 <hr>
                 <div class="mb-3">
                     <label for="code" class="form-label fw-bold">Question</label>
-                    <span class="input-group-text">
+                    <span class="form-control">
                         <?php echo $row['question']; ?>
                     </span>
                 </div>

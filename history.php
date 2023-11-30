@@ -1,16 +1,16 @@
 <?php
-session_start();
+    session_start();
 
-include_once 'dbconnect.php';
+    include_once 'dbconnect.php';
 
-if (!isset($_SESSION['userID'])) {
-    header('location: login.php');
-} else {
-    $count = 1;
-    $userID = $_SESSION['userID'];
-    $sql = "SELECT * FROM score JOIN question ON score.questionID = question.questionID WHERE userID = '$userID'";
-    $result = mysqli_query($conn, $sql);
-}
+    if (!isset($_SESSION['userID'])) {
+        header('location: login.php');
+    } else {
+        $count = 1;
+        $userID = $_SESSION['userID'];
+        $sql = "SELECT * FROM score JOIN question ON score.questionID = question.questionID WHERE userID = '$userID'";
+        $result = mysqli_query($conn, $sql);
+    }
 ?>
 
 <!DOCTYPE html>
@@ -56,7 +56,7 @@ if (!isset($_SESSION['userID'])) {
         <table class="table table-striped table-bordered shadow-lg">
             <tr>
                 <th scope="row">#</th>
-                <th scope="row">แบบทดสอบที่ทำ</th>
+                <th scope="row">แบบทดสอบ</th>
                 <th scope="row">คะแนน</th>
             </tr>
             <?php while ($row = mysqli_fetch_assoc($result)): ?>
@@ -75,37 +75,32 @@ if (!isset($_SESSION['userID'])) {
         </table>
 
         <div class="d-flex justify-content-center text-light my-3">
-            <h2>แบบทดสอบที่ยังไม่ได้ทำ</h2>
+            <h2>แบบฝึกหัดทั้งหมด</h2>
         </div>
 
         <?php
         $count = 1;
-        $aSql = "SELECT * FROM question";
-        $aResult = mysqli_query($conn, $aSql);
-
-        $bSql = "SELECT * FROM score JOIN question ON score.questionID = question.questionID WHERE userID = '$userID'";
-        $bResult = mysqli_query($conn, $bSql);
+        $sql = "SELECT * FROM question";
+        $result = mysqli_query($conn, $sql);
         ?>
 
         <table class="table table-striped table-bordered shadow-lg">
             <tr>
                 <th scope="row">#</th>
                 <th scope="row">แบบทดสอบ</th>
-                <th scope="row">คะแนน</th>
+                <th scope="row"></th>
             </tr>
-            <?php while ($aRow = mysqli_fetch_assoc($aResult)): ?>
+            <?php while ($row = mysqli_fetch_assoc($result)): ?>
                 <tr>
-                    <?php while ($bRow = mysqli_fetch_assoc($bResult)): ?>
-                        <td>
-                            <?php echo $count++; ?>
-                        </td>
-                        <td>
-                            <?php echo $aRow['question']; ?>
-                        </td>
-                        <td>
-
-                        </td>
-                    <?php endwhile; ?>
+                    <td>
+                        <?php echo $count++; ?>
+                    </td>
+                    <td>
+                        <?php echo $row['question']; ?>
+                    </td>
+                    <td>
+                        <a href="grader_question.php?questionID=<?php echo $row['questionID']; ?>" class="btn btn-success">ทำแบบทดสอบ</a>
+                    </td>
                 </tr>
             <?php endwhile; ?>
         </table>
@@ -114,6 +109,14 @@ if (!isset($_SESSION['userID'])) {
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
         crossorigin="anonymous"></script>
+
+        <script>
+            $(document).ready(function() {
+                $('#btnBack').click(function() {
+                    history.back();
+                });
+            });
+        </script>
 </body>
 
 </html>
