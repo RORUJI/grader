@@ -9,6 +9,9 @@
         $sql = "SELECT * FROM question WHERE questionID = " . $_GET['questionID'] . "";
         $result = mysqli_query($conn, $sql);
         $row = mysqli_fetch_assoc($result);
+
+        $sql = "SELECT * FROM question";
+        $result = mysqli_query($conn, $sql);
     }
 ?>
 
@@ -50,7 +53,7 @@
     </nav>
 
     <div class="container">
-        <div class="position-absolute top-50 start-50 translate-middle mt-3">
+        <div class="position-absolute top-50 start-50 translate-middle">
             <form action="check_question/check_question_<?php echo $row['questionID']; ?>.php" method="post"
                 id="codeForm" class="bg-body rounded p-3 shadow-lg">
                 <h2 class="fw-bold text-center">Insert Code</h2>
@@ -69,13 +72,27 @@
                     <label for="submit" class="form-label"></label>
                     <button type="submit" class="btn btn-primary w-100">Submit</button>
                 </div>
+                <div class="mb-2">
+                    <?php if ($_GET['questionID'] == 1): ?>
+                        <a href="index.php"
+                            class="btn btn-danger">หน้าหลัก</a>
+                    <?php endif; ?>
+                    <?php if ($_GET['questionID'] > 1): ?>
+                        <a href="grader_question.php?questionID=<?php echo $_GET['questionID'] - 1; ?>"
+                            class="btn btn-danger">ก่อนหน้า</a>
+                    <?php endif; ?>
+                    <?php if ($_GET['questionID'] < mysqli_num_rows($result)): ?>
+                    <a href="grader_question.php?questionID=<?php echo $_GET['questionID'] + 1; ?>"
+                        class="btn btn-success float-end">ต่อไป</a>
+                    <?php endif; ?>
+                </div>
             </form>
         </div>
     </div>
 
     <script>
-        $(document).ready(function() {
-            $('#btnBack').click(function() {
+        $(document).ready(function () {
+            $('#btnBack').click(function () {
                 history.back();
             });
         });
@@ -115,7 +132,7 @@
                                         data: {
                                             questionID: questionID
                                         },
-                                        success: function(data) {
+                                        success: function (data) {
                                             let score = JSON.parse(data);
 
                                             if (score.status == 'success') {
@@ -123,10 +140,18 @@
                                                     icon: score.status,
                                                     title: 'สำเร็จ!',
                                                     text: score.msg,
-                                                    showConfirmButton: false,
-                                                    timer: 1500
+                                                    showConfirmButton: true,
+                                                    showCancelButton: true,
+                                                    confirmButtonText: 'ดูคะแนน',
+                                                    cancelButtonText: 'ไว้ทีหลัง',
+                                                    confirmButtonColor: '#3085d6',
+                                                    cancelButtonColor: '#d33'
                                                 }).then(function (result) {
-                                                    window.location.reload();
+                                                    if (result.isConfirmed) {
+                                                        window.location.href = 'history.php';
+                                                    } else {
+                                                        window.location.reload();
+                                                    }
                                                 });
                                             } else {
                                                 Swal.fire({

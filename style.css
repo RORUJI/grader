@@ -33,3 +33,7 @@ form {
 .signin-link:hover {
     text-decoration: underline;
 }
+
+#codeForm {
+    margin-top: 70px;
+}

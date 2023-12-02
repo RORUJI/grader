@@ -58,7 +58,7 @@
                                     echo json_encode(array('status' => 'score_success', 'msg' => 'คำตอบของคุณถูกต้อง!'));
                                 }
                             } else {
-                                echo json_encode(array('status' => 'success', 'msg' => 'คำตอบของคุณไม่ถูกต้อง!'));
+                                echo json_encode(array('status' => 'success', 'msg' => 'คำตอบของคุณถูกต้อง!'));
                             }
                         }
                     }

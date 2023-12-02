@@ -48,18 +48,17 @@
                             $count++;
                             continue;
                         } else {
-                            echo json_encode(array('status' => 'success', 'msg' => 'Your result is correct!'));
-
                             if (isset($_SESSION['userID'])) {
-                                $userID = $_SESSION['userID'];
-                                $checkscore = "SELECT * FROM score WHERE userID = '$userID' AND questionID = '$questionID'";
-                                $queryscore = mysqli_query($conn, $checkscore);
-                                
-                                if (mysqli_num_rows($queryscore) == 0) {
-                                    $score = 1;
-                                    $insertScore = "INSERT INTO score(score, userID, questionID) VALUES('$score', '$userID', '$questionID')";
-                                    $queryscore = mysqli_query($conn, $insertScore);
+                                $sql = "SELECT * FROM score WHERE userID = '$_SESSION[userID]' AND questionID = '$questionID'";
+                                $result = mysqli_query($conn, $sql);
+
+                                if (mysqli_num_rows($result) == 0) {
+                                    echo json_encode(array('status' => 'noscore_success', 'msg' => 'คำตอบของคุณถูกต้อง!'));
+                                } else {
+                                    echo json_encode(array('status' => 'score_success', 'msg' => 'คำตอบของคุณถูกต้อง!'));
                                 }
+                            } else {
+                                echo json_encode(array('status' => 'success', 'msg' => 'คำตอบของคุณถูกต้อง!'));
                             }
                         }
                     }
