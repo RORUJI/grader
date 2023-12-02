@@ -41,11 +41,12 @@
                     <a href="login.php" class="btn btn-primary ms-3">Login</a>
                 <?php endif; ?>
                 <?php if (isset($_SESSION['levelID'])): ?>
-                    <span class="text-primary fw-bold">Username:&nbsp;</span>
+                    <span class="text-primary fw-bold"><i class="bi bi-person-fill"></i> Username:&nbsp;</span>
                     <span>
                         <?php echo $_SESSION['username']; ?>
                     </span>
-                    <a href="system/logout_system.php" id="signout-btn" class="btn btn-danger ms-3">Logout</a>
+                    <a href="system/logout_system.php" id="signout-btn" class="btn btn-danger ms-3">
+                    <i class="bi bi-door-closed-fill"></i>Logout</a>
                 <?php endif; ?>
                 <button type="button" class="btn btn-danger" id="btnBack">Back</button>
             </div>
@@ -68,23 +69,28 @@
                     <label for="code" class="form-label fw-bold">Insert Your Code</label>
                     <textarea name="sqlCode" id="sqlCode" class="form-control" cols="30" rows="10"></textarea>
                 </div>
-                <div class="mb-3">
-                    <label for="submit" class="form-label"></label>
-                    <button type="submit" class="btn btn-primary w-100">Submit</button>
-                </div>
-                <div class="mb-2">
-                    <?php if ($_GET['questionID'] == 1): ?>
-                        <a href="index.php"
-                            class="btn btn-danger">หน้าหลัก</a>
-                    <?php endif; ?>
-                    <?php if ($_GET['questionID'] > 1): ?>
-                        <a href="grader_question.php?questionID=<?php echo $_GET['questionID'] - 1; ?>"
-                            class="btn btn-danger">ก่อนหน้า</a>
-                    <?php endif; ?>
-                    <?php if ($_GET['questionID'] < mysqli_num_rows($result)): ?>
-                    <a href="grader_question.php?questionID=<?php echo $_GET['questionID'] + 1; ?>"
-                        class="btn btn-success float-end">ต่อไป</a>
-                    <?php endif; ?>
+                <div class="mb-1">
+                    <div class="row">
+                        <div class="col">
+                            <?php if ($_GET['questionID'] == 1): ?>
+                                <a href="index.php"
+                                    class="btn btn-danger w-100">หน้าหลัก</a>
+                            <?php endif; ?>
+                            <?php if ($_GET['questionID'] > 1): ?>
+                                <a href="grader_question.php?questionID=<?php echo $_GET['questionID'] - 1; ?>"
+                                    class="btn btn-danger w-100">ก่อนหน้า</a>
+                            <?php endif; ?>
+                        </div>
+                        <div class="col-7">
+                            <button type="submit" class="btn btn-primary w-100"><i class="bi bi-send"></i> ส่งคำตอบ</button>
+                        </div>
+                        <div class="col">
+                            <?php if ($_GET['questionID'] < mysqli_num_rows($result)): ?>
+                                <a href="grader_question.php?questionID=<?php echo $_GET['questionID'] + 1; ?>"
+                                    class="btn btn-success w-100">ต่อไป</a>
+                            <?php endif; ?>
+                        </div>
+                    </div>
                 </div>
             </form>
         </div>
