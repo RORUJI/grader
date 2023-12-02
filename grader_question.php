@@ -94,19 +94,84 @@
                     success: function (data) {
                         let result = JSON.parse(data);
 
-                        if (result.status == 'success') {
+                        if (result.status == 'noscore_success') {
                             Swal.fire({
-                                icon: result.status,
-                                title: 'สำเร็จ!',
-                                text: result.msg,
+                                icon: 'success',
+                                title: result.msg,
+                                text: 'คุณต้องการบันทึกคะแนนของคุณหรือไม่?',
+                                showConfirmButton: true,
+                                showCancelButton: true,
+                                confirmButtonText: 'บันทึก',
+                                cancelButtonText: 'ไม่ล่ะ',
+                                confirmButtonColor: '#3085d6',
+                                cancelButtonColor: '#d33'
+                            }).then(function (result) {
+                                if (result.isConfirmed) {
+                                    let questionID = <?php echo $_GET['questionID']; ?>;
+
+                                    $.ajax({
+                                        type: 'POST',
+                                        url: 'enter_score.php',
+                                        data: {
+                                            questionID: questionID
+                                        },
+                                        success: function(data) {
+                                            let score = JSON.parse(data);
+
+                                            if (score.status == 'success') {
+                                                Swal.fire({
+                                                    icon: score.status,
+                                                    title: 'สำเร็จ!',
+                                                    text: score.msg,
+                                                    showConfirmButton: false,
+                                                    timer: 1500
+                                                }).then(function (result) {
+                                                    window.location.reload();
+                                                });
+                                            } else {
+                                                Swal.fire({
+                                                    icon: score.status,
+                                                    title: 'ล้มเหลว!',
+                                                    text: score.msg,
+                                                    showConfirmButton: false,
+                                                    timer: 1500
+                                                });
+                                            }
+                                        }
+                                    })
+                                } else {
+                                    window.location.reload();
+                                }
+                            });
+                        } else if (result.status == 'score_success') {
+                            Swal.fire({
+                                icon: 'success',
+                                title: result.msg,
+                                text: 'คุณมีคะแนนอยู่แล้ว',
                                 showConfirmButton: false,
                                 timer: 1500
-                            }).then(function () {
-                                window.location.reload();
+                            });
+                        } else if (result.status == 'success') {
+                            Swal.fire({
+                                icon: 'success',
+                                title: result.msg,
+                                text: 'หากคุณต้องการบันทึกคะแนนของคุณ คุณต้องทำการ Login',
+                                showConfirmButton: true,
+                                showCancelButton: true,
+                                confirmButtonText: 'ล็อคอิน',
+                                cancelButtonText: 'ไม่ล่ะ',
+                                confirmButtonColor: '#3085d6',
+                                cancelButtonColor: '#d33'
+                            }).then(function (result) {
+                                if (result.isConfirmed) {
+                                    window.location.href = 'login.php';
+                                } else {
+                                    window.location.reload();
+                                }
                             });
                         } else {
                             Swal.fire({
-                                icon: result.status,
+                                icon: 'error',
                                 title: 'ล้มเหลว!',
                                 text: result.msg,
                                 showConfirmButton: false,
