@@ -37,3 +37,7 @@ form {
 #codeForm {
     margin-top: 70px;
 }
+
+textarea.form-control {
+    font-family: consolas;
+}

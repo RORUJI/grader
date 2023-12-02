@@ -1,4 +1,6 @@
 <?php
+    session_start();
+    
     include_once('../dbconnect.php');
 
     $code = $_POST['sqlCode'];
@@ -16,18 +18,18 @@
             $bResult = mysqli_query($conn, $code);
 
             if (mysqli_num_fields($aResult) != mysqli_num_fields($bResult)) {
-                echo json_encode(array('status' => 'error', 'msg' => 'Your result is incorrect!'));
+                echo json_encode(array('status' => 'error', 'msg' => 'คำตอบของคุณไม่ถูกต้อง!'));
             } else if (mysqli_num_rows($aResult) != mysqli_num_rows($bResult)) {
-                echo json_encode(array('status' => 'error', 'msg' => 'Your result is incorrect!'));
+                echo json_encode(array('status' => 'error', 'msg' => 'คำตอบของคุณไม่ถูกต้อง!'));
             } else {
                 $count = 1;
 
                 while (($aRow = mysqli_fetch_assoc($aResult)) && ($bRow = mysqli_fetch_assoc($bResult))) {
                     if ($aRow['firstname'] != $bRow['firstname']) {
-                        echo json_encode(array('status' => 'error', 'msg' => 'Your result is incorrect!'));
+                        echo json_encode(array('status' => 'error', 'msg' => 'คำตอบของคุณไม่ถูกต้อง!'));
                         break;
                     } else if ($aRow['lastname'] != $bRow['lastname']) {
-                        echo json_encode(array('status' => 'error', 'msg' => 'Your result is incorrect!'));
+                        echo json_encode(array('status' => 'error', 'msg' => 'คำตอบของคุณไม่ถูกต้อง!'));
                         break;
                     } else {
                         if ($count < mysqli_num_rows($aResult)) {
@@ -44,7 +46,7 @@
                                     echo json_encode(array('status' => 'score_success', 'msg' => 'คำตอบของคุณถูกต้อง!'));
                                 }
                             } else {
-                                echo json_encode(array('status' => 'success', 'msg' => 'คำตอบของคุณไม่ถูกต้อง!'));
+                                echo json_encode(array('status' => 'success', 'msg' => 'คำตอบของคุณถูกต้อง!'));
                             }
                         }
                     }
