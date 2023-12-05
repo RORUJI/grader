@@ -48,7 +48,8 @@ INSERT INTO person(firstname, lastname, birthday, weight, height, genderID) VALU
 ('Spring', 'Bounce', '2000-05-05', '59.61', '178.12', 1),
 ('Summer', 'ItBurning', '2004-04-19', '48.47', '153.69', 2),
 ('Fall', 'Down', '1989-11-11', '45.54', '158.32', 2),
-('Winter', 'SoCold', '1981-01-02', '59.88', '186.99', 1);
+('Winter', 'SoCold', '1981-01-02', '59.88', '186.99', 1),
+('Happy', 'Newclear', '2000-05-05', '61.54', '169.99', 1);
 
 CREATE TABLE question (
     questionID INT(3) NOT NULL AUTO_INCREMENT,
@@ -65,7 +66,9 @@ INSERT INTO question(question, code) VALUES('จงเรียกข้อม�
 ('จงเรียกข้อมูลที่ที gender เป็น Female จากตาราง gender', "SELECT * FROM gender WHERE gender = 'Female'"),
 ('จงเรียกข้อมูลทั้งหมดจากตาราง person โดยเรียงจาก personID มากไปน้อย', "SELECT * FROM person ORDER BY personID DESC"),
 ('จงเรียกข้อมูลเฉพาะ firstname กับ genderID ที่ genderID = 2 จากตาราง person', "SELECT firstname, genderID FROM person WHERE genderID = 2"),
-('จงเรียกข้อมูลในตาราง person ยกเว้น genderID ที่ genderID = 1', "SELECT personID, firstname, lastname, birthday, weight, height FROM person WHERE genderID = 1");
+('จงเรียกข้อมูลในตาราง person ยกเว้น genderID ที่ genderID = 1', "SELECT personID, firstname, lastname, birthday, weight, height FROM person WHERE genderID = 1"),
+('จงเรียกข้อมูลในตาราง person ทั้งหมดที่ weight มากกว่า 60 และ height มากกว่า 170', "SELECT * FROM person WHERE weight > 60 AND height > 170"),
+('จงเรียกข้อมูลในตาราง person ทั้งหมดที่ weight น้อยกว่า 60 หรือ height มากกว่า 185', 'SELECT * FROM person WHERE weight < 60 OR height > 185');
 
 CREATE TABLE score (
     scoreID INT(3) NOT NULL AUTO_INCREMENT,
