@@ -18,8 +18,6 @@
     <link rel="stylesheet" href="style.css?v<?php echo time(); ?>">
     <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-    <link rel="stylesheet" href="https://cdn.datatables.net/1.13.7/css/jquery.dataTables.css" />
-    <script src="https://cdn.datatables.net/1.13.7/js/jquery.dataTables.js"></script>
     <title>Grader</title>
 </head>
 
@@ -46,7 +44,7 @@
     </nav>
 
     <div class="container">
-        <div class="d-flex justify-content-center text-light my-2">
+        <div class="d-flex justify-content-center text-light my-3">
             <h2>ตาราง Person</h2>
         </div>
         <table class="table table-striped table-bordered shadow-lg">
