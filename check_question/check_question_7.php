@@ -1,15 +1,15 @@
 <?php
     session_start();
-    
+
     include_once('../dbconnect.php');
 
     $code = $_POST['sqlCode'];
 
     if ($code == "") {
-        echo json_encode(array('status' => 'error', 'msg' => 'Please enter your code.'));
+        echo json_encode(array('status' => 'error', 'msg' => 'โปรดใส่โค้ดคำสั่ง'));
     } else {
         try {
-            $questionID = 2;
+            $questionID = 7;
             $sql = "SELECT * FROM question WHERE questionID = '$questionID'";
             $query = mysqli_query($conn, $sql);
             $question = mysqli_fetch_assoc($query);
@@ -25,10 +25,22 @@
                 $count = 1;
 
                 while (($aRow = mysqli_fetch_assoc($aResult)) && ($bRow = mysqli_fetch_assoc($bResult))) {
-                    if ($aRow['firstname'] != $bRow['firstname']) {
+                    if ($aRow['personID'] != $bRow['personID']) {
+                        echo json_encode(array('status' => 'error', 'msg' => 'คำตอบของคุณไม่ถูกต้อง!'));
+                        break;
+                    } else if ($aRow['firstname'] != $bRow['firstname']) {
                         echo json_encode(array('status' => 'error', 'msg' => 'คำตอบของคุณไม่ถูกต้อง!'));
                         break;
                     } else if ($aRow['lastname'] != $bRow['lastname']) {
+                        echo json_encode(array('status' => 'error', 'msg' => 'คำตอบของคุณไม่ถูกต้อง!'));
+                        break;
+                    } else if ($aRow['weight'] != $bRow['weight']) {
+                        echo json_encode(array('status' => 'error', 'msg' => 'คำตอบของคุณไม่ถูกต้อง!'));
+                        break;
+                    } else if ($aRow['height'] != $bRow['height']) {
+                        echo json_encode(array('status' => 'error', 'msg' => 'คำตอบของคุณไม่ถูกต้อง!'));
+                        break;
+                    } else if ($aRow['genderID'] != $bRow['genderID']) {
                         echo json_encode(array('status' => 'error', 'msg' => 'คำตอบของคุณไม่ถูกต้อง!'));
                         break;
                     } else {
@@ -53,7 +65,7 @@
                 }
             }
         } catch (Exception $e) {
-            echo json_encode(array('status' => 'error', 'msg' => 'Something went wrong, please try again!'));
+            echo json_encode(array('status' => 'error', 'msg' => 'โค้ดของคุณมีบางอย่างผิดพลาด โปรดลองใหม่อีกครั้ง!'));
         }
     }
 ?>

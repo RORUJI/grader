@@ -40,7 +40,17 @@ CREATE TABLE person (
 INSERT INTO person(firstname, lastname, birthday, weight, height, genderID) VALUES
 ('Nitipat', 'Jirapong', '2003-02-14', '52.21', '177.77', 1),
 ('Unknown', 'Personal', '1997-11-12', '69.14', '181.21', 2),
-('Exam', 'Final', '2001-01-05', '100.01', '187.14', 1);
+('Exam', 'Final', '2001-01-05', '100.01', '187.14', 1),
+('Security', 'Guard', '1994-08-25', '70.54', '185.64', 1),
+('Tele', 'Vision', '1985-01-12', '50.18', '157.25', 2),
+('Smart', 'Phone', '1989-02-15', '49.55', '154.60', 2),
+('Local', 'Host', '1999-05-29', '58.88', '174.95', 1),
+('Spring', 'Bounce', '2000-05-05', '59.61', '178.12', 1),
+('Summer', 'ItBurning', '2004-04-19', '48.47', '153.69', 2),
+('Fall', 'Down', '1989-11-11', '45.54', '158.32', 2),
+('Winter', 'SoCold', '1981-01-02', '59.88', '186.99', 1),
+('Happy', 'Newclear', '2000-05-05', '61.54', '169.99', 1),
+('I-AM', 'Batman', '1990-12-07', '66.99', '159.00', 1);
 
 CREATE TABLE question (
     questionID INT(3) NOT NULL AUTO_INCREMENT,
@@ -50,7 +60,23 @@ CREATE TABLE question (
 ) ENGINE = InnoDB DEFAULT CHARSET = utf8;
 
 INSERT INTO question(question, code) VALUES('จงเรียกข้อมูลทั้งหมดจากตาราง person', "SELECT * FROM person"),
-('จงเรียก firstname และ lastname ทั้งหมดจากตาราง person', "SELECT firstname, lastname FROM person");
+('จงเรียกข้อมูลเฉพาะ firstname และ lastname ทั้งหมดจากตาราง person', "SELECT firstname, lastname FROM person"),
+('จงเรียกข้อมูลจากตาราง person จำนวน 2 แถว', "SELECT * FROM person LIMIT 2"),
+('จงเรียกข้อมูลที่มี firstname เป็น Nitipat จากตาราง person', "SELECT * FROM person WHERE firstname = 'Nitipat'"),
+('จงเรียกข้อมูลทั้งหมดจากตาราง gender', "SELECT * FROM gender"),
+('จงเรียกข้อมูลที่ที gender เป็น Female จากตาราง gender', "SELECT * FROM gender WHERE gender = 'Female'"),
+('จงเรียกข้อมูลทั้งหมดจากตาราง person โดยเรียงจาก personID มากไปน้อย', "SELECT * FROM person ORDER BY personID DESC"),
+('จงเรียกข้อมูลเฉพาะ firstname กับ genderID ที่ genderID = 2 จากตาราง person', "SELECT firstname, genderID FROM person WHERE genderID = 2"),
+('จงเรียกข้อมูลในตาราง person ยกเว้น genderID ที่ genderID = 1', "SELECT personID, firstname, lastname, birthday, weight, height FROM person WHERE genderID = 1"),
+('จงเรียกข้อมูลในตาราง person ทั้งหมดที่ weight มากกว่า 60 และ height มากกว่า 170', "SELECT * FROM person WHERE weight > 60 AND height > 170"),
+('จงเรียกข้อมูลในตาราง person ทั้งหมดที่ weight น้อยกว่า 60 หรือ height มากกว่า 185', 'SELECT * FROM person WHERE weight < 60 OR height > 185'),
+('จงเรียกข้อมูลในตาราง person ทั้งหมดที่ weight มากกว่า 60 และ genderID = 2', 'SELECT * FROM person WHERE weight > 60 AND genderID = 2'),
+('จงเรียกข้อมูล firstname และ lastname ที่ personID น้อกกว่าหรือเท่ากับ 5', 'SELECT firstname, lastname FROM person WHERE personID <= 5'),
+('จงเรียกข้อมูล firstname, lastname และ birthday ที่มี weight มากกว่า 48 และ height น้อยกว่า 180 จากตาราง person โดยเรียงจาก firstname มากไปน้อยจำนวน 5 ข้อมูล', 
+"SELECT firstname, lastname, birthday FROM person WHERE weight > 48 AND height < 180 ORDER BY firstname DESC LIMIT 5"),
+('จงเรียกข้อมูล firstname, lastname, weight, height ที่ genderID = 1 จากตาราง person โดยเรียง weight จากน้อยไปมาก', 
+'SELECT firstname, lastname, weight, height FROM person WHERE genderID = 1 ORDER BY weight ASC');
+
 
 CREATE TABLE score (
     scoreID INT(3) NOT NULL AUTO_INCREMENT,

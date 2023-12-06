@@ -1,15 +1,15 @@
 <?php
     session_start();
-    
+
     include_once('../dbconnect.php');
 
     $code = $_POST['sqlCode'];
 
     if ($code == "") {
-        echo json_encode(array('status' => 'error', 'msg' => 'Please enter your code.'));
+        echo json_encode(array('status' => 'error', 'msg' => 'โปรดใส่โค้ดคำสั่ง'));
     } else {
         try {
-            $questionID = 2;
+            $questionID = 13;
             $sql = "SELECT * FROM question WHERE questionID = '$questionID'";
             $query = mysqli_query($conn, $sql);
             $question = mysqli_fetch_assoc($query);
@@ -53,7 +53,7 @@
                 }
             }
         } catch (Exception $e) {
-            echo json_encode(array('status' => 'error', 'msg' => 'Something went wrong, please try again!'));
+            echo json_encode(array('status' => 'error', 'msg' => 'โค้ดของคุณมีบางอย่างผิดพลาด โปรดลองใหม่อีกครั้ง!'));
         }
     }
 ?>

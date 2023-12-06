@@ -18,48 +18,47 @@
             $bResult = mysqli_query($conn, $code);
 
             if (mysqli_num_fields($aResult) != mysqli_num_fields($bResult)) {
-                echo json_encode(array('status' => 'error', 'msg' => 'Your result is incorrect!'));
+                echo json_encode(array('status' => 'error', 'msg' => 'คำตอบของคุณไม่ถูกต้อง!'));
             } else if (mysqli_num_rows($aResult) != mysqli_num_rows($bResult)) {
-                echo json_encode(array('status' => 'error', 'msg' => 'Your result is incorrect!'));
+                echo json_encode(array('status' => 'error', 'msg' => 'คำตอบของคุณไม่ถูกต้อง!'));
             } else {
                 $count = 1;
 
                 while (($aRow = mysqli_fetch_assoc($aResult)) && ($bRow = mysqli_fetch_assoc($bResult))) {
                     if ($aRow['personID'] != $bRow['personID']) {
-                        echo json_encode(array('status' => 'error', 'msg' => 'Your result is incorrect!'));
+                        echo json_encode(array('status' => 'error', 'msg' => 'คำตอบของคุณไม่ถูกต้อง!'));
                         break;
                     } else if ($aRow['firstname'] != $bRow['firstname']) {
-                        echo json_encode(array('status' => 'error', 'msg' => 'Your result is incorrect!'));
+                        echo json_encode(array('status' => 'error', 'msg' => 'คำตอบของคุณไม่ถูกต้อง!'));
                         break;
                     } else if ($aRow['lastname'] != $bRow['lastname']) {
-                        echo json_encode(array('status' => 'error', 'msg' => 'Your result is incorrect!'));
+                        echo json_encode(array('status' => 'error', 'msg' => 'คำตอบของคุณไม่ถูกต้อง!'));
                         break;
                     } else if ($aRow['weight'] != $bRow['weight']) {
-                        echo json_encode(array('status' => 'error', 'msg' => 'Your result is incorrect!'));
+                        echo json_encode(array('status' => 'error', 'msg' => 'คำตอบของคุณไม่ถูกต้อง!'));
                         break;
                     } else if ($aRow['height'] != $bRow['height']) {
-                        echo json_encode(array('status' => 'error', 'msg' => 'Your result is incorrect!'));
+                        echo json_encode(array('status' => 'error', 'msg' => 'คำตอบของคุณไม่ถูกต้อง!'));
                         break;
                     } else if ($aRow['genderID'] != $bRow['genderID']) {
-                        echo json_encode(array('status' => 'error', 'msg' => 'Your result is incorrect!'));
+                        echo json_encode(array('status' => 'error', 'msg' => 'คำตอบของคุณไม่ถูกต้อง!'));
                         break;
                     } else {
                         if ($count < mysqli_num_rows($aResult)) {
                             $count++;
                             continue;
                         } else {
-                            echo json_encode(array('status' => 'success', 'msg' => 'Your result is correct!'));
-
                             if (isset($_SESSION['userID'])) {
-                                $userID = $_SESSION['userID'];
-                                $checkscore = "SELECT * FROM score WHERE userID = '$userID' AND questionID = '$questionID'";
-                                $queryscore = mysqli_query($conn, $checkscore);
-                                
-                                if (mysqli_num_rows($queryscore) == 0) {
-                                    $score = 1;
-                                    $insertScore = "INSERT INTO score(score, userID, questionID) VALUES('$score', '$userID', '$questionID')";
-                                    $queryscore = mysqli_query($conn, $insertScore);
+                                $sql = "SELECT * FROM score WHERE userID = '$_SESSION[userID]' AND questionID = '$questionID'";
+                                $result = mysqli_query($conn, $sql);
+
+                                if (mysqli_num_rows($result) == 0) {
+                                    echo json_encode(array('status' => 'noscore_success', 'msg' => 'คำตอบของคุณถูกต้อง!'));
+                                } else {
+                                    echo json_encode(array('status' => 'score_success', 'msg' => 'คำตอบของคุณถูกต้อง!'));
                                 }
+                            } else {
+                                echo json_encode(array('status' => 'success', 'msg' => 'คำตอบของคุณถูกต้อง!'));
                             }
                         }
                     }
