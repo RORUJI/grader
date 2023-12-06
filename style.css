@@ -33,3 +33,49 @@ form {
 .signin-link:hover {
     text-decoration: underline;
 }
+
+.link-a{
+    text-decoration: none;
+    color: white;
+    display: block;
+    text-align: center;
+    padding: 1vh;
+}
+.graph{
+    height:40vh;
+    margin-top: 2vh;
+    margin-bottom: 2vh;
+    border-radius: 10px;
+}
+.graph1{
+    height: 45vh;
+    border-radius: 10px;
+    background-color: brown;
+    text-decoration: none;
+    color: white;
+    box-shadow: rgba(0, 0, 0, 0.3) 0px 19px 38px, rgba(0, 0, 0, 0.22) 0px 15px 12px;
+    transition: .5s;
+}
+.graph1:hover{
+    transform: translateY(-14px);
+}
+.graph2{
+    height: 45vh;
+    border-radius: 10px;
+    background-color: chocolate;
+    text-decoration: none;
+    color: white;
+    box-shadow: rgba(0, 0, 0, 0.3) 0px 19px 38px, rgba(0, 0, 0, 0.22) 0px 15px 12px;
+    transition: .5s;
+}
+.graph2:hover{
+    transform: translateY(-14px);
+}
+.div-1{
+    padding-left: 2vh;
+    padding-top: 22vh;
+}
+.div-2{
+    padding-left: 2vh;
+    padding-top: 22vh;
+}
