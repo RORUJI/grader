@@ -69,7 +69,14 @@ INSERT INTO question(question, code) VALUES('จงเรียกข้อม�
 ('จงเรียกข้อมูลเฉพาะ firstname กับ genderID ที่ genderID = 2 จากตาราง person', "SELECT firstname, genderID FROM person WHERE genderID = 2"),
 ('จงเรียกข้อมูลในตาราง person ยกเว้น genderID ที่ genderID = 1', "SELECT personID, firstname, lastname, birthday, weight, height FROM person WHERE genderID = 1"),
 ('จงเรียกข้อมูลในตาราง person ทั้งหมดที่ weight มากกว่า 60 และ height มากกว่า 170', "SELECT * FROM person WHERE weight > 60 AND height > 170"),
-('จงเรียกข้อมูลในตาราง person ทั้งหมดที่ weight น้อยกว่า 60 หรือ height มากกว่า 185', 'SELECT * FROM person WHERE weight < 60 OR height > 185');
+('จงเรียกข้อมูลในตาราง person ทั้งหมดที่ weight น้อยกว่า 60 หรือ height มากกว่า 185', 'SELECT * FROM person WHERE weight < 60 OR height > 185'),
+('จงเรียกข้อมูลในตาราง person ทั้งหมดที่ weight มากกว่า 60 และ genderID = 2', 'SELECT * FROM person WHERE weight > 60 AND genderID = 2'),
+('จงเรียกข้อมูล firstname และ lastname ที่ personID น้อกกว่าหรือเท่ากับ 5', 'SELECT firstname, lastname FROM person WHERE personID <= 5'),
+('จงเรียกข้อมูล firstname, lastname และ birthday ที่มี weight มากกว่า 48 และ height น้อยกว่า 180 จากตาราง person โดยเรียงจาก firstname มากไปน้อยจำนวน 5 ข้อมูล', 
+"SELECT firstname, lastname, birthday FROM person WHERE weight > 48 AND height < 180 ORDER BY firstname DESC LIMIT 5"),
+('จงเรียกข้อมูล firstname, lastname, weight, height ที่ genderID = 1 จากตาราง person โดยเรียง weight จากน้อยไปมาก', 
+'SELECT firstname, lastname, weight, height FROM person WHERE genderID = 1 ORDER BY weight ASC');
+
 
 CREATE TABLE score (
     scoreID INT(3) NOT NULL AUTO_INCREMENT,

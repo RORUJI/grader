@@ -81,6 +81,28 @@
                     </tr>
                 </tbody>
             <?php endwhile; ?>
+                <tfoot>
+                    <tr>
+                        <td>รวม</td>
+                        <td>แบบทดสอบทั้งหมด</td>
+                        <td>
+                            <?php 
+                                $sql = "SELECT count(question) FROM question";
+                                $result = mysqli_query($conn, $sql);
+                                $questionCount = mysqli_fetch_assoc($result);
+
+                                $sql = "SELECT sum(score) FROM score WHERE userID = '$userID'";
+                                $result = mysqli_query($conn, $sql);
+                                $row = mysqli_fetch_assoc($result);
+                                echo $row['sum(score)'] . '/' . $questionCount['count(question)'];
+                            ?>
+                        </td>
+                        <td>
+                            <button type="button" class="btn btn-danger"
+                                onclick="resetAllScore(<?php echo $userID; ?>)">รีเซ็ตคะแนนทั้งหมด</button>
+                        </td>
+                    </tr>
+                </tfoot>
         </table>
 
         <div class="d-flex justify-content-center text-light my-3">
@@ -148,6 +170,54 @@
                             url: 'system/reset_score.php',
                             data: {
                                 scoreID: scoreID
+                            },
+                            success: function (data) {
+                                result = JSON.parse(data);
+                                if (result.status == 'success') {
+                                    Swal.fire({
+                                        icon: 'success',
+                                        title: 'สำเร็จ!',
+                                        text: result.msg,
+                                        showConfirmButton: false,
+                                        timer: 1500
+                                    }).then(function() {
+                                        window.location.reload();
+                                    });
+                                } else {
+                                    Swal.fire({
+                                        icon: score.status,
+                                        title: 'ล้มเหลว!',
+                                        text: score.msg,
+                                        showConfirmButton: false,
+                                        timer: 1500
+                                    });
+                                }
+                            }
+                        })
+                    }
+                })
+            });
+        }
+
+        function resetAllScore(userID) {
+            $(document).ready(function () {
+                Swal.fire({
+                    icon: 'info',
+                    title: 'คุณต้องการรีเซ็ตคะแนนหรือไม่?',
+                    text: 'หากคุณรีเซ็ต คะแนนของแบบทดสอบนี้จะหายไป!',
+                    showConfirmButton: true,
+                    showCancelButton: true,
+                    confirmButtonText: 'รีเซ็ต',
+                    cancelButtonText: 'ไม่ล่ะ',
+                    confirmButtonColor: '#3085d6',
+                    cancelButtonColor: '#d33'
+                }).then(function (result) {
+                    if (result.isConfirmed) {
+                        $.ajax({
+                            type: 'POST',
+                            url: 'system/reset_allScore.php',
+                            data: {
+                                userID: userID
                             },
                             success: function (data) {
                                 result = JSON.parse(data);
