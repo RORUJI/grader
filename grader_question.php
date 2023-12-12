@@ -55,8 +55,10 @@
 
     <div class="container">
         <div class="position-absolute top-50 start-50 translate-middle">
-            <form action="check_question/check_question_<?php echo $row['questionID']; ?>.php" method="post"
+            <form action="check_select.php" method="post"
                 id="codeForm" class="bg-body rounded p-3 shadow-lg">
+                <input type="hidden" name="questionID" value="<?php echo $row['questionID']; ?>">
+                <input type="hidden" name="code" value="<?php echo $row['code']; ?>">
                 <h2 class="fw-bold text-center">Insert Code</h2>
                 <hr>
                 <div class="mb-3">
