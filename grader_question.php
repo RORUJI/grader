@@ -6,7 +6,7 @@
     if (!isset($_GET['questionID'])) {
         header('location: index.php');
     } else {
-        $sql = "SELECT * FROM question WHERE questionID = " . $_GET['questionID'] . "";
+        $sql = "SELECT * FROM question INNER JOIN type ON question.typeID = type.typeID WHERE questionID = " . $_GET['questionID'] . "";
         $result = mysqli_query($conn, $sql);
         $row = mysqli_fetch_assoc($result);
 
@@ -55,14 +55,22 @@
 
     <div class="container">
         <div class="position-absolute top-50 start-50 translate-middle">
-            <form action="check_question/check_question_<?php echo $row['questionID']; ?>.php" method="post"
+            <form action="check_question.php" method="post"
                 id="codeForm" class="bg-body rounded p-3 shadow-lg">
+                <input type="hidden" name="questionID" value="<?php echo $row['questionID']; ?>">
                 <h2 class="fw-bold text-center">Insert Code</h2>
                 <hr>
                 <div class="mb-3">
                     <label for="code" class="form-label fw-bold">Question</label>
                     <span class="form-control">
                         <?php echo $row['question']; ?>
+                    </span>
+                </div>
+                <div class="mb-3">
+                    <label for="type" class="form-label">Type</label>
+                    <span class="form-control">
+                        <input type="hidden" name="type" value="<?php echo $row['typeID']; ?>">
+                        <?php echo $row['type']; ?>
                     </span>
                 </div>
                 <div class="mb-3">
