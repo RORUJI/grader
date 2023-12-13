@@ -14,24 +14,34 @@
 </head>
     
 <body class="">
-    <div class="row bg-warning" style="height:10vh; width: 100.8%"></div>
-    <div class="row" style="height: 90vh; width: 100.8%">
-        <div class="col-3 bg-primary" >
-            <a href="#" class="link-a"><i class="bi bi-house-fill"></i> Home</a>
-            <a href="#" class="link-a">Home</a>
-            <a href="#" class="link-a">Home</a>
-            <a href="#" class="link-a">Home</a>
-        </div>
-        <div class="col bg-success">
-            <div class="graph col bg-danger"></div>
-            <div class="row">
-                <a href="grader_question.php" class="graph1 col mx-3"><div class="div-1">SQL</div></a>
-                <a href="" class="graph2 col mx-3"><div class="div-2">ss</div></a>
+    <div class="container-fluid">
+        <div class="row" style="height: 100vh;">
+            <div class="col-2 bg-primary" >
+            <div class="row" style="height:10vh; width: auto; background:bisque;"></div>
+                <a href="#" class="link-a"><i class="bi bi-house-fill"></i> Home</a>
+                <a href="#" class="link-a">Home</a>
+                <a href="#" class="link-a">Home</a>
+                <a href="#" class="link-a">Home</a>
             </div>
-        </div>
-        <div class="col-3 bg-danger">
-            <h2>Column 3</h2>
-            <p>Test</p>
+            <div class="col bg-success">
+            <div class="row" style="height:10vh; width: auto; background:blueviolet;"></div> 
+                <div class="graph col bg-danger"></div>
+                <div class="row">
+                    <a href="grader_question.php" class="graph1 col mx-3"><div class="div-1">SQL</div></a>
+                    <a href="" class="graph2 col mx-3"><div class="div-2">ss</div></a>
+                </div>
+            </div>
+            <div class="col-2 bg-danger">
+            <div class="row" style="height:10vh; width: auto; background:aquamarine;"></div>
+                <div class="container">
+                    <div class="hexagon">
+                        <div class="shape">
+                            <img src="User.jpg" alt="">
+                        </div>
+                        <p class="name">User Test</p>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 </body>

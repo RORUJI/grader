@@ -8,7 +8,7 @@
     } else {
         $count = 1;
         $userID = $_SESSION['userID'];
-        $sql = "SELECT * FROM score JOIN question ON score.questionID = question.questionID WHERE userID = '$userID'";
+        $sql = "SELECT * FROM question";
         $result = mysqli_query($conn, $sql);
     }
 ?>
@@ -59,26 +59,18 @@
                     <th scope="row">#</th>
                     <th scope="row">แบบทดสอบ</th>
                     <th scope="row">คะแนน</th>
-                    <th scope="row">รีเซ็ตคะแนน</th>
                 </tr>
             </thead>
-            <?php while ($row = mysqli_fetch_assoc($result)): ?>
+            <?php while ($row = mysqli_fetch_array($result)): ?>
                 <tbody>
-                    <tr>
-                        <td>
-                            <?php echo $count++; ?>
-                        </td>
-                        <td>
-                            <?php echo $row['question']; ?>
-                        </td>
-                        <td>
-                            <?php echo $row['score']; ?>/1
-                        </td>
-                        <td>
-                            <button type="button" class="btn btn-danger"
-                                onclick="resetScore(<?php echo $row['scoreID']; ?>)">รีเซ็ตคะแนน</button>
-                        </td>
-                    </tr>
+                        <tr>
+                        <?php $i = 0;
+                        while ($i < mysqli_num_fields($result)): ?>
+                            <td>
+                                <?php echo $row[$i]; ?>
+                            </td>
+                            <?php $i++; endwhile; ?>
+                        </tr>
                 </tbody>
             <?php endwhile; ?>
                 <tfoot>
