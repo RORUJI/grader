@@ -52,30 +52,56 @@ INSERT INTO person(firstname, lastname, birthday, weight, height, genderID) VALU
 ('Happy', 'Newclear', '2000-05-05', '61.54', '169.99', 1),
 ('I-AM', 'Batman', '1990-12-07', '66.99', '159.00', 1);
 
+CREATE TABLE type (
+    typeID INT(3) NOT NULL AUTO_INCREMENT,
+    type VARCHAR(255) NOT NULL,
+    PRIMARY KEY(typeID)
+) ENGINE = InnoDB DEFAULT CHARSET = utf8;
+
+INSERT INTO type(type) VALUES('SELECT'), ('INSERT'), ('DELETE');
+
 CREATE TABLE question (
     questionID INT(3) NOT NULL AUTO_INCREMENT,
     question VARCHAR(255) NOT NULL,
-    code VARCHAR(255) NOT NULL,
-    PRIMARY KEY(questionID)
+    select_code VARCHAR(255) NOT NULL,
+    insert_code VARCHAR(255),
+    delete_code VARCHAR(255),
+    typeID INT(3) NOT NULL,
+    PRIMARY KEY(questionID),
+    FOREIGN KEY(typeID) REFERENCES type(typeID)
 ) ENGINE = InnoDB DEFAULT CHARSET = utf8;
 
-INSERT INTO question(question, code) VALUES('จงเรียกข้อมูลทั้งหมดจากตาราง person', "SELECT * FROM person"),
-('จงเรียกข้อมูลเฉพาะ firstname และ lastname ทั้งหมดจากตาราง person', "SELECT firstname, lastname FROM person"),
-('จงเรียกข้อมูลจากตาราง person จำนวน 2 แถว', "SELECT * FROM person LIMIT 2"),
-('จงเรียกข้อมูลที่มี firstname เป็น Nitipat จากตาราง person', "SELECT * FROM person WHERE firstname = 'Nitipat'"),
-('จงเรียกข้อมูลทั้งหมดจากตาราง gender', "SELECT * FROM gender"),
-('จงเรียกข้อมูลที่ที gender เป็น Female จากตาราง gender', "SELECT * FROM gender WHERE gender = 'Female'"),
-('จงเรียกข้อมูลทั้งหมดจากตาราง person โดยเรียงจาก personID มากไปน้อย', "SELECT * FROM person ORDER BY personID DESC"),
-('จงเรียกข้อมูลเฉพาะ firstname กับ genderID ที่ genderID = 2 จากตาราง person', "SELECT firstname, genderID FROM person WHERE genderID = 2"),
-('จงเรียกข้อมูลในตาราง person ยกเว้น genderID ที่ genderID = 1', "SELECT personID, firstname, lastname, birthday, weight, height FROM person WHERE genderID = 1"),
-('จงเรียกข้อมูลในตาราง person ทั้งหมดที่ weight มากกว่า 60 และ height มากกว่า 170', "SELECT * FROM person WHERE weight > 60 AND height > 170"),
-('จงเรียกข้อมูลในตาราง person ทั้งหมดที่ weight น้อยกว่า 60 หรือ height มากกว่า 185', 'SELECT * FROM person WHERE weight < 60 OR height > 185'),
-('จงเรียกข้อมูลในตาราง person ทั้งหมดที่ weight มากกว่า 60 และ genderID = 2', 'SELECT * FROM person WHERE weight > 60 AND genderID = 2'),
-('จงเรียกข้อมูล firstname และ lastname ที่ personID น้อกกว่าหรือเท่ากับ 5', 'SELECT firstname, lastname FROM person WHERE personID <= 5'),
+INSERT INTO question(question, select_code, typeID) VALUES('จงเรียกข้อมูลทั้งหมดจากตาราง person', "SELECT * FROM person", 1),
+('จงเรียกข้อมูลเฉพาะ firstname และ lastname ทั้งหมดจากตาราง person', "SELECT firstname, lastname FROM person", 1),
+('จงเรียกข้อมูลจากตาราง person จำนวน 2 แถว', "SELECT * FROM person LIMIT 2", 1),
+('จงเรียกข้อมูลที่มี firstname เป็น Nitipat จากตาราง person', "SELECT * FROM person WHERE firstname = 'Nitipat'", 1),
+('จงเรียกข้อมูลทั้งหมดจากตาราง gender', "SELECT * FROM gender", 1),
+('จงเรียกข้อมูลที่ที gender เป็น Female จากตาราง gender', "SELECT * FROM gender WHERE gender = 'Female'", 1),
+('จงเรียกข้อมูลทั้งหมดจากตาราง person โดยเรียงจาก personID มากไปน้อย', "SELECT * FROM person ORDER BY personID DESC", 1),
+('จงเรียกข้อมูลเฉพาะ firstname กับ genderID ที่ genderID = 2 จากตาราง person', "SELECT firstname, genderID FROM person WHERE genderID = 2", 1),
+('จงเรียกข้อมูลในตาราง person ยกเว้น genderID ที่ genderID = 1', "SELECT personID, firstname, lastname, birthday, weight, height FROM person WHERE genderID = 1",1 ),
+('จงเรียกข้อมูลในตาราง person ทั้งหมดที่ weight มากกว่า 60 และ height มากกว่า 170', "SELECT * FROM person WHERE weight > 60 AND height > 170", 1),
+('จงเรียกข้อมูลในตาราง person ทั้งหมดที่ weight น้อยกว่า 60 หรือ height มากกว่า 185', 'SELECT * FROM person WHERE weight < 60 OR height > 185', 1),
+('จงเรียกข้อมูลในตาราง person ทั้งหมดที่ weight มากกว่า 60 และ genderID = 2', 'SELECT * FROM person WHERE weight > 60 AND genderID = 2', 1),
+('จงเรียกข้อมูล firstname และ lastname ที่ personID น้อกกว่าหรือเท่ากับ 5', 'SELECT firstname, lastname FROM person WHERE personID <= 5', 1),
 ('จงเรียกข้อมูล firstname, lastname และ birthday ที่มี weight มากกว่า 48 และ height น้อยกว่า 180 จากตาราง person โดยเรียงจาก firstname มากไปน้อยจำนวน 5 ข้อมูล', 
-"SELECT firstname, lastname, birthday FROM person WHERE weight > 48 AND height < 180 ORDER BY firstname DESC LIMIT 5"),
+"SELECT firstname, lastname, birthday FROM person WHERE weight > 48 AND height < 180 ORDER BY firstname DESC LIMIT 5", 1),
 ('จงเรียกข้อมูล firstname, lastname, weight, height ที่ genderID = 1 จากตาราง person โดยเรียง weight จากน้อยไปมาก', 
-'SELECT firstname, lastname, weight, height FROM person WHERE genderID = 1 ORDER BY weight ASC');
+'SELECT firstname, lastname, weight, height FROM person WHERE genderID = 1 ORDER BY weight ASC', 1);
+
+INSERT INTO question(question, select_code, insert_code, delete_code, typeID) VALUES
+('จงเพิ่มข้อมูล firstname, lastname, brithday, weight, height, genderID ตามนี้ firstname = Mytester, lastname = Enjoying, birthday = 2001-12-13, weight = 52.54, height = 158.44, genderID = 2 ลงในตาราง person',
+"SELECT * FROM person WHERE firstname = 'Mytester' AND lastname = 'Enjoying' AND birthday = '2001-12-13' AND weight = '52.54' AND height = '158.44' AND genderID = '2'",
+"INSERT INTO person(firstname, lastname, birthday, weight, height, genderID) VALUES('Mytester', 'Enjoying', '2001-12-13', '52.54', '158.44', '2')",
+"DELETE FROM person WHERE firstname = 'Mytester' AND lastname = 'Enjoying' AND birthday = '2001-12-13' AND weight = '52.54' AND height = '158.44' AND genderID = '2'",
+2);
+
+INSERT INTO question(question, select_code, insert_code, delete_code, typeID) VALUES
+('จงลบข้อมูล firstname, lastname, brithday, weight, height, genderID ตามนี้ firstname = Mytester, lastname = Enjoying, birthday = 2001-12-13, weight = 52.54, height = 158.44, genderID = 2 ลงในตาราง person',
+"SELECT * FROM person WHERE firstname = 'Mytester' AND lastname = 'Enjoying' AND birthday = '2001-12-13' AND weight = '52.54' AND height = '158.44' AND genderID = '2'",
+"INSERT INTO person(firstname, lastname, birthday, weight, height, genderID) VALUES('Mytester', 'Enjoying', '2001-12-13', '52.54', '158.44', '2')",
+"DELETE FROM person WHERE firstname = 'Mytester' AND lastname = 'Enjoying' AND birthday = '2001-12-13' AND weight = '52.54' AND height = '158.44' AND genderID = '2'",
+3);
 
 
 CREATE TABLE score (
