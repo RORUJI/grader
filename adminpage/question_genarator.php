@@ -115,7 +115,7 @@ include_once "../dbconnect.php";
                         let result = JSON.parse(data);
 
                         if (result.status == 'success') {
-
+                            console.log(result.msg);
                         } else {
                             Swal.fire({
                                 icon: 'error',
