@@ -21,45 +21,48 @@ include_once "../dbconnect.php";
 
 <body class="bg-primary">
     <div class="container-fluid">
-        <form action="system/genarator_question_system.php" method="post" id="generatorForm" class="bg-body p-3 w-100 h-100">
-            <h2 class="fw-bold text-center">สร้างโจทย์ปัญหา</h2>
-            <hr>
-            <div class="mb-3">
-                <div class="row">
-                    <div class="col-3">
-                        <label for="type" class="form-label">เลือกประเภทของโจทย์</label>
-                        <select name="type" id="type" class="form-select">
-                            <option value="">เลือกประเภทของโจทย์</option>
-                            <?php $sql = "SELECT * FROM type";
-                            $result = $conn->query($sql);
-                            while ($row = $result->fetch_assoc()): ?>
-                                <option value="<?php echo $row['typeID']; ?>">
-                                    <?php echo $row['type']; ?>
-                                </option>
-                            <?php endwhile; ?>
-                        </select>
-                    </div>
-                    <div class="col">
-                        <label for="table" class="form-label">ตารางที่ต้องการใช้งาน</label>
-                        <select name="table" id="table" class="form-select">
-                            <option value="">เลือกตารางข้อมูล</option>
-                            <option value="person">person</option>
-                            <option value="gender">gender</option>
-                        </select>
-                    </div>
-                    <div class="col-1">
-                        <label for="" class="form-label"></label>
-                        <button type="button" class="btn btn-primary" id="btn-tb">ตกลง</button>
+        <div class="position-absolute top-50 start-50 translate-middle" style="width: 180vh">
+            <form action="system/genarator_question_system.php" method="post" id="generatorForm"
+                class="bg-body p-3 w-100 h-100">
+                <h2 class="fw-bold text-center">สร้างโจทย์ปัญหา</h2>
+                <hr>
+                <div class="mb-3">
+                    <div class="row">
+                        <div class="col-3">
+                            <label for="type" class="form-label">เลือกประเภทของโจทย์</label>
+                            <select name="type" id="type" class="form-select">
+                                <option value="">เลือกประเภทของโจทย์</option>
+                                <?php $sql = "SELECT * FROM type";
+                                $result = $conn->query($sql);
+                                while ($row = $result->fetch_assoc()): ?>
+                                    <option value="<?php echo $row['typeID']; ?>">
+                                        <?php echo $row['type']; ?>
+                                    </option>
+                                <?php endwhile; ?>
+                            </select>
+                        </div>
+                        <div class="col-2">
+                            <label for="table" class="form-label">ตารางที่ต้องการใช้งาน</label>
+                            <select name="table" id="table" class="form-select">
+                                <option value="">เลือกตารางข้อมูล</option>
+                                <option value="person">person</option>
+                                <option value="gender">gender</option>
+                            </select>
+                        </div>
+                        <div class="col-1">
+                            <label for="" class="form-label">&nbsp;</label>
+                            <button type="button" class="btn btn-primary w-100" id="btn-tb">ตกลง</button>
+                        </div>
                     </div>
                 </div>
-            </div>
-            <div class="mb-3">
-                <span id="check"></span>
-            </div>
-            <button type="submit" class="btn btn-primary">
-                Submit
-            </button>
-        </form>
+                <div class="mb-3">
+                    <span id="check"></span>
+                </div>
+                <button type="submit" class="btn btn-primary">
+                    Submit
+                </button>
+            </form>
+        </div>
     </div>
 
     <script>
@@ -100,8 +103,8 @@ include_once "../dbconnect.php";
             });
         });
 
-        $(document).ready(function() {
-            $('#generatorForm').submit(function(e) {
+        $(document).ready(function () {
+            $('#generatorForm').submit(function (e) {
                 e.preventDefault();
                 let formUrl = $(this).attr('action');
                 let reqMethod = $(this).attr('method');
@@ -111,7 +114,7 @@ include_once "../dbconnect.php";
                     type: reqMethod,
                     url: formUrl,
                     data: formData,
-                    success: function(data) {
+                    success: function (data) {
                         let result = JSON.parse(data);
 
                         if (result.status == 'success') {
