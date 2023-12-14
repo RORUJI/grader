@@ -21,7 +21,7 @@ include_once "../dbconnect.php";
 
 <body class="bg-primary">
     <div class="container-fluid">
-        <form action="system/genarator_question_system.php" method="post" class="bg-body p-3 w-100 h-100">
+        <form action="system/genarator_question_system.php" method="post" id="generatorForm" class="bg-body p-3 w-100 h-100">
             <h2 class="fw-bold text-center">สร้างโจทย์ปัญหา</h2>
             <hr>
             <div class="mb-3">
@@ -94,6 +94,36 @@ include_once "../dbconnect.php";
                             });
                         } else {
                             $('#check').html(data);
+                        }
+                    }
+                });
+            });
+        });
+
+        $(document).ready(function() {
+            $('#generatorForm').submit(function(e) {
+                e.preventDefault();
+                let formUrl = $(this).attr('action');
+                let reqMethod = $(this).attr('method');
+                let formData = $(this).serialize();
+
+                $.ajax({
+                    type: reqMethod,
+                    url: formUrl,
+                    data: formData,
+                    success: function(data) {
+                        let result = JSON.parse(data);
+
+                        if (result.status == 'success') {
+
+                        } else {
+                            Swal.fire({
+                                icon: 'error',
+                                title: 'ล้มเหลว!',
+                                text: result.msg,
+                                showConfirmButton: false,
+                                timer: 1500
+                            });
                         }
                     }
                 });

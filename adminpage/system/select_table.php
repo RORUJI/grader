@@ -24,7 +24,6 @@ if (!empty($type) && !empty($table)) {
         echo "<input class='form-check-input' id='all-request' name='data' type='checkbox' value='*'> ";
         echo "<label for='All' class='form-check-label'>ทั้งหมด</label>";
         echo "</div>";
-    }
     echo "<div class='col'>";
     echo "<label for='condtion' class='form-label'>กำหนดเงื่อนไข</label>";
     echo "<div class='row'>";
@@ -88,6 +87,7 @@ if (!empty($type) && !empty($table)) {
         $i++;
         $count++;
     }
+}
     echo "</div>";
     echo "</div>";
     echo "</div>";
