@@ -46,7 +46,7 @@ if($question == "") {
         if($select_code == "") {
             echo json_encode(array('status' => 'error', 'msg' => 'กรุณาใส่ SELECT CODE ด้วย'));
         } else if($insert_code == "") {
-            echo json_encode(array('status' => 'error', 'msg' => 'กรุณาใส่ DELETE CODE ด้วย'));
+            echo json_encode(array('status' => 'error', 'msg' => 'กรุณาใส่ INSERT CODE ด้วย'));
         } else {
             $sql = "INSERT INTO question(question, select_code, insert_code, delete_code, typeID) VALUES('$question', '$select_code', '$insert_code', '$delete_code', '$type')";
             $result = $conn->query($sql);

@@ -46,7 +46,7 @@ $result = mysqli_query($conn, $sql);
     </nav>
 
     <div class="container">
-        <div class="position-absolute top-50 start-50 translate-middle">
+        <div class="position-absolute top-50 start-50 translate-middle" style="margin-top: 20rem;">
             <form action="system/insert_question_system.php" method="post" id="insertForm"
                 class="insert-form bg-body rounded p-3 shadow-lg">
                 <h2 class="fw-bold text-center">สร้างโจทย์ปัญหา</h2>
