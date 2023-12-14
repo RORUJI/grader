@@ -23,12 +23,12 @@ include_once "../dbconnect.php";
     <div class="container-fluid">
         <div class="position-absolute top-50 start-50 translate-middle" style="width: 180vh">
             <form action="system/genarator_question_system.php" method="post" id="generatorForm"
-                class="bg-body p-3 w-100 h-100">
+                class="bg-body p-3 w-100 h-100 rounded shadow-lg">
                 <h2 class="fw-bold text-center">สร้างโจทย์ปัญหา</h2>
                 <hr>
-                <div class="mb-3">
-                    <div class="row">
-                        <div class="col-3">
+                <div class="mb">
+                    <div class="row p-2">
+                        <div class="col-3 p-2 bg-secondary-subtle rounded me-3">
                             <label for="type" class="form-label">เลือกประเภทของโจทย์</label>
                             <select name="type" id="type" class="form-select">
                                 <option value="">เลือกประเภทของโจทย์</option>
@@ -41,21 +41,24 @@ include_once "../dbconnect.php";
                                 <?php endwhile; ?>
                             </select>
                         </div>
-                        <div class="col-2">
+                        <div class="col-3 p-2 bg-secondary-subtle rounded">
                             <label for="table" class="form-label">ตารางที่ต้องการใช้งาน</label>
-                            <select name="table" id="table" class="form-select">
-                                <option value="">เลือกตารางข้อมูล</option>
-                                <option value="person">person</option>
-                                <option value="gender">gender</option>
-                            </select>
-                        </div>
-                        <div class="col-1">
-                            <label for="" class="form-label">&nbsp;</label>
-                            <button type="button" class="btn btn-primary w-100" id="btn-tb">ตกลง</button>
+                            <div class="row">
+                                <div class="col-8">
+                                    <select name="table" id="table" class="form-select w-100">
+                                        <option value="">เลือกตารางข้อมูล</option>
+                                        <option value="person">person</option>
+                                        <option value="gender">gender</option>
+                                    </select>
+                                </div>
+                                <div class="col">
+                                    <button type="button" class="btn btn-primary w-100" id="btn-tb">ตกลง</button>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
-                <div class="mb-3">
+                <div class="mb">
                     <span id="check"></span>
                 </div>
                 <button type="submit" class="btn btn-primary">

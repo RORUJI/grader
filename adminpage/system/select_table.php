@@ -10,8 +10,8 @@ if (!empty($type) && !empty($table)) {
     if ($type == 1) {
         $sql = "SELECT COLUMN_NAME FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_NAME = '$table'";
         $result = $conn->query($sql);
-        echo "<div class='row'>
-                <div class='col-3'>
+        echo "<div class='row p-2'>
+                <div class='col-3 p-2 bg-secondary-subtle rounded'>
                     <label for='request' class='form-label'>ต้องการเรียกข้อมูลอะไรบ้าง</label>";
         while ($row = $result->fetch_array()) {
             $i = 0;
@@ -26,7 +26,7 @@ if (!empty($type) && !empty($table)) {
             "<input class='form-check-input' id='all-request' name='data' type='checkbox' value='*'>
             <label for='All' class='form-check-label'>ทั้งหมด</label>
         </div>
-        <div class='col'>
+        <div class='col ms-3 p-2 bg-secondary-subtle rounded'>
             <label for='condtion' class='form-label'>กำหนดเงื่อนไข</label>
                 <div class='row'>";
         $count = 0;
@@ -34,29 +34,38 @@ if (!empty($type) && !empty($table)) {
             $result = $conn->query($sql);
             $i = 0;
             echo
-                "<div class='row'>
-                    <div class='col mb-3'>
-                        <label for='condition' class='form-label'>เลือกคอล์มส์</label>
-                        <select class='form-select' name='condition[field][]'>
-                            <option value=''>เลือกคอล์มส์</option>";
+                "<div class='row row-cols-4 '>
+                    <div class='col mb-3'>";
+            if ($count < 1) {
+                echo "<label for='condition' class='form-label'>เลือกคอล์มส์</label>";
+            }
+            echo
+                "<select class='form-select' name='condition[field][]'>
+                    <option value=''>เลือกคอล์มส์</option>";
             while ($row = $result->fetch_array()) {
                 echo "<option value='$row[$i]'>$row[$i]</option>";
             }
             echo
                 "</select>
             </div>
-            <div class='col mb-3'>
-                <label for='condition' class='form-label'>เลือกเงื่อนไข</label>
-                <select class='form-select' name='condition[condition][]'>'
+            <div class='col mb-3'>";
+            if ($count < 1) {
+                echo "<label for='condition' class='form-label'>เลือกเงื่อนไข</label>";
+            }
+            echo
+                "<select class='form-select' name='condition[condition][]'>'
                     <option value=''>เลือกเงื่อนไข</option>
                     <option value='>'>มากกว่า</option>
                     <option value='<'>น้อยกว่า</option>
                     <option value='='>เท่ากับ</option>
                 </select>
             </div>
-            <div class='col mb-3'>
-                <label for='condition' class='form-label'>กรอกตัวเปรียบเทียบ</label>
-                <input type='text' class='form-control' name='condition[compare][]' placeholder='กรอกตัวเปรียบเทียบ' value=''>
+            <div class='col mb-3'>";
+            if ($count < 1) {
+                echo "<label for='condition' class='form-label'>กรอกตัวเปรียบเทียบ</label>";
+            }
+            echo
+                "<input type='text' class='form-control' name='condition[compare][]' placeholder='กรอกตัวเปรียบเทียบ' value=''>
             </div>";
             if ($count < 1) {
                 echo
