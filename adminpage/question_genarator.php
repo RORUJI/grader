@@ -49,6 +49,7 @@ include_once "../dbconnect.php";
                                         <option value="">เลือกตารางข้อมูล</option>
                                         <option value="person">person</option>
                                         <option value="gender">gender</option>
+                                        <option value="user">user</option>
                                     </select>
                                 </div>
                                 <div class="col">

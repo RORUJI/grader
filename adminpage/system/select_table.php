@@ -8,7 +8,7 @@ $table = $_POST['table'];
 
 if (!empty($type) && !empty($table)) {
     if ($type == 1) {
-        $sql = "SELECT COLUMN_NAME FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_NAME = '$table'";
+        $sql = "SELECT COLUMN_NAME FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_SCHEMA = 'grader' AND TABLE_NAME = '$table'";
         $result = $conn->query($sql);
         echo "<div class='row p-2'>
                 <div class='col-3 p-2 bg-secondary-subtle rounded'>
@@ -116,22 +116,42 @@ if (!empty($type) && !empty($table)) {
                     <option value='FULL OUTER JOIN'>FULL OUTER JOIN</option>
                 </select>
             </div>";
+    $sql = "SELECT COLUMN_NAME FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_SCHEMA = 'grader' AND TABLE_NAME = '$table'";
+    $result = $conn->query($sql);
+    $mainTable = array();
+    while ($row = $result->fetch_array()) {
+        $mainTable[] = $row[0];
+    }
     $showTable = "SHOW TABLES";
-    $i = 0;
     $result = $conn->query($showTable);
     echo
-        "<div class='col'>";
+        "<div class='col'>
+            <label for='join' class='form-label fw-bold'>ตารางที่ต้องการ JOIN</label>
+            <select class='form-select' name='sort'>'
+                <option value=''>เลือกตารางที่ต้องการ JOIN</option>";
+    $tablename = array();
     while ($row = $result->fetch_array()) {
-        $data[] = $row;
-        $sql = "SELECT COLUMN_NAME FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_NAME = '$row[0]'";
+        $tablename[] = $row[0];
+    }
+    for ($i = 0; $i < count($tablename); $i++) {
+        $sql = "SELECT COLUMN_NAME FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_SCHEMA = 'grader' AND TABLE_NAME = '$tablename[$i]'";
         $result = $conn->query($sql);
-
+        $tablefield = array();
         while ($row = $result->fetch_array()) {
-        
+            $tablefield[] = $row[0];
+        }
+        //echo $mainTable[$i] . " ";
+        for ($j = 0; $j < count($mainTable); $j++) {
+            for ($k = 0; $k < count($tablefield); $k++) {
+                if ($table != $tablename[$i] && $mainTable[$j] == $tablefield[$k]) {
+                    echo "<option value='$tablefield[$k]'>$tablename[$i]</option>";
+                }
+            }
         }
     }
     echo
-        "</div>
+        "</select>'
+        </div>
     </div>
 </div>";
 }
