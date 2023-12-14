@@ -21,15 +21,15 @@ include_once "../dbconnect.php";
 
 <body class="bg-primary">
     <div class="container-fluid">
-        <div class="position-absolute top-50 start-50 translate-middle" style="width: 180vh">
+        <div class="position-absolute top-50 start-50 translate-middle" style="width: 150vh; height: 80vh;">
             <form action="system/genarator_question_system.php" method="post" id="generatorForm"
-                class="bg-body p-3 w-100 h-100 rounded shadow-lg">
+                class="bg-body p-3 w-100 h-100 rounded shadow-lg overflow-y-scroll">
                 <h2 class="fw-bold text-center">สร้างโจทย์ปัญหา</h2>
                 <hr>
                 <div class="mb">
                     <div class="row p-2">
                         <div class="col-3 p-2 bg-secondary-subtle rounded me-3">
-                            <label for="type" class="form-label">เลือกประเภทของโจทย์</label>
+                            <label for="type" class="form-label fw-bold">เลือกประเภทของโจทย์</label>
                             <select name="type" id="type" class="form-select">
                                 <option value="">เลือกประเภทของโจทย์</option>
                                 <?php $sql = "SELECT * FROM type";
@@ -41,8 +41,8 @@ include_once "../dbconnect.php";
                                 <?php endwhile; ?>
                             </select>
                         </div>
-                        <div class="col-3 p-2 bg-secondary-subtle rounded">
-                            <label for="table" class="form-label">ตารางที่ต้องการใช้งาน</label>
+                        <div class="col-4 p-2 bg-secondary-subtle rounded">
+                            <label for="table" class="form-label fw-bold">ตารางที่ต้องการใช้งาน</label>
                             <div class="row">
                                 <div class="col-8">
                                     <select name="table" id="table" class="form-select w-100">

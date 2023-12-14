@@ -12,7 +12,7 @@ if (!empty($type) && !empty($table)) {
         $result = $conn->query($sql);
         echo "<div class='row p-2'>
                 <div class='col-3 p-2 bg-secondary-subtle rounded'>
-                    <label for='request' class='form-label'>ต้องการเรียกข้อมูลอะไรบ้าง</label>";
+                    <label for='request' class='form-label fw-bold'>ต้องการเรียกข้อมูลอะไรบ้าง</label>";
         while ($row = $result->fetch_array()) {
             $i = 0;
             echo
@@ -27,7 +27,7 @@ if (!empty($type) && !empty($table)) {
             <label for='All' class='form-check-label'>ทั้งหมด</label>
         </div>
         <div class='col ms-3 p-2 bg-secondary-subtle rounded'>
-            <label for='condtion' class='form-label'>กำหนดเงื่อนไข</label>
+            <label for='condtion' class='form-label fw-bold'>กำหนดเงื่อนไข</label>
                 <div class='row'>";
         $count = 0;
         while ($count < 2) {
@@ -85,7 +85,7 @@ if (!empty($type) && !empty($table)) {
         echo
             "<div class='row'>
                 <div class='col mb-3'>
-                    <label for='sort' class='form-label'>เรียงลำดับ</label>
+                    <label for='sort' class='form-label fw-bold'>เรียงลำดับ</label>
                     <select class='form-select' name='orderby'>'
                         <option value=''>เรียงลำดับโดย</option>";
         $result = $conn->query($sql);
@@ -97,7 +97,7 @@ if (!empty($type) && !empty($table)) {
             "</select>
         </div>
         <div class='col mb-3'>
-            <label for='sort' class='form-label'>เรียงลำดับจาก</label>
+            <label for='sort' class='form-label fw-bold'>เรียงลำดับจาก</label>
             <select class='form-select' name='sort'>'
                 <option value=''>เรียงลำดับ</option>
                 <option value='ASC'>น้อยไปมาก</option>
@@ -107,6 +107,19 @@ if (!empty($type) && !empty($table)) {
     }
     echo
         "</div>
+        <div class='row'>
+            <div class='col'>
+                <label for='join' class='form-label fw-bold'>JOIN</label>
+                <select class='form-select' name='sort'>'
+                    <option value=''>เลือกรูปแบบการ JOIN</option>
+                    <option value='INNER JOIN'>INNER JOIN</option>
+                    <option value='LEFT JOIN'>LEFT JOIN</option>
+                    <option value='RIGHT JOIN'>RIGHT JOIN</option>
+                    <option value='FULL OUTER JOIN'>FULL OUTER JOIN</option>
+                </select>
+            </div>
+            <div class='col'></div>
+        </div>
     </div>";
 }
 ?>
