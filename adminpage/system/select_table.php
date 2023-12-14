@@ -29,7 +29,7 @@ if (!empty($type) && !empty($table)) {
     echo "<label for='condtion' class='form-label'>กำหนดเงื่อนไข</label>";
     echo "<div class='row'>";
     $count = 0;
-    while ($count < 5) {
+    while ($count < 2) {
         $sql = "SELECT COLUMN_NAME FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_NAME = '$table'";
         $result = $conn->query($sql);
         $i = 0;
@@ -68,6 +68,22 @@ if (!empty($type) && !empty($table)) {
         echo "<label for='condition' class='form-label'>กรอกตัวเปรียบเทียบ</label>";
         echo "<input type='text' class='form-control' name='condition[compare][]' placeholder='กรอกตัวเปรียบเทียบ' value=''>";
         echo "</div>";
+        if ($count < 1) {
+            echo "<div class='col mb-3'>";
+            echo "<label for='' class='form-label'>เลือก</label>";
+            echo "<select name='andor' class='form-select'>";
+            echo "<option value=''>";
+            echo "เลือกตัวเชื่อม";
+            echo "</option>";
+            echo "<option value='AND'>";
+            echo "AND";
+            echo "</option>";
+            echo "<option value='OR'>";
+            echo "OR";
+            echo "</option>";
+            echo "</select>";
+            echo "</div>";
+        }
         echo "</div>";
         $i++;
         $count++;

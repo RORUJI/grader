@@ -6,6 +6,7 @@ include_once "../../dbconnect.php";
 $type = $_POST['type'];
 $table = $_POST['table'];
 $condition = $_POST['condition'];
+$andor = $_POST['andor'];
 if (!empty($_POST['data'])) {
     $data = $_POST['data'];
     $count = 1;
@@ -34,7 +35,7 @@ if (!empty($_POST['data'])) {
                     $sql = $sql . $key . " " . $condition['condition'][$i] . " " . $condition['compare'][$i] . " ";
                     $i++;
                     if (!empty($condition['field'][$i])) {
-                        $sql = $sql . ' AND ';
+                        $sql = $sql . $andor . " ";
                     }
                 }
             }
