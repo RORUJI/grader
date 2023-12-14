@@ -14,13 +14,11 @@ if (!empty($type) && !empty($table)) {
                 <div class='col-3 p-2 bg-secondary-subtle rounded'>
                     <label for='request' class='form-label fw-bold'>ต้องการเรียกข้อมูลอะไรบ้าง</label>";
         while ($row = $result->fetch_array()) {
-            $i = 0;
             echo
                 "<div class='mb-3'>
-                    <input class='form-check-input request-data' name='data[]' type='checkbox' value='$row[$i]'>
-                    <label for='$row[$i]' class='form-check-label'>$row[$i]</label>
+                    <input class='form-check-input request-data' name='data[]' type='checkbox' value='$row[0]'>
+                    <label for='$row[0]' class='form-check-label'>$row[0]</label>
                 </div>";
-            $i++;
         }
         echo
             "<input class='form-check-input' id='all-request' name='data' type='checkbox' value='*'>
@@ -117,10 +115,25 @@ if (!empty($type) && !empty($table)) {
                     <option value='RIGHT JOIN'>RIGHT JOIN</option>
                     <option value='FULL OUTER JOIN'>FULL OUTER JOIN</option>
                 </select>
-            </div>
-            <div class='col'></div>
-        </div>
-    </div>";
+            </div>";
+    $showTable = "SHOW TABLES";
+    $i = 0;
+    $result = $conn->query($showTable);
+    echo
+        "<div class='col'>";
+    while ($row = $result->fetch_array()) {
+        $data[] = $row;
+        $sql = "SELECT COLUMN_NAME FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_NAME = '$row[0]'";
+        $result = $conn->query($sql);
+
+        while ($row = $result->fetch_array()) {
+        
+        }
+    }
+    echo
+        "</div>
+    </div>
+</div>";
 }
 ?>
 
