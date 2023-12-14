@@ -39,7 +39,7 @@ if ($_POST['type'] == "") {
             $sql = $sql . "WHERE ";
             foreach ($condition['field'] as $key) {
                 if (!empty($key)) {
-                    $sql = $sql . $key . " " . $condition['condition'][$i] . " " . $condition['compare'][$i] . " ";
+                    $sql = $sql . $key . " " . $condition['condition'][$i] . " " . "'" . $condition['compare'][$i] . "'" . " ";
                     $i++;
                     if (!empty($condition['field'][$i])) {
                         $sql = $sql . $andor . " ";

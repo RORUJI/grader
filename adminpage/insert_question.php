@@ -58,7 +58,7 @@ $result = mysqli_query($conn, $sql);
                 </div>
                 <div class="mb-3">
                     <label for="type" class="form-label fw-bold">Type</label>
-                    <select name="type" id="type" class="form-control">
+                    <select name="type" id="type" class="form-select">
                         <option value="">เลือกประเภท</option>
                         <?php while($row = $result->fetch_assoc()): ?>
                             <option value="<?php echo $row['typeID']; ?>">
