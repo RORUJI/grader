@@ -125,5 +125,5 @@ if ($_POST['type'] == "") {
             $question = $question . " " . $str[$i] . " ";
         }
     }
-    echo json_encode(array("status" => "success", "msg" => ""));
+    echo json_encode(array("status" => "success", "msg" => "ทำการสร้างโจทย์ปัญหาของคุณสำเร็จแล้ว", "question" => $question, "sql" => $sql));
 }

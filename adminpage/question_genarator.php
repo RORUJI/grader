@@ -125,6 +125,12 @@ include_once "../dbconnect.php";
                                 icon: 'success',
                                 title: 'สำเร็จ!',
                                 text: result.msg,
+                                showConfirmButton: true,
+                                showCancelButton: true,
+                                confirmButtonText: 'ดูผลลับ',
+                                cancelButtonText: 'แก้ไข',
+                                confirmButtonColor: '#3085d6',
+                                cancelButtonColor: '#d33'
                             });
                         } else {
                             Swal.fire({
