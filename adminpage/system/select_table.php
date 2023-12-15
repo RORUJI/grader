@@ -108,7 +108,7 @@ if (!empty($type) && !empty($table)) {
         <div class='row'>
             <div class='col'>
                 <label for='join' class='form-label fw-bold'>JOIN</label>
-                <select class='form-select' name='sort'>'
+                <select class='form-select' name='jointype'>'
                     <option value=''>เลือกรูปแบบการ JOIN</option>
                     <option value='INNER JOIN'>INNER JOIN</option>
                     <option value='LEFT JOIN'>LEFT JOIN</option>
@@ -127,7 +127,7 @@ if (!empty($type) && !empty($table)) {
     echo
         "<div class='col'>
             <label for='join' class='form-label fw-bold'>ตารางที่ต้องการ JOIN</label>
-            <select class='form-select' name='sort'>'
+            <select class='form-select' name='jointable'>'
                 <option value=''>เลือกตารางที่ต้องการ JOIN</option>";
     $tablename = array();
     while ($row = $result->fetch_array()) {
@@ -144,7 +144,7 @@ if (!empty($type) && !empty($table)) {
         for ($j = 0; $j < count($mainTable); $j++) {
             for ($k = 0; $k < count($tablefield); $k++) {
                 if ($table != $tablename[$i] && $mainTable[$j] == $tablefield[$k]) {
-                    echo "<option value='$tablefield[$k]'>$tablename[$i]</option>";
+                    echo "<option value='$tablename[$i] $tablefield[$k]'>$tablename[$i]</option>";
                 }
             }
         }
