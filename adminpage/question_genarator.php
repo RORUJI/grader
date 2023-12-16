@@ -2,6 +2,8 @@
 session_start();
 
 include_once "../dbconnect.php";
+
+$type = "test";
 ?>
 
 <!DOCTYPE html>
@@ -59,7 +61,9 @@ include_once "../dbconnect.php";
                     </div>
                 </div>
                 <div class="mb">
-                    <span id="check"></span>
+                    <span id="check">
+
+                    </span>
                 </div>
                 <button type="submit" class="btn btn-primary">
                     Submit
