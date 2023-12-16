@@ -65,7 +65,7 @@ if ($_POST['type'] == "") {
             $sort = $_POST['sort'];
             $sql = $sql . "ORDER BY " . $orderby . " " . $sort;
         }
-        echo json_encode(array("status" => "success", "msg" => $question));
+        echo json_encode(array("status" => "success", "msg" => $sql));
     } else if ($type == 2) {
         $sql = "INSERT INTO $table (";
         $sql = $sql . (") VALUES (");

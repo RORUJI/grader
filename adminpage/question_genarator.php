@@ -111,39 +111,43 @@ $type = "test";
         });
 
         $(document).ready(function () {
-            // $('#generatorForm').submit(function (e) {
-            //     e.preventDefault();
-            //     let formUrl = $(this).attr('action');
-            //     let reqMethod = $(this).attr('method');
-            //     let formData = $(this).serialize();
+            $('#generatorForm').submit(function (e) {
+                e.preventDefault();
+                let formUrl = $(this).attr('action');
+                let reqMethod = $(this).attr('method');
+                let formData = $(this).serialize();
 
-            //     $.ajax({
-            //         type: reqMethod,
-            //         url: formUrl,
-            //         data: formData,
-            //         success: function (data) {
-            //             let result = JSON.parse(data);
+                $.ajax({
+                    type: reqMethod,
+                    url: formUrl,
+                    data: formData,
+                    success: function (data) {
+                        let result = JSON.parse(data);
 
-            //             if (result.status == 'success') {
-            //                 Swal.fire({
-            //                     icon: 'success',
-            //                     title: 'success!',
-            //                     text: result.msg,
-            //                     showConfirmButton: false,
-            //                     timer: 1500
-            //                 });
-            //             } else {
-            //                 Swal.fire({
-            //                     icon: 'error',
-            //                     title: 'ล้มเหลว!',
-            //                     text: result.msg,
-            //                     showConfirmButton: false,
-            //                     timer: 1500
-            //                 });
-            //             }
-            //         }
-            //     });
-            // });
+                        if (result.status == 'success') {
+                            Swal.fire({
+                                icon: 'success',
+                                title: 'สำเร็จ!',
+                                text: result.msg,
+                                showConfirmButton: true,
+                                showCancelButton: true,
+                                confirmButtonText: 'ดูผลลับ',
+                                cancelButtonText: 'แก้ไข',
+                                confirmButtonColor: '#3085d6',
+                                cancelButtonColor: '#d33'
+                            });
+                        } else {
+                            Swal.fire({
+                                icon: 'error',
+                                title: 'ล้มเหลว!',
+                                text: result.msg,
+                                showConfirmButton: false,
+                                timer: 1500
+                            });
+                        }
+                    }
+                });
+            });
         });
     </script>
 </body>
