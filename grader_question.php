@@ -54,7 +54,7 @@
     </nav>
 
     <div class="container">
-        <div class="position-absolute top-50 start-50 translate-middle">
+        <div class="position-absolute top-50 start-50 translate-middle" style="margin-top: 45vh;">
             <form action="check_question.php" method="post"
                 id="codeForm" class="bg-body rounded p-3 shadow-lg">
                 <input type="hidden" name="questionID" value="<?php echo $row['questionID']; ?>">

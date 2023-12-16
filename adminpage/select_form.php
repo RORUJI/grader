@@ -164,6 +164,11 @@ $result = $conn->query($sql);
             </div>
         </div>
     </div>
+    <div class="row p-2">
+        <button type="submit" class="btn btn-primary">
+            Submit
+        </button>
+    </div>
 </body>
 
 </html>

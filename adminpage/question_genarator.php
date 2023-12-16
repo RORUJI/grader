@@ -23,14 +23,14 @@ $type = "test";
 
 <body class="bg-primary">
     <div class="container-fluid">
-        <div class="position-absolute top-50 start-50 translate-middle" style="width: 150vh; height: 80vh;">
+        <div class="position-absolute top-50 start-50 translate-middle" style="width: 150vh; height: 75vh;">
             <form action="system/genarator_question_system.php" method="post" id="generatorForm"
                 class="bg-body p-3 w-100 h-100 rounded shadow-lg overflow-y-scroll">
                 <h2 class="fw-bold text-center">สร้างโจทย์ปัญหา</h2>
                 <hr>
                 <div class="mb">
                     <div class="row p-2">
-                        <div class="col-3 p-2 bg-secondary-subtle rounded me-3">
+                        <div id="type-select" class="col-3 p-2 bg-secondary-subtle rounded me-3">
                             <label for="type" class="form-label fw-bold">เลือกประเภทของโจทย์</label>
                             <select name="type" id="type" class="form-select">
                                 <option value="">เลือกประเภทของโจทย์</option>
@@ -43,7 +43,7 @@ $type = "test";
                                 <?php endwhile; ?>
                             </select>
                         </div>
-                        <div class="col-4 p-2 bg-secondary-subtle rounded">
+                        <div id="table-select" class="col-4 p-2 bg-secondary-subtle rounded">
                             <label for="table" class="form-label fw-bold">ตารางที่ต้องการใช้งาน</label>
                             <div class="row">
                                 <div class="col-8">
@@ -65,9 +65,6 @@ $type = "test";
 
                     </span>
                 </div>
-                <button type="submit" class="btn btn-primary">
-                    Submit
-                </button>
             </form>
         </div>
     </div>
@@ -128,13 +125,36 @@ $type = "test";
                             Swal.fire({
                                 icon: 'success',
                                 title: 'สำเร็จ!',
-                                text: result.msg,
+                                text: result.question,
                                 showConfirmButton: true,
                                 showCancelButton: true,
                                 confirmButtonText: 'ดูผลลับ',
                                 cancelButtonText: 'แก้ไข',
                                 confirmButtonColor: '#3085d6',
                                 cancelButtonColor: '#d33'
+                            }).then(function (r) {
+                                if (r.isConfirmed) {
+                                    let type = $('#type').val();
+
+                                    if (type == 1) {
+                                        $.ajax ({
+                                        type: 'POST',
+                                        url: 'system/question_detail_system.php',
+                                        data: {
+                                            type: result.type,
+                                            question: result.question,
+                                            selectSQL: result.selectSQL
+                                        },
+                                        success: function (data) {
+                                            $('#check').html(data);
+                                            $('#type-select').remove();
+                                            $('#table-select').remove();
+                                        }
+                                    });
+                                    }
+                                } else {
+
+                                }
                             });
                         } else {
                             Swal.fire({
