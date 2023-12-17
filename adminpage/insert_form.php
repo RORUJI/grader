@@ -41,6 +41,7 @@ $result = $conn->query($sql);
     </div>
 
     <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script>
         $(document).ready(function () {
             $('#btn').on('click', function () {
@@ -51,9 +52,25 @@ $result = $conn->query($sql);
                     url: 'system/input_data_system.php',
                     data: datas,
                     success: function (data) {
-                        $('#input-data').html(data);
+                        if (data == "") {
+                            Swal.fire({
+                                icon: 'error',
+                                title: 'ล้มเหลว!',
+                                text: 'กรุณาเลือกข้อมูลที่ต้องการให้ใส่',
+                                showConfirmButton: false,
+                                timer: 1500
+                            });
+                        } else {
+                            $('#input-data').html(data);
+                        }
                     }
                 });
+            });
+        });
+
+        $(document).ready(function () {
+            $('#all-select').click(function () {
+                $('.request-data').prop('disabled', $('#all-select').is(':checked'));
             });
         });
     </script>

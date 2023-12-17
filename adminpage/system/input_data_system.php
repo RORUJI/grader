@@ -3,18 +3,22 @@ session_start();
 
 include_once "../../dbconnect.php";
 
-if (!isset($_POST['data'])) {
-
-} else if ($_POST['data'] == "*") {
-
-} else {
+if (isset($_POST['data'])) {
+    $table = $_POST['table'];
     $input = $_POST['data'];
-}
-$datas = array();
+    $datas = array();
 
-foreach ($input as $key => $value) {
-    $datas[$key] = $value;
-}
+    if ($input != "*") {
+        foreach ($input as $key => $value) {
+            $datas[$key] = $value;
+        }
+    } else {
+        $sql = "SELECT COLUMN_NAME FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_SCHEMA = 'grader' AND TABLE_NAME = '$table'";
+        $result = $conn->query($sql);
+        while ($row = $result->fetch_array()) {
+            $datas[] =  $row[0];
+        }
+    }
 ?>
 
 <!DOCTYPE html>
@@ -43,3 +47,5 @@ foreach ($input as $key => $value) {
 </body>
 
 </html>
+
+<?php } ?>
