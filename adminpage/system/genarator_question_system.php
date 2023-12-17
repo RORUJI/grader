@@ -3,25 +3,26 @@ session_start();
 
 include_once "../../dbconnect.php";
 
-if ($_POST['type'] == "") {
+if (!isset($_POST['type'])) {
     echo json_encode(array("status" => "error", "msg" => "กรุณาเลือกประเภทโจทย์!"));
-} else if ($_POST['table'] == "") {
+} else if (!isset($_POST['table'])) {
     echo json_encode(array("status" => "error", "msg" => "กรุณาเลือกตารางข้อมูล!"));
 } else if (!isset($_POST['data'])) {
     echo json_encode(array("status" => "error", "msg" => "กรุณายืนยันโจทย์และตารางข้อมูลหรือเลือกข้อมูลที่ต้องการ!"));
-} else if ($_POST['orderby'] != "" && $_POST['sort'] == "") {
-    echo json_encode(array("status" => "error", "msg" => "กรุณาลำดับด้วย!"));
-} else if ($_POST['jointype'] != "" && $_POST['jointable'] == "") {
-    echo json_encode(array("status" => "error", "msg" => "กรุณาเลือกตารางที่ต้องการ JOIN!"));
-} else if ($_POST['jointype'] == "" && $_POST['jointable'] != "") {
-    echo json_encode(array("status" => "error", "msg" => "กรุณาเลือกตประเภทของการ JOIN!"));
 } else {
     $type = $_POST['type'];
     $table = $_POST['table'];
     $data = $_POST['data'];
     $count = 1;
     if ($type == 1) {
-        $selectSQL = "SELECT ";
+        if ($_POST['orderby'] != "" && $_POST['sort'] == "") {
+            echo json_encode(array("status" => "error", "msg" => "กรุณาลำดับด้วย!"));
+        } else if ($_POST['jointype'] != "" && $_POST['jointable'] == "") {
+            echo json_encode(array("status" => "error", "msg" => "กรุณาเลือกตารางที่ต้องการ JOIN!"));
+        } else if ($_POST['jointype'] == "" && $_POST['jointable'] != "") {
+            echo json_encode(array("status" => "error", "msg" => "กรุณาเลือกตประเภทของการ JOIN!"));
+        } else
+            $selectSQL = "SELECT ";
         if ($data != '*') {
             foreach ($data as $key) {
                 $selectSQL = $selectSQL . $key;
@@ -66,9 +67,29 @@ if ($_POST['type'] == "") {
             $selectSQL = $selectSQL . "ORDER BY " . $orderby . " " . $sort;
         }
     } else if ($type == 2) {
-        $sql = "INSERT INTO $table (";
-        $sql = $sql . (") VALUES (");
-        $sql = $sql . (");");
+        $field = array();
+        if ($_POST['data'] != '*') {
+            $field = $_POST['data'];
+        } else {
+            $sql = "SELECT COLUMN_NAME FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_SCHEMA = 'grader' AND TABLE_NAME = '$table'";
+            $result = $conn->query($sql);
+            while ($row = $result->fetch_array()) {
+                $field[] = $row[0];
+            }
+        }
+
+        $insertSQL = "INSERT INTO $table (";
+        for ($i = 0; $i < count($field); $i++) {
+            $insertSQL = $insertSQL . $field[$i];
+            if ($i < count($field) - 1) {
+                $insertSQL = $insertSQL . ", ";
+            } else {
+                continue;
+            }
+        }
+        $insertSQL = $insertSQL . (") VALUES (");
+        $insertSQL = $insertSQL . (");");
+        echo $insertSQL;
     } else if ($type == 3) {
 
     } else {

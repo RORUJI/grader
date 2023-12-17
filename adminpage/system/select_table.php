@@ -9,6 +9,8 @@ $table = $_POST['table'];
 if (!empty($type) && !empty($table)) {
     if ($type == 1) {
         include_once "../select_form.php";
+    } else if ($type == 2) {
+        include_once "../insert_form.php";
     }
 }
 ?>
