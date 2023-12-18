@@ -27,13 +27,6 @@ $result = $conn->query($sql);
             <?php endwhile; ?>
             <input class="form-check-input" id="all-select" name="data" type="checkbox" value="*">
             <label for="select-all-data" class="form-check-label">ทั้งหมด</label>
-            <div class="row">
-                <div class="col mt-2">
-                    <button type="button" id="btn" class="btn btn-primary">
-                        ยืนยัน
-                    </button>
-                </div>
-            </div>
         </div>
         <div id="input-data" class="col">
 
@@ -44,7 +37,7 @@ $result = $conn->query($sql);
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script>
         $(document).ready(function () {
-            $('#btn').on('click', function () {
+            $('input[name="data[]"]').on('change', function (e) {
                 let datas = $('#generatorForm').serialize();
 
                 $.ajax({
@@ -53,13 +46,7 @@ $result = $conn->query($sql);
                     data: datas,
                     success: function (data) {
                         if (data == "") {
-                            Swal.fire({
-                                icon: 'error',
-                                title: 'ล้มเหลว!',
-                                text: 'กรุณาเลือกข้อมูลที่ต้องการให้ใส่',
-                                showConfirmButton: false,
-                                timer: 1500
-                            });
+                            $('#input-data').html('');
                         } else {
                             $('#input-data').html(data);
                         }
@@ -71,6 +58,21 @@ $result = $conn->query($sql);
         $(document).ready(function () {
             $('#all-select').click(function () {
                 $('.request-data').prop('disabled', $('#all-select').is(':checked'));
+
+                let datas = $('#generatorForm').serialize();
+
+                $.ajax({
+                    type: 'POST',
+                    url: 'system/input_data_system.php',
+                    data: datas,
+                    success: function (data) {
+                        if (data == "") {
+                            $('#input-data').html('');
+                        } else {
+                            $('#input-data').html(data);
+                        }
+                    }
+                });
             });
         });
     </script>

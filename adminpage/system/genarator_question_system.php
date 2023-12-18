@@ -68,6 +68,8 @@ if (!isset($_POST['type'])) {
         }
     } else if ($type == 2) {
         $field = array();
+        $data = array();
+        $data = $_POST['data-field'];
         if ($_POST['data'] != '*') {
             $field = $_POST['data'];
         } else {
@@ -88,6 +90,14 @@ if (!isset($_POST['type'])) {
             }
         }
         $insertSQL = $insertSQL . (") VALUES (");
+        for ($i = 0; $i < count($data); $i++) {
+            $insertSQL = $insertSQL . "'" . $data[$i] . "'";
+            if ($i < count($data) - 1) {
+            $insertSQL = $insertSQL . ", ";
+            } else {
+                continue;
+            }
+        }
         $insertSQL = $insertSQL . (");");
         echo $insertSQL;
     } else if ($type == 3) {
