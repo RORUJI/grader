@@ -63,9 +63,9 @@ INSERT INTO type(type) VALUES('SELECT'), ('INSERT'), ('DELETE');
 CREATE TABLE question (
     questionID INT(3) NOT NULL AUTO_INCREMENT,
     question VARCHAR(255) NOT NULL,
-    select_code VARCHAR(255) NOT NULL,
-    insert_code VARCHAR(255),
-    delete_code VARCHAR(255),
+    select_code text NOT NULL,
+    insert_code text,
+    delete_code text,
     typeID INT(3) NOT NULL,
     PRIMARY KEY(questionID),
     FOREIGN KEY(typeID) REFERENCES type(typeID)

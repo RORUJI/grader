@@ -29,10 +29,10 @@ $result = mysqli_query($conn, $sql);
                 <h2 class="text-primary fw-bold">G r a d e r</h2>
             </a>
             <div class="justify-content-end align-items-center">
-                <?php if(!isset($_SESSION['levelID'])): ?>
+                <?php if (!isset($_SESSION['levelID'])): ?>
                     <a href="../login.php" class="btn btn-primary ms-3">Login</a>
                 <?php endif; ?>
-                <?php if(isset($_SESSION['levelID'])): ?>
+                <?php if (isset($_SESSION['levelID'])): ?>
                     <span class="text-primary fw-bold"><i class="bi bi-person-fill"></i> Username:&nbsp;</span>
                     <span>
                         <?php echo $_SESSION['username']; ?>
@@ -60,10 +60,19 @@ $result = mysqli_query($conn, $sql);
                     <label for="type" class="form-label fw-bold">Type</label>
                     <select name="type" id="type" class="form-select">
                         <option value="">เลือกประเภท</option>
-                        <?php while($row = $result->fetch_assoc()): ?>
-                            <option value="<?php echo $row['typeID']; ?>">
-                                <?php echo $row['type']; ?>
-                            </option>
+                        <?php while ($row = $result->fetch_assoc()): ?>
+                            <?php if (!isset($_POST['type'])): ?>
+                                <option value="<?php echo $row['typeID']; ?>">
+                                    <?php echo $row['type']; ?>
+                                </option>
+                            <?php endif; ?>
+                        <?php endwhile; ?>
+                        <?php while ($row = $result->fetch_assoc()): ?>
+                            <?php if ($_POST['type'] == $row['typeID']): ?>
+                                <option value="<?php echo $row['typeID']; ?>" selected>
+                                    <?php echo $row['type']; ?>
+                                </option>
+                            <?php endif; ?>
                         <?php endwhile; ?>
                     </select>
                 </div>
