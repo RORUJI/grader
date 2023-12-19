@@ -22,58 +22,37 @@
         <div class="row p-2">
             <div class="col p-2 me-3 bg-secondary-subtle rounded">
                 <label for="select-SQL-code" class="form-label fw-bold">SELECT CODE</label>
-                <span class="form-control" style="height: 30vh;">
-                    <?php if (isset($_POST['selectSQL'])): ?>
-                        <input type="hidden" name="select_code" value="<?php echo $_POST['selectSQL']; ?>">
-                        <?php echo $_POST['selectSQL']; ?>
-                    <?php endif; ?>
-                    <?php if (!isset($_POST['selectSQL'])): ?>
-                        <input type="hidden" name="select_code" value="">
-                        NOT SELECT SQL CODE.
-                    <?php endif; ?>
-                </span>
+                <?php if (isset($_POST['selectSQL'])): ?>
+                    <textarea name="select_code" class="form-control" cols="30"
+                        rows="10"><?php echo $_POST['selectSQL']; ?></textarea>
+                <?php endif; ?>
+                <?php if (!isset($_POST['selectSQL'])): ?>
+                    <textarea name="select_code" class="form-control" cols="30" rows="10">NOT SELECT SQL CODE.</textarea>
+                <?php endif; ?>
             </div>
             <div class="col p-2 bg-secondary-subtle rounded">
                 <label for="insert-SQL-code" class="form-label fw-bold">INSERT CODE</label>
-                <span class="form-control" style="height: 30vh;">
-                    <?php if (isset($_POST['insertSQL'])): ?>
-                        <input type="hidden" name="insert_code" value=<?php echo $_POST['insertSQL']; ?>>
-                        <?php echo $_POST['insertSQL']; ?>
-                    <?php endif; ?>
-                    <?php if (!isset($_POST['insertSQL'])): ?>
-                        <input type="hidden" name="insert_code" value="">
-                        NOT INSERT SQL CODE.
-                    <?php endif; ?>
-                </span>
+                <?php if (isset($_POST['insertSQL'])): ?>
+                    <textarea name="insert_code" class="form-control" cols="30"
+                        rows="10"><?php echo $_POST['insertSQL']; ?></textarea>
+                <?php endif; ?>
+                <?php if (!isset($_POST['insertSQL'])): ?>
+                    <textarea name="insert_code" class="form-control" cols="30" rows="10">NOT INSERT SQL CODE.</textarea>
+                <?php endif; ?>
             </div>
         </div>
         <div class="row p-2">
             <div class="col p-2 me-3 bg-secondary-subtle rounded">
                 <label for="delete-SQL-code" class="form-label fw-bold">DELETE CODE</label>
-                <span class="form-control" style="height: 30vh;">
-                    <?php if (isset($_POST['deleteSQL'])): ?>
-                        <input type="hidden" name="delete_code" value=<?php echo $_POST['deleteSQL']; ?>>
-                        <?php echo $_POST['deleteSQL']; ?>
-                    <?php endif; ?>
-                    <?php if (!isset($_POST['deleteSQL'])): ?>
-                        <input type="hidden" name="delete_code" value="">
-                        NOT DELETE SQL CODE.
-                    <?php endif; ?>
-                </span>
+                <?php if (isset($_POST['deleteSQL'])): ?>
+                    <textarea name="delete_code" class="form-control" cols="30"
+                        rows="10"><?php echo $_POST['deleteSQL']; ?></textarea>
+                <?php endif; ?>
+                <?php if (!isset($_POST['deleteSQL'])): ?>
+                    <textarea name="delete_code" class="form-control" cols="30" rows="10">NOT DELETE SQL CODE.</textarea>
+                <?php endif; ?>
             </div>
-            <div class="col p-2 bg-secondary-subtle rounded">
-                <label for="update-SQL-code" class="form-label fw-bold">UPDATE CODE</label>
-                <span class="form-control" style="height: 30vh;">
-                    <?php if (isset($_POST['updateSQL'])): ?>
-                        <input type="hidden" name="updateSQL" value=<?php echo $_POST['updateSQL']; ?>>
-                        <?php echo $_POST['updateSQL']; ?>
-                    <?php endif; ?>
-                    <?php if (!isset($_POST['updateSQL'])): ?>
-                        <input type="hidden" name="updateSQL" value="">
-                        NOT UPDATE SQL CODE.
-                    <?php endif; ?>
-                </span>
-            </div>
+
         </div>
         <button type="submit" id="btn-create" class="btn btn-primary">สร้างโจทย์</button>
         <button type="button" id="btn-return" class="btn btn-danger">ย้อนกลับ</button>

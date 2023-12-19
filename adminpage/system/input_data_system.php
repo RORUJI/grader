@@ -32,8 +32,8 @@ if (isset($_POST['data'])) {
 
     <body>
         <div class="col p-2 bg-secondary-subtle rounded">
-            <label for="request-data" class="form-label fw-bold">ต้องการใส่ข้อมูล</label>
-            <!--PHP INSERT DATA FIELD LOOP-->
+            <label for="request-data" class="form-label fw-bold">ใส่ข้อมูล</label>
+            <!--PHP DATA FIELD LOOP-->
             <?php foreach ($datas as $data): ?>
                 <div class="mb-3">
                     <label for="input-data" class="form-label">

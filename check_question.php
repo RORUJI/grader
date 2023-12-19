@@ -114,7 +114,7 @@ if ($code == "") {
                 echo json_encode(array('status' => 'error', 'msg' => 'คำตอบของคุณไม่ถูกต้อง!'));
             }
         } catch (Exception $e) {
-            echo json_encode(array('status' => 'error', 'msg' => 'Something went wrong, please try again!'));
+            echo json_encode(array('status' => 'error', 'msg' => $e->getMessage()));
         }
     }
 }

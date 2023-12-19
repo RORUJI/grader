@@ -70,6 +70,9 @@ if (!isset($_POST['type'])) {
         $field = array();
         $data = array();
         $data = $_POST['data-field'];
+        $insertSQL = "INSERT INTO $table (";
+        $selectSQL = "SELECT * FROM $table WHERE ";
+        $deleteSQL = "DELETE FROM $table WHERE ";
         if ($_POST['data'] != '*') {
             $field = $_POST['data'];
         } else {
@@ -80,47 +83,83 @@ if (!isset($_POST['type'])) {
             }
         }
 
-        $insertSQL = "INSERT INTO $table (";
         for ($i = 0; $i < count($field); $i++) {
             $insertSQL = $insertSQL . $field[$i];
             if ($i < count($field) - 1) {
-                $insertSQL = $insertSQL . ", ";
+                $insertSQL = "$insertSQL, ";
             } else {
                 continue;
             }
         }
+
         $insertSQL = $insertSQL . (") VALUES (");
         for ($i = 0; $i < count($data); $i++) {
-            $insertSQL = $insertSQL . "'" . $data[$i] . "'";
+            $insertSQL = "$insertSQL '$data[$i]'";
+            $selectSQL = "$selectSQL $field[$i] = '$data[$i]'";
+            $deleteSQL = "$deleteSQL $field[$i] = '$data[$i]'";
+            ;
             if ($i < count($data) - 1) {
-            $insertSQL = $insertSQL . ", ";
+                $insertSQL = "$insertSQL, ";
+                $selectSQL = "$selectSQL AND ";
+                $deleteSQL = "$deleteSQL AND ";
             } else {
                 continue;
             }
         }
         $insertSQL = $insertSQL . (");");
-        echo $insertSQL;
     } else if ($type == 3) {
+        $deleteSQL = "DELETE FROM $table WHERE";
+        $selectSQL = "SELECT * FROM $table WHERE ";
+        $insertSQL = "INSERT INTO $table (";
+        $field = array();
+        $data = $_POST['data-field'];
 
+        if ($_POST['data'] != '*') {
+            $field = $_POST['data'];
+        } else {
+            $sql = "SELECT COLUMN_NAME FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_SCHEMA = 'grader' AND TABLE_NAME = '$table'";
+            $result = $conn->query($sql);
+            while ($row = $result->fetch_array()) {
+                $field[] = $row[0];
+            }
+        }
+
+        for ($i = 0; $i < count($field); $i++) {
+            $deleteSQL = "$deleteSQL $field[$i] = '$data[$i]'";
+            $selectSQL = "$selectSQL $field[$i] = '$data[$i]'";
+            $insertSQL = $insertSQL . $field[$i];
+            if ($i < count($field) - 1) {
+                $deleteSQL = "$deleteSQL AND ";
+                $selectSQL = "$selectSQL AND ";
+                $insertSQL = "$insertSQL, ";
+            } else {
+                $deleteSQL = "$deleteSQL;";
+                $selectSQL = "$selectSQL;";
+                $insertSQL = $insertSQL . ")";
+            }
+        }
+        $insertSQL = "$insertSQL VALUES (";
+        for ($i = 0; $i < count($data); $i++) {
+            $insertSQL = $insertSQL . "'$data[$i]'";
+            if ($i < count($data) - 1) {
+                $insertSQL = "$insertSQL, ";
+            } else {
+                $insertSQL = $insertSQL . ");";
+            }
+        }
     } else {
 
     }
+    $question = "";
     if ($type == 1) {
         $selectStr = array();
         $selectSQLStr = explode(" ", $selectSQL);
         foreach ($selectSQLStr as $key => $value) {
             $selectStr[] = $value;
         }
-        $question = "";
         for ($i = 0; $i < count($selectStr); $i++) {
             if ($selectStr[$i] == "SELECT") {
                 $question = $question . "จงเรียกข้อมูล";
-            } else if ($selectStr[$i] == "INSERT") {
-
-            } else if ($selectStr[$i] == "INTO") {
-
-            } else if ($selectStr[$i] == "DELETE") {
-
             } else if ($selectStr[$i] == "*") {
                 $question = $question . "ทั้งหมด";
             } else if ($selectStr[$i] == "FROM") {
@@ -157,6 +196,55 @@ if (!isset($_POST['type'])) {
                 $question = $question . " " . $selectStr[$i] . " ";
             }
         }
-        echo json_encode(array("status" => "success", "msg" => "ทำการสร้างโจทย์ปัญหาของคุณสำเร็จแล้ว", "question" => $question, "selectSQL" => $selectSQL, "type" => $type));
+        echo json_encode(array("status" => "success", "msg" => "ทำการสร้างโจทย์ปัญหาของคุณสำเร็จแล้ว",
+            "question" => $question, "selectSQL" => $selectSQL, "type" => $type));
+    } else if ($type == 2) {
+        $fieldNameStr = array();
+        $fieldDataStr = array();
+        $question = "จงเพิ่มข้อมูล ";
+        foreach ($field as $key => $value) {
+            $fieldNameStr[] = $value;
+        }
+
+        foreach ($data as $key => $value) {
+            $fieldDataStr[] = $value;
+        }
+
+        for ($i = 0; $i < count($fieldNameStr); $i++) {
+            $question = $question . "$fieldNameStr[$i] = $fieldDataStr[$i]";
+            if ($i < count($fieldNameStr) - 1) {
+                $question = $question . ", ";
+            } else {
+                $question = $question . " ";
+            }
+        }
+        $question = $question . "ลงในตาราง $table";
+        echo json_encode(array("status" => "success", "msg" => "ทำการสร้างโจทย์ปัญหาของคุณสำเร็จแล้ว",
+            "question" => $question, "selectSQL" => $selectSQL, "insertSQL" => $insertSQL,
+            "deleteSQL" => $deleteSQL, "type" => $type));
+    } else if ($type == 3) {
+        $fieldNameStr = array();
+        $fieldDataStr = array();
+        $question = "จงลบข้อมูลที่มี";
+        foreach ($field as $key => $value) {
+            $fieldNameStr[] = $value;
+        }
+
+        foreach ($data as $key => $value) {
+            $fieldDataStr[] = $value;
+        }
+
+        for ($i = 0; $i < count($fieldNameStr); $i++) {
+            $question = "$question $fieldNameStr[$i] = '$fieldDataStr[$i]'";
+            
+            if ($i < count($fieldNameStr) - 1) {
+                $question = "$question, ";
+            }
+        }
+        $question = "$question ออกจากตาราง $table";
+
+        echo json_encode(array("status" => "success", "msg" => "ทำการสร้างโจทย์ปัญหาของคุณสำเร็จแล้ว",
+            "question" => $question, "selectSQL" => $selectSQL, "insertSQL" => $insertSQL,
+            "deleteSQL" => $deleteSQL, "type" => $type));
     }
 }
