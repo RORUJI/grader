@@ -1,3 +1,7 @@
+<?php
+session_start();
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -38,7 +42,18 @@
                         <div class="shape">
                             <img src="User.jpg" alt="">
                         </div>
-                        <p class="name">User Test</p>
+                        <p class="name">
+                            <?php if (isset($_SESSION['userID'])) : ?>
+                                <?php echo $_SESSION['username']; ?>
+                                <br/>
+                                <a href="system/logout_system.php" class="btn btn-danger">Logout</a>
+                            <?php endif; ?>
+                            <?php if (!isset($_SESSION['userID'])) : ?>
+                                Guest
+                                <br/>
+                                <a href="login.php" class="btn btn-primary">Login</a>
+                            <?php endif; ?>
+                        </p>
                     </div>
                 </div>
             </div>

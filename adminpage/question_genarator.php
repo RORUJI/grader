@@ -3,7 +3,6 @@ session_start();
 
 include_once "../dbconnect.php";
 
-$type = "test";
 ?>
 
 <!DOCTYPE html>
@@ -22,88 +21,54 @@ $type = "test";
 
 <body class="bg-primary">
     <div class="container-fluid">
-<<<<<<< HEAD
         <div class="position-absolute top-50 start-50 translate-middle" style="width: 150vh;">
-            <form action="system/genarator_question_system.php" method="post" id="generatorForm" class="bg-body p-3 w-100 h-100">
-                <h2 class="fw-bold text-center">สร้างโจทย์ปัญหา</h2>
-                <hr>
-                <div class="mb-3">
-                    <div class="row">
-                        <div class="col-3">
-                            <label for="type" class="form-label">เลือกประเภทของโจทย์</label>
-=======
-        <div class="position-absolute top-50 start-50 translate-middle" style="width: 150vh; height: 75vh;">
-            <form action="system/genarator_question_system.php" method="post" id="generatorForm"
-                class="bg-body p-3 w-100 h-100 rounded shadow-lg overflow-y-scroll">
+            <form action="system/genarator_question_system.php" method="post" id="generatorForm" class="bg-body p-3 w-100 h-100 rounded shadow-lg overflow-y-scroll">
                 <h2 class="fw-bold text-center">สร้างโจทย์ปัญหา</h2>
                 <hr>
                 <div class="mb">
                     <div class="row p-2">
                         <div id="type-select" class="col-3 p-2 bg-secondary-subtle rounded me-3">
                             <label for="type" class="form-label fw-bold">เลือกประเภทของโจทย์</label>
->>>>>>> ded83b0489228833df1517cd8053755522c07ff9
                             <select name="type" id="type" class="form-select">
                                 <option value="">เลือกประเภทของโจทย์</option>
                                 <?php $sql = "SELECT * FROM type";
                                 $result = $conn->query($sql);
-<<<<<<< HEAD
                                 while ($row = $result->fetch_assoc()) : ?>
-=======
-                                while ($row = $result->fetch_assoc()): ?>
->>>>>>> ded83b0489228833df1517cd8053755522c07ff9
                                     <option value="<?php echo $row['typeID']; ?>">
                                         <?php echo $row['type']; ?>
                                     </option>
                                 <?php endwhile; ?>
                             </select>
                         </div>
-<<<<<<< HEAD
-                        <div class="col">
-                            <label for="table" class="form-label">ตารางที่ต้องการใช้งาน</label>
-                            <select name="table" id="table" class="form-select">
-                                <option value="">เลือกตารางข้อมูล</option>
-                                <option value="person">person</option>
-                                <option value="gender">gender</option>
-                            </select>
-                        </div>
-                        <div class="col-1">
-                            <label for="" class="form-label"></label>
-                            <button type="button" class="btn btn-primary" id="btn-tb">ตกลง</button>
+                        <div class="col p-2 bg-secondary-subtle rounded me-3">
+                            <div class="row">
+                                <div class="col-5">
+                                    <label for="table" class="form-label">ตารางที่ต้องการใช้งาน</label>
+                                    <select name="table" id="table" class="form-select">
+                                        <option value="">เลือกตารางข้อมูล</option>
+                                        <option value="person">person</option>
+                                        <option value="gender">gender</option>
+                                    </select>
+                                </div>
+                                <div class="col-1">
+                                    <label for="" class="form-label">&nbsp;</label>
+                                    <button type="button" class="btn btn-primary" id="btn-tb">ตกลง</button>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
                 <div class="mb-3">
                     <span id="check"></span>
                 </div>
-                <button type="submit" class="btn btn-primary">
-                    Submit
-                </button>
-=======
-                        <div id="table-select" class="col-4 p-2 bg-secondary-subtle rounded">
-                            <label for="table" class="form-label fw-bold">ตารางที่ต้องการใช้งาน</label>
-                            <div class="row">
-                                <div class="col-8">
-                                    <select name="table" id="table" class="form-select w-100">
-                                        <option value="">เลือกตารางข้อมูล</option>
-                                        <option value="person">person</option>
-                                        <option value="gender">gender</option>
-                                    </select>
-                                </div>
-                                <div class="col">
-                                    <button type="button" class="btn btn-primary w-100" id="btn-tb">ตกลง</button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="mb">
-                    <span id="check">
-
-                    </span>
-                </div>
->>>>>>> ded83b0489228833df1517cd8053755522c07ff9
-            </form>
         </div>
+        <div class="mb">
+            <span id="check">
+
+            </span>
+        </div>
+        </form>
+    </div>
     </div>
 
     <script>
@@ -144,8 +109,8 @@ $type = "test";
             });
         });
 
-        $(document).ready(function () {
-            $('#generatorForm').submit(function (e) {
+        $(document).ready(function() {
+            $('#generatorForm').submit(function(e) {
                 e.preventDefault();
                 let formUrl = $(this).attr('action');
                 let reqMethod = $(this).attr('method');
@@ -155,7 +120,7 @@ $type = "test";
                     type: reqMethod,
                     url: formUrl,
                     data: formData,
-                    success: function (data) {
+                    success: function(data) {
                         let result = JSON.parse(data);
 
                         if (result.status == 'success') {
@@ -169,7 +134,7 @@ $type = "test";
                                 cancelButtonText: 'แก้ไข',
                                 confirmButtonColor: '#3085d6',
                                 cancelButtonColor: '#d33'
-                            }).then(function (r) {
+                            }).then(function(r) {
                                 if (r.isConfirmed) {
                                     let type = $('#type').val();
 
@@ -182,7 +147,7 @@ $type = "test";
                                                 question: result.question,
                                                 selectSQL: result.selectSQL
                                             },
-                                            success: function (data) {
+                                            success: function(data) {
                                                 $('#check').html(data);
                                                 $('#type-select').remove();
                                                 $('#table-select').remove();
@@ -199,7 +164,7 @@ $type = "test";
                                                 insertSQL: result.insertSQL,
                                                 deleteSQL: result.deleteSQL
                                             },
-                                            success: function (data) {
+                                            success: function(data) {
                                                 $('#check').html(data);
                                                 $('#type-select').remove();
                                                 $('#table-select').remove();
@@ -216,7 +181,7 @@ $type = "test";
                                                 insertSQL: result.insertSQL,
                                                 deleteSQL: result.deleteSQL
                                             },
-                                            success: function (data) {
+                                            success: function(data) {
                                                 $('#check').html(data);
                                                 $('#type-select').remove();
                                                 $('#table-select').remove();

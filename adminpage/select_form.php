@@ -16,10 +16,9 @@ $result = $conn->query($sql);
         <div class="col-3 p-2 bg-secondary-subtle rounded">
             <label for="request-data" class="form-label fw-bold">ต้องการเรียกข้อมูลอะไรบ้าง</label>
             <!--PHP SELECT TABLE FIELD LOOP-->
-            <?php while ($row = $result->fetch_array()): ?>
+            <?php while ($row = $result->fetch_array()) : ?>
                 <div class="mb-3">
-                    <input type="checkbox" name="data[]" id="request-data" class="form-check-input request-data"
-                        value="<?php echo $row[0]; ?>">
+                    <input type="checkbox" name="data[]" id="request-data" class="form-check-input request-data" value="<?php echo $row[0]; ?>">
                     <label for="select-data" class="form-check-label">
                         <?php echo $row[0]; ?>
                     </label>
@@ -33,18 +32,18 @@ $result = $conn->query($sql);
             <label for="set-condition" class="form-label fw-bold">กำหนดเงื่อนไข</label>
             <div class="row">
                 <?php $i = 0; ?>
-                <?php while ($i < 2): ?>
+                <?php while ($i < 2) : ?>
                     <?php
                     $result = $conn->query($sql);
                     ?>
                     <div class="row row-cols-4">
                         <div class="col mb-3">
-                            <?php if ($i < 1): ?>
+                            <?php if ($i < 1) : ?>
                                 <label for="select-field" class="form-label">เลือกคอล์มส์</label>
                             <?php endif; ?>
                             <select class="form-select" name="condition[field][]">
                                 <option value="">เลือกคอล์มส์</option>
-                                <?php while ($row = $result->fetch_array()): ?>
+                                <?php while ($row = $result->fetch_array()) : ?>
                                     <option value="<?php echo $row[0]; ?>">
                                         <?php echo $row[0]; ?>
                                     </option>
@@ -52,7 +51,7 @@ $result = $conn->query($sql);
                             </select>
                         </div>
                         <div class="col mb-3'">
-                            <?php if ($i < 1): ?>
+                            <?php if ($i < 1) : ?>
                                 <label for="select-condition" class="form-label">เลือกเงื่อนไข</label>
                             <?php endif; ?>
                             <select class="form-select" name="condition[condition][]">
@@ -63,13 +62,12 @@ $result = $conn->query($sql);
                             </select>
                         </div>
                         <div class="col mb-3">
-                            <?php if ($i < 1): ?>
+                            <?php if ($i < 1) : ?>
                                 <label for="compare" class="form-label">กรอกตัวเปรียบเทียบ</label>
                             <?php endif; ?>
-                            <input type="text" class="form-control" name="condition[compare][]"
-                                placeholder="กรอกตัวเปรียบเทียบ" value="">
+                            <input type="text" class="form-control" name="condition[compare][]" placeholder="กรอกตัวเปรียบเทียบ" value="">
                         </div>
-                        <?php if ($i < 1): ?>
+                        <?php if ($i < 1) : ?>
                             <div class="col mb-3">
                                 <label for="select-compare" class="form-label">เลือกตัวเชื่อม</label>
                                 <select name="andor" class="form-select">
@@ -92,7 +90,7 @@ $result = $conn->query($sql);
                             <?php
                             $result = $conn->query($sql);
                             ?>
-                            <?php while ($row = $result->fetch_array()): ?>
+                            <?php while ($row = $result->fetch_array()) : ?>
                                 <option value="<?php echo $row[0]; ?>">
                                     <?php echo $row[0]; ?>
                                 </option>
@@ -147,10 +145,10 @@ $result = $conn->query($sql);
                                 while ($row = $result->fetch_array()) {
                                     $tablefield[] = $row[0];
                                 }
-                                ?>
-                                <?php for ($j = 0; $j < count($mainTable); $j++): ?>
-                                    <?php for ($k = 0; $k < count($tablefield); $k++): ?>
-                                        <?php if ($table != $tablename[$i] && $mainTable[$j] == $tablefield[$k]): ?>
+                            ?>
+                                <?php for ($j = 0; $j < count($mainTable); $j++) : ?>
+                                    <?php for ($k = 0; $k < count($tablefield); $k++) : ?>
+                                        <?php if ($table != $tablename[$i] && $mainTable[$j] == $tablefield[$k]) : ?>
                                             <option value="<?php echo $tablename[$i] . " " . $tablefield[$k]; ?>">
                                                 <?php echo $tablename[$i]; ?>
                                             </option>
@@ -162,12 +160,12 @@ $result = $conn->query($sql);
                     </div>
                 </div>
             </div>
+            <div class="row p-2 justify-content-center">
+                <button type="submit" class="btn btn-primary w-75">
+                    Submit
+                </button>
+            </div>
         </div>
-    </div>
-    <div class="row p-2">
-        <button type="submit" class="btn btn-primary">
-            Submit
-        </button>
     </div>
 </body>
 
