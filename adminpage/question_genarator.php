@@ -11,7 +11,8 @@ include_once "../dbconnect.php";
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.2/font/bootstrap-icons.min.css">
     <link rel="stylesheet" href="../style.css?v<?php echo time(); ?>">
     <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
@@ -22,7 +23,8 @@ include_once "../dbconnect.php";
 <body class="bg-primary">
     <div class="container-fluid">
         <div class="position-absolute top-50 start-50 translate-middle" style="width: 150vh;">
-            <form action="system/genarator_question_system.php" method="post" id="generatorForm" class="bg-body p-3 w-100 h-100 rounded shadow-lg overflow-y-scroll">
+            <form action="system/genarator_question_system.php" method="post" id="generatorForm"
+                class="bg-body p-3 w-100 h-100 rounded shadow-lg overflow-y-scroll">
                 <h2 class="fw-bold text-center">สร้างโจทย์ปัญหา</h2>
                 <hr>
                 <div class="mb">
@@ -33,7 +35,7 @@ include_once "../dbconnect.php";
                                 <option value="">เลือกประเภทของโจทย์</option>
                                 <?php $sql = "SELECT * FROM type";
                                 $result = $conn->query($sql);
-                                while ($row = $result->fetch_assoc()) : ?>
+                                while ($row = $result->fetch_assoc()): ?>
                                     <option value="<?php echo $row['typeID']; ?>">
                                         <?php echo $row['type']; ?>
                                     </option>
@@ -42,38 +44,29 @@ include_once "../dbconnect.php";
                         </div>
                         <div class="col p-2 bg-secondary-subtle rounded me-3">
                             <div class="row">
-                                <div class="col-5">
-                                    <label for="table" class="form-label">ตารางที่ต้องการใช้งาน</label>
+                                <div class="col">
+                                    <label for="table" class="form-label fw-bold">ตารางที่ต้องการใช้งาน</label>
                                     <select name="table" id="table" class="form-select">
                                         <option value="">เลือกตารางข้อมูล</option>
                                         <option value="person">person</option>
                                         <option value="gender">gender</option>
                                     </select>
                                 </div>
-                                <div class="col-1">
-                                    <label for="" class="form-label">&nbsp;</label>
-                                    <button type="button" class="btn btn-primary" id="btn-tb">ตกลง</button>
-                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
                 <div class="mb-3">
-                    <span id="check"></span>
+                    <div id="input-field"></div>
                 </div>
-        </div>
-        <div class="mb">
-            <span id="check">
-
-            </span>
         </div>
         </form>
     </div>
     </div>
 
     <script>
-        $(document).ready(function() {
-            $('#btn-tb').on('click', function(e) {
+        $(document).ready(function () {
+            $('#type, #table').on('change', function (e) {
                 e.preventDefault();
                 let type = $('#type').val();
                 let table = $('#table').val();
@@ -84,33 +77,19 @@ include_once "../dbconnect.php";
                         type: type,
                         table: table
                     },
-                    success: function(data) {
-                        if (type == '') {
-                            Swal.fire({
-                                icon: 'error',
-                                title: 'ล้มเหลว',
-                                text: 'กรุณาเลือกประเภทของโจทย์ปัญหา!',
-                                showConfirmButton: false,
-                                timer: 1500
-                            });
-                        } else if (table == '') {
-                            Swal.fire({
-                                icon: 'error',
-                                title: 'ล้มเหลว',
-                                text: 'กรุณาเลือกตารางข้อมูล!',
-                                showConfirmButton: false,
-                                timer: 1500
-                            });
+                    success: function (data) {
+                        if (type == "" || table == "") {
+                            $('#input-field').html('');
                         } else {
-                            $('#check').html(data);
+                            $('#input-field').html(data);
                         }
                     }
                 });
             });
         });
 
-        $(document).ready(function() {
-            $('#generatorForm').submit(function(e) {
+        $(document).ready(function () {
+            $('#generatorForm').submit(function (e) {
                 e.preventDefault();
                 let formUrl = $(this).attr('action');
                 let reqMethod = $(this).attr('method');
@@ -120,21 +99,21 @@ include_once "../dbconnect.php";
                     type: reqMethod,
                     url: formUrl,
                     data: formData,
-                    success: function(data) {
+                    success: function (data) {
                         let result = JSON.parse(data);
 
                         if (result.status == 'success') {
                             Swal.fire({
                                 icon: 'success',
                                 title: 'สำเร็จ!',
-                                text: result.question,
+                                text: result.msg,
                                 showConfirmButton: true,
                                 showCancelButton: true,
                                 confirmButtonText: 'ดูผลลับ',
                                 cancelButtonText: 'แก้ไข',
                                 confirmButtonColor: '#3085d6',
                                 cancelButtonColor: '#d33'
-                            }).then(function(r) {
+                            }).then(function (r) {
                                 if (r.isConfirmed) {
                                     let type = $('#type').val();
 
@@ -147,8 +126,8 @@ include_once "../dbconnect.php";
                                                 question: result.question,
                                                 selectSQL: result.selectSQL
                                             },
-                                            success: function(data) {
-                                                $('#check').html(data);
+                                            success: function (data) {
+                                                $('#input-field').html(data);
                                                 $('#type-select').remove();
                                                 $('#table-select').remove();
                                             }
@@ -164,8 +143,8 @@ include_once "../dbconnect.php";
                                                 insertSQL: result.insertSQL,
                                                 deleteSQL: result.deleteSQL
                                             },
-                                            success: function(data) {
-                                                $('#check').html(data);
+                                            success: function (data) {
+                                                $('#input-field').html(data);
                                                 $('#type-select').remove();
                                                 $('#table-select').remove();
                                             }
@@ -181,8 +160,8 @@ include_once "../dbconnect.php";
                                                 insertSQL: result.insertSQL,
                                                 deleteSQL: result.deleteSQL
                                             },
-                                            success: function(data) {
-                                                $('#check').html(data);
+                                            success: function (data) {
+                                                $('#input-field').html(data);
                                                 $('#type-select').remove();
                                                 $('#table-select').remove();
                                             }

@@ -13,59 +13,94 @@ if (!isset($_POST['type'])) {
     $type = $_POST['type'];
     $table = $_POST['table'];
     $data = $_POST['data'];
-    $count = 1;
     if ($type == 1) {
-        if ($_POST['orderby'] != "" && $_POST['sort'] == "") {
-            echo json_encode(array("status" => "error", "msg" => "กรุณาลำดับด้วย!"));
-        } else if ($_POST['jointype'] != "" && $_POST['jointable'] == "") {
-            echo json_encode(array("status" => "error", "msg" => "กรุณาเลือกตารางที่ต้องการ JOIN!"));
-        } else if ($_POST['jointype'] == "" && $_POST['jointable'] != "") {
-            echo json_encode(array("status" => "error", "msg" => "กรุณาเลือกตประเภทของการ JOIN!"));
-        } else
-            $selectSQL = "SELECT ";
-        if ($data != '*') {
-            foreach ($data as $key) {
-                $selectSQL = $selectSQL . $key;
-                if ($count < count($data)) {
-                    $selectSQL = $selectSQL . ", ";
+        $selectSQL = "SELECT";
+        $fieldName = array();
+
+        if ($data != "*") {
+            foreach ($data as $key => $value) {
+                $fieldName[] = $value;
+            }
+
+            for ($i = 0; $i < count($fieldName); $i++) {
+                if ($i < count($fieldName) - 1) {
+                    $selectSQL = "$selectSQL $fieldName[$i],";
                 } else {
-                    $selectSQL = $selectSQL . " ";
+                    $selectSQL = "$selectSQL $fieldName[$i]";
                 }
-                $count++;
             }
         } else {
-            $selectSQL = $selectSQL . $data . " ";
+            $selectSQL = "$selectSQL *";
         }
-        $selectSQL = $selectSQL . "FROM $table ";
-        if ($_POST['jointype'] != "" && $_POST['jointable'] != "") {
-            $jointype = $_POST['jointype'];
-            $jointable = explode(' ', $_POST['jointable']);
-            $joindata = array();
-            foreach ($jointable as $key) {
-                $joindata[] = $key;
-            }
-            $selectSQL = $selectSQL . " " . $jointype . " " . $joindata[0] . " ON " . $table . "." . $joindata[1] . " = " . $joindata[0] . "." . $joindata[1];
-        }
-        $condition = $_POST['condition'];
-        $andor = $_POST['andor'];
-        if (!empty($condition['field'][0])) {
-            $i = 0;
-            $selectSQL = $selectSQL . " WHERE ";
-            foreach ($condition['field'] as $key) {
-                if (!empty($key)) {
-                    $selectSQL = $selectSQL . $key . " " . $condition['condition'][$i] . " " . "'" . $condition['compare'][$i] . "'" . " ";
-                    $i++;
-                    if (!empty($condition['field'][$i])) {
-                        $selectSQL = $selectSQL . $andor . " ";
+        $selectSQL = "$selectSQL FROM $table";
+
+        if (isset($_POST['jointype']) && $_POST['jointable']) {
+            if ($_POST['jointype'] != "" || $_POST['jointable'] != "") {
+                $joinType = $_POST['jointype'];
+                $joinTable = $_POST['jointable'];
+                $joinData = explode(' ', $joinTable);
+                $joinTableData = array();
+                if ($joinType != "" && $joinTable != "") {
+                    foreach ($joinData as $key => $value) {
+                        $joinTableData[] = $value;
                     }
+                    $selectSQL = "$selectSQL $joinType $joinTableData[0] ON $table.$joinTableData[1] = $joinTableData[0].$joinTableData[1]";
+                } else if ($joinType != "" && $joinTable == "") {
+                    echo json_encode(array("status" => "error", "msg" => "กรุณาเลือกตารางที่ต้องการ JOIN!"));
+                } else {
+                    echo json_encode(array("status" => "error", "msg" => "กรุณาประเภทที่ต้องการ JOIN!"));
                 }
             }
         }
-        if ($_POST['orderby'] != "" && $_POST['sort'] != "") {
+
+        if (isset($_POST['condition'])) {
+            $selectSQL = "$selectSQL WHERE";
+            $condition = $_POST['condition'];
+            $whereField = array();
+            $whereCondition = array();
+            $whereCompare = array();
+
+            foreach ($condition['field'] as $key => $value) {
+                $whereField[] = $value;
+            }
+            foreach ($condition['condition'] as $key => $value) {
+                $whereCondition[] = $value;
+            }
+            foreach ($condition['compare'] as $key => $value) {
+                $whereCompare[] = $value;
+            }
+
+            if ($_POST['conditionLink'] != "") {
+                $conditionLink = $_POST['conditionLink'];
+            } else {
+                $conditionLink = "";
+            }
+
+            for ($i = 0; $i < count($whereField); $i++) {
+                $selectSQL = "$selectSQL $whereField[$i] $whereCondition[$i] '$whereCompare[$i]'";
+
+                if ($i < count($whereField) - 1) {
+                    $selectSQL = "$selectSQL $conditionLink";
+                }
+            }
+        } else {
+
+        }
+
+        if (isset($_POST['orderby']) != "" || isset($_POST['sort']) != "") {
             $orderby = $_POST['orderby'];
             $sort = $_POST['sort'];
-            $selectSQL = $selectSQL . "ORDER BY " . $orderby . " " . $sort;
+
+            if ($orderby != "" && $sort != "") {
+                $selectSQL = "$selectSQL ORDER BY $orderby $sort";
+            } else if ($orderby != "" && $sort == "") {
+                $orderby = $_POST['orderby'];
+                $selectSQL = "$selectSQL ORDER BY $orderby";
+            } else {
+                echo json_encode(array("status" => "error", "msg" => "กรุณาเลือกคอลัมส์ที่ต้องการให้เรียง!"));
+            }
         }
+
     } else if ($type == 2) {
         $field = array();
         $data = array();
@@ -196,6 +231,7 @@ if (!isset($_POST['type'])) {
                 $question = $question . " " . $selectStr[$i] . " ";
             }
         }
+        // echo "$question <br/> $selectSQL";
         echo json_encode(array("status" => "success", "msg" => "ทำการสร้างโจทย์ปัญหาของคุณสำเร็จแล้ว",
             "question" => $question, "selectSQL" => $selectSQL, "type" => $type));
     } else if ($type == 2) {
@@ -236,7 +272,7 @@ if (!isset($_POST['type'])) {
 
         for ($i = 0; $i < count($fieldNameStr); $i++) {
             $question = "$question $fieldNameStr[$i] = '$fieldDataStr[$i]'";
-            
+
             if ($i < count($fieldNameStr) - 1) {
                 $question = "$question, ";
             }
