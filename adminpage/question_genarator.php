@@ -21,8 +21,30 @@ include_once "../dbconnect.php";
 </head>
 
 <body class="bg-primary">
+    <nav class="navbar navbar-expand-lg bg-body">
+        <div class="container">
+            <a class="navbar-brand" href="home.php">
+                <h2 class="text-primary fw-bold">G r a d e r</h2>
+            </a>
+            <div class="justify-content-end align-items-center">
+                <?php if (!isset($_SESSION['levelID'])): ?>
+                    <a href="login.php" class="btn btn-primary ms-3">Login</a>
+                <?php endif; ?>
+                <?php if (isset($_SESSION['levelID'])): ?>
+                    <span class="text-primary fw-bold"><i class="bi bi-person-fill"></i> Username:&nbsp;</span>
+                    <span>
+                        <?php echo $_SESSION['username']; ?>
+                    </span>
+                    <a href="system/logout_system.php" id="signout-btn" class="btn btn-danger ms-3">
+                        <i class="bi bi-door-closed-fill"></i>Logout</a>
+                <?php endif; ?>
+                <button type="button" class="btn btn-danger" id="btnBack">Back</button>
+            </div>
+        </div>
+    </nav>
+
     <div class="container-fluid">
-        <div class="position-absolute top-50 start-50 translate-middle" style="width: 150vh;">
+        <div class="position-absolute top-50 start-50 translate-middle" style="width: 150vh; height: 75vh">
             <form action="system/genarator_question_system.php" method="post" id="generatorForm"
                 class="bg-body p-3 w-100 h-100 rounded shadow-lg overflow-y-scroll">
                 <h2 class="fw-bold text-center">สร้างโจทย์ปัญหา</h2>
@@ -59,9 +81,8 @@ include_once "../dbconnect.php";
                 <div class="mb-3">
                     <div id="input-field"></div>
                 </div>
+            </form>
         </div>
-        </form>
-    </div>
     </div>
 
     <script>
