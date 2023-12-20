@@ -183,7 +183,113 @@ if (!isset($_POST['type'])) {
             }
         }
     } else {
+        $checkEcho = "";
 
+        if ($_POST['data'] != '*') {
+            $field = $_POST['data'];
+        } else {
+            $sql = "SELECT COLUMN_NAME FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_SCHEMA = 'grader' AND TABLE_NAME = '$table'";
+            $result = $conn->query($sql);
+            while ($row = $result->fetch_array()) {
+                $field[] = $row[0];
+            }
+        }
+
+        $beforeUpdateData = $_POST['before-update-field'];
+        $afterUpdateData = $_POST['after-update-field'];
+        $beforeData = array();
+        $afterData = array();
+
+        foreach ($beforeUpdateData as $key => $value) {
+            if ($beforeUpdateData[$key] == "") {
+                $checkEcho = "beforeUpdateEmpty";
+                break;
+            } else {
+                $beforeData[] = $value;
+            }
+        }
+
+        if ($checkEcho == "beforeUpdateEmpty") {
+            echo json_encode(array("status" => "error", "msg" => "กรุณากรอกข้อมูลก่อนแก้ไข!"));
+        } else {
+            foreach ($afterUpdateData as $key => $value) {
+                if ($afterUpdateData[$key] == "") {
+                    $checkEcho = "afterUpdateEmpty";
+                    break;
+                } else {
+                    $afterData[] = $value;
+                }
+            }
+            if ($checkEcho == "afterUpdateEmpty") {
+                echo json_encode(array("status" => "error", "msg" => "กรุณากรอกข้อมูลหลังแก้ไข!"));
+            } else {
+                $updateSQL = "UPDATE $table SET";
+                $selectSQL = "SELECT * FROM $table WHERE";
+                $insertSQL = "INSERT INTO $table (";
+                $deleteSQL = "DELETE FROM $table WHERE";
+
+                for ($i = 0; $i < count($field); $i++) {
+                    $updateSQL = "$updateSQL $field[$i] = '$afterData[$i]'";
+                    $selectSQL = "$selectSQL $field[$i] = '$beforeData[$i]'";
+                    $insertSQL = $insertSQL . $field[$i];
+                    $deleteSQL = "$deleteSQL $field[$i] = '$afterData[$i]'";
+
+                    if ($i < count($field) - 1) {
+                        $updateSQL = "$updateSQL, ";
+                        $selectSQL = "$selectSQL AND ";
+                        $insertSQL = "$insertSQL, ";
+                        $deleteSQL = "$deleteSQL AND";
+                    } else {
+                        $insertSQL = "$insertSQL)";
+                        continue;
+                    }
+                }
+
+                $updateSQL = "$updateSQL WHERE";
+                $insertSQL = "$insertSQL VALUES (";
+
+                for ($i = 0; $i < count($field); $i++) {
+                    $updateSQL = "$updateSQL $field[$i] = '$beforeData[$i]'";
+                    $insertSQL = $insertSQL . $afterData[$i];
+
+                    if ($i < count($field) - 1) {
+                        $updateSQL = "$updateSQL AND";
+                        $insertSQL = "$insertSQL, ";
+                    } else {
+                        $insertSQL = "$insertSQL);";
+                        continue;
+                    }
+                }
+
+                $question = "จงแก้ไขข้อมูลที่";
+
+                for ($i = 0; $i < count($beforeData); $i++) {
+                    $question = "$question $field[$i] เป็น $beforeData[$i]";
+
+                    if ($i < count($beforeData) - 1) {
+                        $question = "$question และ";
+                    } else {
+                        continue;
+                    }
+                }
+
+                $question = "$question ให้";
+
+                for ($i = 0; $i < count($afterData); $i++) {
+                    $question = "$question $field[$i] เป็น $afterData[$i]";
+
+                    if ($i < count($beforeData) - 1) {
+                        $question = "$question และ";
+                    } else {
+                        continue;
+                    }
+                }
+
+                echo json_encode(array("status" => "success", "msg" => "ทำการสร้างโจทย์ปัญหาของคุณสำเร็จแล้ว",
+                    "question" => $question, "selectSQL" => $selectSQL, "insertSQL" => $insertSQL,
+                    "deleteSQL" => $deleteSQL, "type" => $type));
+            }
+        }
     }
     $question = "";
     if ($type == 1) {
@@ -205,7 +311,7 @@ if (!isset($_POST['type'])) {
                 $question = $question . $selectStr[$i] . " ";
             } else if ($selectStr[$i] == "JOIN") {
                 $question = $question . $selectStr[$i] . " กับตาราง ";
-            } else if ($selectStr[$i] == "ON" || str_contains($selectStr[$i], ".") || $selectStr[$i] == "=" || $selectStr[$i] == $table || $selectStr[$i] == "''") {
+            } else if ($selectStr[$i] == "ON" || strpos($selectStr[$i], ".") !== false || $selectStr[$i] == "=" || $selectStr[$i] == $table || $selectStr[$i] == "''") {
                 continue;
             } else if ($selectStr[$i] == "WHERE") {
                 $question = $question . " ที่ ";
@@ -282,5 +388,7 @@ if (!isset($_POST['type'])) {
         echo json_encode(array("status" => "success", "msg" => "ทำการสร้างโจทย์ปัญหาของคุณสำเร็จแล้ว",
             "question" => $question, "selectSQL" => $selectSQL, "insertSQL" => $insertSQL,
             "deleteSQL" => $deleteSQL, "type" => $type));
+    } else {
+
     }
 }

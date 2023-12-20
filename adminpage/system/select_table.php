@@ -13,6 +13,8 @@ if (!empty($type) && !empty($table)) {
         include_once "../insert_form.php";
     } else if ($type == 3) {
         include_once "../delete_form.php";
+    } else {
+        include_once "../update_form.php";
     }
 }
 ?>

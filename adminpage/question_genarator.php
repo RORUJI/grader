@@ -167,7 +167,7 @@ include_once "../dbconnect.php";
                                             success: function (data) {
                                                 $('#input-field').html(data);
                                                 $('#type-select').remove();
-                                                $('#table-select').remove();
+                                                $('#table').remove();
                                             }
                                         });
                                     } else if (type == 3) {
@@ -184,7 +184,24 @@ include_once "../dbconnect.php";
                                             success: function (data) {
                                                 $('#input-field').html(data);
                                                 $('#type-select').remove();
-                                                $('#table-select').remove();
+                                                $('#table').remove();
+                                            }
+                                        });
+                                    } else {
+                                        $.ajax({
+                                            type: 'POST',
+                                            url: 'system/question_detail_system.php',
+                                            data: {
+                                                type: result.type,
+                                                question: result.question,
+                                                selectSQL: result.selectSQL,
+                                                insertSQL: result.insertSQL,
+                                                deleteSQL: result.deleteSQL
+                                            },
+                                            success: function (data) {
+                                                $('#input-field').html(data);
+                                                $('#type-select').remove();
+                                                $('#table').remove();
                                             }
                                         });
                                     }

@@ -63,7 +63,24 @@ if ($question == "") {
                 }
             }
         } else {
+            if ($select_code == "") {
+                echo json_encode(array('status' => 'error', 'msg' => 'กรุณาใส่ SELECT CODE ด้วย'));
+            } else if ($insert_code == "") {
+                echo json_encode(array('status' => 'error', 'msg' => 'กรุณาใส่ INSERT CODE ด้วย'));
+            } else if ($delete_code == "") {
+                echo json_encode(array('status' => 'error', 'msg' => 'กรุณาใส่ DELETE CODE ด้วย'));
+            } else {
+                $sql = "INSERT INTO question(question, select_code, insert_code, delete_code, typeID) VALUES(?, ?, ?, ?, ?)";
+                $statement = $conn->prepare($sql);
+                $statement->bind_param("ssssi", $question, $select_code, $insert_code, $delete_code, $type);
+                $result = $statement->execute();
 
+                if ($result) {
+                    echo json_encode(array('status' => 'success', 'msg' => 'เพิ่มโจทย์ปัญหาสำเร็จ'));
+                } else {
+                    echo json_encode(array('status' => 'error', 'msg' => 'เพิ่มโจทย์ปัญหาไม่สำเร็จ'));
+                }
+            }
         }
     } catch (Exception $e) {
         echo json_encode(array('status' => 'error', 'msg' => $e->getMessage()));
