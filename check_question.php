@@ -11,7 +11,7 @@ $result = $conn->query($sql);
 $row = $result->fetch_assoc();
 
 if ($code == "") {
-    echo json_encode(array('status' => 'error', 'msg' => 'Please enter your code.' . $type));
+    echo json_encode(array('status' => 'error', 'msg' => 'Please enter your code.'));
 } else {
     if ($type == 1) {
         try {
@@ -114,7 +114,37 @@ if ($code == "") {
                 echo json_encode(array('status' => 'error', 'msg' => 'คำตอบของคุณไม่ถูกต้อง!'));
             }
         } catch (Exception $e) {
-            echo json_encode(array('status' => 'error', 'msg' => $e->getMessage()));
+            echo json_encode(array('status' => 'error', 'msg' => 'Something went wrong, please try again!'));
+        }
+    } else {
+        try {
+            $query = $conn->query($row['select_code']);
+
+            if ($query->num_rows > 0) {
+                $delete = $conn->query($row['delete_code']);
+            } else {
+                $insert = $conn->query($row['insert_code']);
+            }
+            $queryCode = $conn->query($code);
+            $query = $conn->query($row['select_code']);
+            if ($query->num_rows > 0) {
+                if (isset($_SESSION['userID'])) {
+                    $sql = "SELECT * FROM score WHERE userID = '$_SESSION[userID]' AND questionID = '$questionID'";
+                    $result = mysqli_query($conn, $sql);
+
+                    if (mysqli_num_rows($result) < 1) {
+                        echo json_encode(array('status' => 'noscore_success', 'msg' => 'คำตอบของคุณถูกต้อง!'));
+                    } else {
+                        echo json_encode(array('status' => 'score_success', 'msg' => 'คำตอบของคุณถูกต้อง!'));
+                    }
+                } else {
+                    echo json_encode(array('status' => 'success', 'msg' => 'คำตอบของคุณถูกต้อง!'));
+                }
+            } else {
+                echo json_encode(array('status' => 'error', 'msg' => 'คำตอบของคุณไม่ถูกต้อง!'));
+            }
+        } catch (Exception $e) {
+            echo json_encode(array('status' => 'error', 'msg' => 'Something went wrong, please try again!'));
         }
     }
 }

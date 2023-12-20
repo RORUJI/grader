@@ -230,7 +230,7 @@ if (!isset($_POST['type'])) {
 
                 for ($i = 0; $i < count($field); $i++) {
                     $updateSQL = "$updateSQL $field[$i] = '$afterData[$i]'";
-                    $selectSQL = "$selectSQL $field[$i] = '$beforeData[$i]'";
+                    $selectSQL = "$selectSQL $field[$i] = '$afterData[$i]'";
                     $insertSQL = $insertSQL . $field[$i];
                     $deleteSQL = "$deleteSQL $field[$i] = '$afterData[$i]'";
 
@@ -250,7 +250,7 @@ if (!isset($_POST['type'])) {
 
                 for ($i = 0; $i < count($field); $i++) {
                     $updateSQL = "$updateSQL $field[$i] = '$beforeData[$i]'";
-                    $insertSQL = $insertSQL . $afterData[$i];
+                    $insertSQL = "$insertSQL'$beforeData[$i]'";
 
                     if ($i < count($field) - 1) {
                         $updateSQL = "$updateSQL AND";
