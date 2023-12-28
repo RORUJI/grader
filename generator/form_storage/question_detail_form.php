@@ -8,8 +8,8 @@
 </head>
 
 <body>
-    <form action="system/insert_question_system.php" method="post" id="insert-form" class="w-100">
-        <input type="hidden" name="type" value="<?php echo $_POST['type']; ?>">
+    <form action="system_storage/insertion_question.php" method="post" id="insert-form" class="w-100">
+        <input type="hidden" name="type" id="type" value=<?php echo $_POST['type']; ?>>
         <div class="row p-2">
             <div class="col p-2 bg-secondary-subtle rounded">
                 <label for="question" class="form-label fw-bold">โจทย์ปัญหา</label>
@@ -27,7 +27,8 @@
                         rows="10"><?php echo $_POST['selectSQL']; ?></textarea>
                 <?php endif; ?>
                 <?php if (!isset($_POST['selectSQL'])): ?>
-                    <textarea name="select_code" class="form-control" cols="30" rows="10">NOT SELECT SQL CODE.</textarea>
+                    <textarea name="select_code" class="form-control bg-body" cols="30"
+                        rows="10">NOT SELECT SQL CODE.</textarea>
                 <?php endif; ?>
             </div>
             <div class="col p-2 bg-secondary-subtle rounded">
@@ -52,7 +53,28 @@
                     <textarea name="delete_code" class="form-control" cols="30" rows="10">NOT DELETE SQL CODE.</textarea>
                 <?php endif; ?>
             </div>
-
+            <div class="col p-2 bg-secondary-subtle rounded">
+                <label for="update-SQL-code" class="form-label fw-bold">Update CODE</label>
+                <?php if (isset($_POST['updateSQL'])): ?>
+                    <textarea name="update_code" class="form-control" cols="30"
+                        rows="10"><?php echo $_POST['updateSQL']; ?></textarea>
+                <?php endif; ?>
+                <?php if (!isset($_POST['updateSQL'])): ?>
+                    <textarea name="update_code" class="form-control" cols="30" rows="10">NOT UPDATE SQL CODE.</textarea>
+                <?php endif; ?>
+            </div>
+        </div>
+        <div class="row p-2">
+            <div class="col p-2 me-3 bg-secondary-subtle rounded">
+                <label for="before-SQL-code" class="form-label fw-bold">BEFORE CODE</label>
+                <?php if (isset($_POST['beforeSQL'])): ?>
+                    <textarea name="before_code" class="form-control" cols="30"
+                        rows="10"><?php echo $_POST['beforeSQL']; ?></textarea>
+                <?php endif; ?>
+                <?php if (!isset($_POST['beforeSQL'])): ?>
+                    <textarea name="before_code" class="form-control" cols="30" rows="10">NOT BEFORE SQL CODE.</textarea>
+                <?php endif; ?>
+            </div>
         </div>
         <button type="submit" id="btn-create" class="btn btn-primary">สร้างโจทย์</button>
         <button type="button" id="btn-return" class="btn btn-danger">ย้อนกลับ</button>

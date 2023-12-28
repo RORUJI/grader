@@ -3,9 +3,9 @@ session_start();
 
 include_once "../../dbconnect.php";
 
-if (isset($_POST['data'])) {
+if (isset($_POST['field-name'])) {
     $table = $_POST['table'];
-    $input = $_POST['data'];
+    $input = $_POST['field-name'];
     $datas = array();
 
     if ($input != "*") {
@@ -39,7 +39,7 @@ if (isset($_POST['data'])) {
                     <label for="input-data" class="form-label">
                         <?php echo $data; ?>
                     </label>
-                    <input type="text" name="data-field[]" id="" class="form-control" value=""
+                    <input type="text" name="field-data[]" id="" class="form-control" value=""
                         placeholder="กรุณากรอก <?php echo $data; ?>">
                 </div>
             <?php endforeach; ?>

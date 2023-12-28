@@ -14,18 +14,18 @@ $result = $conn->query($sql);
 <body>
     <div class="row p-2">
         <div class="col-3 p-2 bg-secondary-subtle rounded">
-            <label for="request-insert-data" class="form-label fw-bold">ต้องการลบข้อมูลอะไรบ้าง</label>
-            <!--PHP DELETE TABLE FIELD LOOP-->
+            <label for="request-insert-data" class="form-label fw-bold">ต้องการใส่ข้อมูลอะไรบ้าง</label>
+            <!--PHP INSERT TABLE FIELD LOOP-->
             <?php while ($row = $result->fetch_array()): ?>
                 <div class="mb-3">
-                    <input type="checkbox" name="data[]" id="request-data" class="form-check-input request-data"
+                    <input type="checkbox" name="field-name[]" id="request-data" class="form-check-input request-data"
                         value="<?php echo $row[0]; ?>">
                     <label for="select-data" class="form-check-label">
                         <?php echo $row[0]; ?>
                     </label>
                 </div>
             <?php endwhile; ?>
-            <input class="form-check-input" id="all-select" name="data" type="checkbox" value="*">
+            <input class="form-check-input" id="all-select" name="field-name" type="checkbox" value="*">
             <label for="select-all-data" class="form-check-label">ทั้งหมด</label>
         </div>
         <div id="input-data" class="col">
@@ -37,12 +37,12 @@ $result = $conn->query($sql);
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script>
         $(document).ready(function () {
-            $('input[name="data[]"]').on('change', function (e) {
+            $('input[name="field-name[]"]').on('change', function (e) {
                 let datas = $('#generatorForm').serialize();
 
                 $.ajax({
                     type: 'POST',
-                    url: 'system/input_data_system.php',
+                    url: 'form_storage/data_insertion_form.php',
                     data: datas,
                     success: function (data) {
                         if (data == "") {
@@ -63,7 +63,7 @@ $result = $conn->query($sql);
 
                 $.ajax({
                     type: 'POST',
-                    url: 'system/input_data_system.php',
+                    url: 'form_storage/data_insertion_form.php',
                     data: datas,
                     success: function (data) {
                         if (data == "") {

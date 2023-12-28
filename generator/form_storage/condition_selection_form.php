@@ -20,7 +20,7 @@ if (isset($_POST['condition-checkbox'])) {
 
     <body>
         <?php $i = 0; ?>
-        <?php while ($i < 2): ?>
+        <?php while ($i < 1): ?>
             <?php
             $result = $conn->query($sql);
             ?>
@@ -57,20 +57,23 @@ if (isset($_POST['condition-checkbox'])) {
                         value="">
                 </div>
                 <?php if ($i < 1): ?>
-                    <div class="col mb-3">
+                    <!-- <div class="col mb-3">
                         <label for="select-compare" class="form-label">เลือกตัวเชื่อม</label>
                         <select name="conditionLink" class="form-select">
                             <option value="">เลือกตัวเชื่อม</option>
                             <option value="AND">AND</option>
                             <option value="OR">OR</option>
                         </select>
-                    </div>
+                    </div> -->
                 <?php endif; ?>
             </div>
             <?php
             $i++;
             ?>
         <?php endwhile; ?>
+
+        <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+        <script></script>
     </body>
 
     </html>

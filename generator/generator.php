@@ -1,8 +1,6 @@
 <?php
 session_start();
-
 include_once "../dbconnect.php";
-
 ?>
 
 <!DOCTYPE html>
@@ -45,7 +43,7 @@ include_once "../dbconnect.php";
 
     <div class="container-fluid">
         <div class="position-absolute top-50 start-50 translate-middle" style="width: 150vh; height: 75vh">
-            <form action="system/genarator_question_system.php" method="post" id="generatorForm"
+            <form action="system_storage/question_generator.php" method="post" id="generatorForm"
                 class="bg-body p-3 w-100 h-100 rounded shadow-lg overflow-y-scroll">
                 <h2 class="fw-bold text-center">สร้างโจทย์ปัญหา</h2>
                 <hr>
@@ -64,7 +62,7 @@ include_once "../dbconnect.php";
                                 <?php endwhile; ?>
                             </select>
                         </div>
-                        <div class="col p-2 bg-secondary-subtle rounded me-3">
+                        <div id="table-select" class="col p-2 bg-secondary-subtle rounded me-3">
                             <div class="row">
                                 <div class="col">
                                     <label for="table" class="form-label fw-bold">ตารางที่ต้องการใช้งาน</label>
@@ -93,7 +91,7 @@ include_once "../dbconnect.php";
                 let table = $('#table').val();
                 $.ajax({
                     type: 'POST',
-                    url: 'system/select_table.php',
+                    url: 'system_storage/selection_table.php',
                     data: {
                         type: type,
                         table: table
@@ -136,12 +134,10 @@ include_once "../dbconnect.php";
                                 cancelButtonColor: '#d33'
                             }).then(function (r) {
                                 if (r.isConfirmed) {
-                                    let type = $('#type').val();
-
-                                    if (type == 1) {
+                                    if (result.type == 1) {
                                         $.ajax({
                                             type: 'POST',
-                                            url: 'system/question_detail_system.php',
+                                            url: 'form_storage/question_detail_form.php',
                                             data: {
                                                 type: result.type,
                                                 question: result.question,
@@ -153,10 +149,10 @@ include_once "../dbconnect.php";
                                                 $('#table-select').remove();
                                             }
                                         });
-                                    } else if (type == 2) {
+                                    } else if (result.type == 2) {
                                         $.ajax({
                                             type: 'POST',
-                                            url: 'system/question_detail_system.php',
+                                            url: 'form_storage/question_detail_form.php',
                                             data: {
                                                 type: result.type,
                                                 question: result.question,
@@ -167,13 +163,13 @@ include_once "../dbconnect.php";
                                             success: function (data) {
                                                 $('#input-field').html(data);
                                                 $('#type-select').remove();
-                                                $('#table').remove();
+                                                $('#table-select').remove();
                                             }
                                         });
-                                    } else if (type == 3) {
+                                    } else if (result.type == 3) {
                                         $.ajax({
                                             type: 'POST',
-                                            url: 'system/question_detail_system.php',
+                                            url: 'form_storage/question_detail_form.php',
                                             data: {
                                                 type: result.type,
                                                 question: result.question,
@@ -184,24 +180,25 @@ include_once "../dbconnect.php";
                                             success: function (data) {
                                                 $('#input-field').html(data);
                                                 $('#type-select').remove();
-                                                $('#table').remove();
+                                                $('#table-select').remove();
                                             }
                                         });
                                     } else {
                                         $.ajax({
                                             type: 'POST',
-                                            url: 'system/question_detail_system.php',
+                                            url: 'form_storage/question_detail_form.php',
                                             data: {
                                                 type: result.type,
                                                 question: result.question,
                                                 selectSQL: result.selectSQL,
+                                                beforeSQL: result.beforeSQL,
                                                 insertSQL: result.insertSQL,
-                                                deleteSQL: result.deleteSQL
+                                                updateSQL: result.updateSQL
                                             },
                                             success: function (data) {
                                                 $('#input-field').html(data);
                                                 $('#type-select').remove();
-                                                $('#table').remove();
+                                                $('#table-select').remove();
                                             }
                                         });
                                     }

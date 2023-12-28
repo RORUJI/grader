@@ -55,7 +55,7 @@
 
     <div class="container">
         <div class="position-absolute top-50 start-50 translate-middle" style="margin-top: 45vh;">
-            <form action="check_question.php" method="post"
+            <form action="quiz/examine_result.php" method="post"
                 id="codeForm" class="bg-body rounded p-3 shadow-lg">
                 <input type="hidden" name="questionID" value="<?php echo $row['questionID']; ?>">
                 <h2 class="fw-bold text-center">Insert Code</h2>
@@ -106,115 +106,28 @@
 
     <script>
         $(document).ready(function () {
-            $('#btnBack').click(function () {
-                history.back();
-            });
-        });
-
-        $(document).ready(function () {
             $('#codeForm').submit(function (e) {
                 e.preventDefault();
                 let formUrl = $(this).attr('action');
                 let reqMethod = $(this).attr('method');
                 let formData = $(this).serialize();
-
-                $.ajax({
+                $.ajax ({
                     type: reqMethod,
                     url: formUrl,
                     data: formData,
                     success: function (data) {
                         let result = JSON.parse(data);
-
-                        if (result.status == 'noscore_success') {
-                            Swal.fire({
-                                icon: 'success',
-                                title: result.msg,
-                                text: 'คุณต้องการบันทึกคะแนนของคุณหรือไม่?',
-                                showConfirmButton: true,
-                                showCancelButton: true,
-                                confirmButtonText: 'บันทึก',
-                                cancelButtonText: 'ไม่ล่ะ',
-                                confirmButtonColor: '#3085d6',
-                                cancelButtonColor: '#d33'
-                            }).then(function (result) {
-                                if (result.isConfirmed) {
-                                    let questionID = <?php echo $_GET['questionID']; ?>;
-
-                                    $.ajax({
-                                        type: 'POST',
-                                        url: 'enter_score.php',
-                                        data: {
-                                            questionID: questionID
-                                        },
-                                        success: function (data) {
-                                            let score = JSON.parse(data);
-
-                                            if (score.status == 'success') {
-                                                Swal.fire({
-                                                    icon: score.status,
-                                                    title: 'สำเร็จ!',
-                                                    text: score.msg,
-                                                    showConfirmButton: true,
-                                                    showCancelButton: true,
-                                                    confirmButtonText: 'ดูคะแนน',
-                                                    cancelButtonText: 'ไว้ทีหลัง',
-                                                    confirmButtonColor: '#3085d6',
-                                                    cancelButtonColor: '#d33'
-                                                }).then(function (result) {
-                                                    if (result.isConfirmed) {
-                                                        window.location.href = 'history.php';
-                                                    } else {
-                                                        window.location.reload();
-                                                    }
-                                                });
-                                            } else {
-                                                Swal.fire({
-                                                    icon: score.status,
-                                                    title: 'ล้มเหลว!',
-                                                    text: score.msg,
-                                                    showConfirmButton: false,
-                                                    timer: 1500
-                                                });
-                                            }
-                                        }
-                                    })
-                                } else {
-                                    window.location.reload();
-                                }
-                            });
-                        } else if (result.status == 'score_success') {
-                            Swal.fire({
-                                icon: 'success',
-                                title: result.msg,
-                                text: 'คุณมีคะแนนอยู่แล้ว',
-                                showConfirmButton: false,
-                                timer: 1500
-                            });
-                        } else if (result.status == 'success') {
-                            Swal.fire({
-                                icon: 'success',
-                                title: result.msg,
-                                text: 'หากคุณต้องการบันทึกคะแนนของคุณ คุณต้องทำการ Login',
-                                showConfirmButton: true,
-                                showCancelButton: true,
-                                confirmButtonText: 'ล็อคอิน',
-                                cancelButtonText: 'ไม่ล่ะ',
-                                confirmButtonColor: '#3085d6',
-                                cancelButtonColor: '#d33'
-                            }).then(function (result) {
-                                if (result.isConfirmed) {
-                                    window.location.href = 'login.php';
-                                } else {
-                                    window.location.reload();
-                                }
+                        if (result.status == 'success') {
+                            Swal.fire ({
+                                icon: result.status,
+                                title: 'สำเร็จ!',
+                                text: result.msg
                             });
                         } else {
-                            Swal.fire({
-                                icon: 'error',
-                                title: 'ล้มเหลว!',
-                                text: result.msg,
-                                showConfirmButton: false,
-                                timer: 1500
+                            Swal.fire ({
+                                icon: result.status,
+                                title: 'สำเร็จ!',
+                                text: result.msg
                             });
                         }
                     }

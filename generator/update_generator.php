@@ -18,14 +18,14 @@ $result = $conn->query($sql);
             <!--PHP INSERT TABLE FIELD LOOP-->
             <?php while ($row = $result->fetch_array()): ?>
                 <div class="mb-3">
-                    <input type="checkbox" name="data[]" id="request-data" class="form-check-input request-data"
+                    <input type="checkbox" name="field-name[]" id="request-data" class="form-check-input request-data"
                         value="<?php echo $row[0]; ?>">
                     <label for="select-data" class="form-check-label">
                         <?php echo $row[0]; ?>
                     </label>
                 </div>
             <?php endwhile; ?>
-            <input class="form-check-input" id="all-select" name="data" type="checkbox" value="*">
+            <input class="form-check-input" id="all-select" name="field-name" type="checkbox" value="*">
             <label for="select-all-data" class="form-check-label">ทั้งหมด</label>
         </div>
         <div id="input-update" class="col mx-1"></div>
@@ -34,12 +34,12 @@ $result = $conn->query($sql);
 
 <script>
     $(document).ready(function () {
-        $('input[name="data[]"]').on('change', function (e) {
+        $('input[name="field-name[]"]').on('change', function (e) {
             let datas = $('#generatorForm').serialize();
 
             $.ajax({
                 type: 'POST',
-                url: 'system/input_update_system.php',
+                url: 'form_storage/data_update_form.php',
                 data: datas,
                 success: function (data) {
                     if (data == "") {
@@ -60,7 +60,7 @@ $result = $conn->query($sql);
 
             $.ajax({
                 type: 'POST',
-                url: 'system/input_update_system.php',
+                url: 'form_storage/data_update_form.php',
                 data: datas,
                 success: function (data) {
                     if (data == "") {

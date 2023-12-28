@@ -35,7 +35,7 @@ $result = $conn->query($sql);
         </div>
         <div class="col mx-3 p-2 bg-secondary-subtle rounded">
             <input type="checkbox" name="condition-checkbox" id="condition-checkbox" class="form-check-input" value="">
-            <label for="set-condition" class="form-check-label fw-bold">กำหนดเงื่อนไข</label>
+            <label for="set-order" class="form-check-label fw-bold">กำหนดเงื่อนไข</label>
             <div class="row">
                 <div id="input-condition-field"></div>
             </div>
@@ -55,12 +55,12 @@ $result = $conn->query($sql);
 
 <script>
     $(document).ready(function () {
-        $('input[name="condition-checkbox"]').on('change', function (e) {
+        $('input[name="condition-checkbox"], select[name="condition-count"]').on('change', function (e) {
             let formData = $('#generatorForm').serialize();
 
             $.ajax({
                 type: 'POST',
-                url: 'system/input_condition_system.php',
+                url: 'form_storage/condition_selection_form.php',
                 data: formData,
                 success: function (data) {
                     if (data == "") {
@@ -77,7 +77,7 @@ $result = $conn->query($sql);
 
             $.ajax({
                 type: 'POST',
-                url: 'system/input_sort_system.php',
+                url: 'form_storage/sorting_selection_form.php',
                 data: formData,
                 success: function (data) {
                     if (data == "") {
@@ -94,7 +94,7 @@ $result = $conn->query($sql);
 
             $.ajax({
                 type: 'POST',
-                url: 'system/input_join_system.php',
+                url: 'form_storage/joined_selection_form.php',
                 data: formData,
                 success: function (data) {
                     if (data == "") {

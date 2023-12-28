@@ -3,9 +3,9 @@ session_start();
 
 include_once "../../dbconnect.php";
 
-if (isset($_POST['data'])) {
+if (isset($_POST['field-name'])) {
     $table = $_POST['table'];
-    $input = $_POST['data'];
+    $input = $_POST['field-name'];
     $datas = array();
 
     if ($input != "*") {
