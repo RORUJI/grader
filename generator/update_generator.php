@@ -9,11 +9,13 @@ $result = $conn->query($sql);
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=q, initial-scale=1.0">
+    <link rel="stylesheet" href="../style2.css?v<?php echo time(); ?>">
+
 </head>
 
 <body>
     <div class="row p-2">
-        <div class="col-3 p-2 bg-secondary-subtle rounded">
+        <div class="col-3 p-2 rounded type-select">
             <label for="request-insert-data" class="form-label fw-bold">ต้องการใส่ข้อมูลอะไรบ้าง</label>
             <!--PHP INSERT TABLE FIELD LOOP-->
             <?php while ($row = $result->fetch_array()): ?>

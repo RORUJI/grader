@@ -9,11 +9,12 @@ $result = $conn->query($sql);
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=q, initial-scale=1.0">
+    <link rel="stylesheet" href="../style2.css?v<?php echo time(); ?>">
 </head>
 
 <body>
     <div class="row p-2">
-        <div class="col-3 p-2 bg-secondary-subtle rounded">
+        <div class="col-3 p-2 rounded type-select">
             <label for="request-data" class="form-label fw-bold">ต้องการเรียกข้อมูลอะไรบ้าง</label>
             <!--PHP SELECT TABLE FIELD LOOP-->
             <?php while ($row = $result->fetch_array()): ?>
@@ -33,7 +34,7 @@ $result = $conn->query($sql);
                 <button type="submit" class="btn btn-primary">สร้างโจทย์ปัญหา</button>
             </div>
         </div>
-        <div class="col mx-3 p-2 bg-secondary-subtle rounded">
+        <div class="col mx-3 p-2 rounded type-select">
             <input type="checkbox" name="condition-checkbox" id="condition-checkbox" class="form-check-input" value="">
             <label for="set-order" class="form-check-label fw-bold">กำหนดเงื่อนไข</label>
             <div class="row">

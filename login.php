@@ -61,7 +61,7 @@
                                 timer: 1500
                             }).then(function() {
                                 if (result.levelID == 1) {
-                                    window.location.href = 'index.php';
+                                    window.location.href = 'index2.php';
                                 } else {
                                     window.location.href = 'adminpage/home.php';
                                 }

@@ -54,34 +54,69 @@ form {
 .graph1{
     height: 45vh;
     border-radius: 10px;
-    background-color:rgb(200, 200, 200);
+    background-image: url(SQl.png);
+    background-position: center;
+    background-size: cover;
     text-decoration: none;
-    color: white;
+    color: #424040;
     box-shadow: rgba(0, 0, 0, 0.1) 0px 19px 38px, rgba(0, 0, 0, 0.12) 0px 15px 12px;
     transition: .5s;
 }
 .graph1:hover{
     transform: translateY(-5px);
 }
+.graph1:hover .div-1{
+    background: #f62323;
+}
 .graph2{
     height: 45vh;
     border-radius: 10px;
-    background-color:rgb(200, 200, 200);
+    background-image: url(LearnSQL.jpg);
+    background-position: center;
+    background-size: cover;
     text-decoration: none;
-    color: white;
+    color: #424040;
     box-shadow: rgba(0, 0, 0, 0.1) 0px 19px 38px, rgba(0, 0, 0, 0.12) 0px 15px 12px;
     transition: .5s;
 }
 .graph2:hover{
     transform: translateY(-5px);
 }
+.graph2:hover .div-2{
+    background: #f62323;
+}
+.graph3{
+    background-color:rgb(149, 147, 147);
+    border-radius: 10px;
+    text-align: center;
+    height: 4vh;
+    box-shadow: rgba(0, 0, 0, 0.1) 0px 19px 38px, rgba(0, 0, 0, 0.12) 0px 15px 12px;
+    transition: .5s;
+}
+.graph3:hover{
+    transform: translateY(-5px);
+}
+.graph3-text{
+    text-decoration: none;
+    color: #424040;
+}
 .div-1{
-    padding-left: 2vh;
-    padding-top: 22vh;
+    background: #eb5d5d;
+    display: inline-block;
+    border-radius: 10px;
+    padding: .2vw;
+    margin: 2vh;
+    color: #fff;
+    transition: .5s;
 }
 .div-2{
-    padding-left: 2vh;
-    padding-top: 22vh;
+    background: #eb5d5d;
+    display: inline-block;
+    border-radius: 10px;
+    padding: .2vw;
+    margin: 2vh;
+    color: #fff;
+    transition: .5s;
 }
 .container{
     position: relative;
@@ -89,51 +124,28 @@ form {
     justify-content: center;
     align-items: center;
 }
-.container .hexagon{
-    position: relative;
-    width: 17vh;
-    height: 11vh;
+.container .User{
     margin-top: 5vh;
+    width: 10vw; /* ขนาดของกรอบ */
+    height: 10vw; /* ขนาดของกรอบ */
+    border-radius: 50%; /* ทำให้เป็นวงกลม */
+    background-color: #ccc; /* สีพื้นหลัง */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden; /* กำหนดให้ภายในเล็กลงในกรอบ */
 }
-.container .hexagon::before {
-    content: '';
-    position: absolute;
-    bottom: -12vh;
-    width: 100%;
-    height: 2vh;
-    background: radial-gradient(rgba(0,0,0,0.15),transparent);
-    border-radius: 50%;
-    transition: .5s;
+.container .div-user {
+    transform: rotate(45deg); /* หมุนรูปร่าง 45 องศา เพื่อให้เกิดรูปร่างมุม */
+    overflow: hidden;
 }
-.container .hexagon:hover::before {
-    opacity: .8;
-    transform: scale(.8);
-}
-.container .hexagon .shape {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 20vh;
-    background: #000;
-    clip-path: polygon(0 25%, 50% 0, 100% 25%, 100% 75%, 50% 100%, 0 75%);
-    
-    transition: .5s;
-    
-}
-.container .hexagon:hover .shape {
-    transform: translateY(-.3vh);
-}
-.container .hexagon .shape img {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
+.container  .div-user img {
+    width: 100%; /* ขนาดภาพให้เต็มขนาดกับพื้นที่ */
+    height: auto;
+    transform: rotate(-45deg); /* ทำให้ภาพกลับมาตำแหน่งเดิม */
 }
 .name{
-    margin-top: 12vh;
+    margin-top: 2vw;
     text-align: center;
 }
 .search{
@@ -143,10 +155,10 @@ form {
     width: 24rem;
 }
 .taskbar{
-    color: white;
-    font-size: 1.5rem;
-    margin-top: .4rem;
-    text-indent: .7rem;
+    color: rgb(84, 84, 84);
+    font-size: 1.5vw;
+    margin-top: .2vw;
+    text-indent: .7vw;
 }
 .taskbar1,.taskbar2,.taskbar3,.taskbar4{
     transition: .8s;
@@ -155,16 +167,25 @@ form {
 .taskbar2:hover,
 .taskbar3:hover,
 .taskbar4:hover{
-    color:rgb(100, 100, 100);
+    color:rgb(0, 0, 0);
 }
 .sidebar{
-    background-color:rgb(214, 214, 214);
+    background-color:rgb(2255, 250, 245);
 }
 .bannerbackground{
-    background-color:rgb(226, 226, 226);
+    background-color:rgb(255, 255, 255);
 }
 .banner{
+    background-image: url(cat.png);
+    background-position: center;
+    background-size: cover;
+}
+.banner2{
     background-color:rgb(208, 208, 208);
+    margin-left: .2vh;
+    margin-right: .2vh;
+    align-items: center;
+    justify-content: center;
 }
 .btn{
     width: 100%;

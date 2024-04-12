@@ -26,11 +26,13 @@ if (isset($_POST['field-name'])) {
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="../style2.css?v<?php echo time(); ?>">
+
         <title>Document</title>
     </head>
 
     <body>
-        <div class="col p-2 bg-secondary-subtle rounded">
+        <div class="col p-2 rounded type-select">
             <div class="row">
                 <div class="col">
                     <label for="request-data" class="form-label fw-bold">ก่อนแก้ไข</label>
