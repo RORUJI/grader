@@ -10,6 +10,7 @@
 <body>
     <form action="system_storage/resultcheck.php" method="post" id="insert-form" class="w-100">
         <input type="hidden" name="quizid" value="<?php echo $_POST['quizid']; ?>">
+        <input type="hidden" name="table" value="<?php echo $_POST['table']; ?>">
         <input type="hidden" name="type" id="type" value=<?php echo $_POST['type']; ?>>
         <div class="row px-2 mb-3">
             <div class="col p-2 me-3 type-select rounded">

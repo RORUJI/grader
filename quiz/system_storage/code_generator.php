@@ -68,7 +68,8 @@ if ($type == 1) {
                                         "msg" => "Generate sql code successfully.",
                                         "code" => $code,
                                         "type" => $type,
-                                        "quizid" => $quizid
+                                        "quizid" => $quizid,
+                                        "table" => $table
                                     )
                                 );
                             }
@@ -79,7 +80,8 @@ if ($type == 1) {
                                     "msg" => "Generate sql code successfully.",
                                     "code" => $code,
                                     "type" => $type,
-                                    "quizid" => $quizid
+                                    "quizid" => $quizid,
+                                    "table" => $table
                                 )
                             );
                         }
@@ -99,7 +101,8 @@ if ($type == 1) {
                                 "msg" => "Generate sql code successfully.",
                                 "code" => $code,
                                 "type" => $type,
-                                "quizid" => $quizid
+                                "quizid" => $quizid,
+                                "table" => $table
                             )
                         );
                     }
@@ -110,7 +113,8 @@ if ($type == 1) {
                             "msg" => "Generate sql code successfully.",
                             "code" => $code,
                             "type" => $type,
-                            "quizid" => $quizid
+                            "quizid" => $quizid,
+                            "table" => $table
                         )
                     );
                 }
@@ -144,7 +148,8 @@ if ($type == 1) {
                                     "msg" => "Generate sql code successfully.",
                                     "code" => $code,
                                     "type" => $type,
-                                    "quizid" => $quizid
+                                    "quizid" => $quizid,
+                                    "table" => $table
                                 )
                             );
                         }
@@ -155,7 +160,8 @@ if ($type == 1) {
                                 "msg" => "Generate sql code successfully.",
                                 "code" => $code,
                                 "type" => $type,
-                                "quizid" => $quizid
+                                "quizid" => $quizid,
+                                "table" => $table
                             )
                         );
                     }
@@ -176,7 +182,8 @@ if ($type == 1) {
                                 "msg" => "Generate sql code successfully.",
                                 "code" => $code,
                                 "type" => $type,
-                                "quizid" => $quizid
+                                "quizid" => $quizid,
+                                "table" => $table
                             )
                         );
                     }
@@ -187,7 +194,8 @@ if ($type == 1) {
                             "msg" => "Generate sql code successfully.",
                             "code" => $code,
                             "type" => $type,
-                            "quizid" => $quizid
+                            "quizid" => $quizid,
+                            "table" => $table
                         )
                     );
                 }
@@ -197,9 +205,7 @@ if ($type == 1) {
 } else if ($type == 2) {
     $fieldName = [];
     $fieldData = [];
-    $insertSQL = "INSERT INTO $table(";
-    $deleteSQL = "DELETE FROM $table WHERE ";
-    $code = "SELECT * FROM $table WHERE ";
+    $code = "INSERT INTO $table(";
     if (isset($_POST['field-data'])) {
         if ($_POST['field-name'] != "*") {
             $fieldName = $_POST['field-name'];
@@ -209,28 +215,31 @@ if ($type == 1) {
                     echo json_encode(array("status" => "error", "msg" => "กรุณากรอกข้อมูล $fieldName[$i]!"));
                     break;
                 } else {
-                    $insertSQL = $insertSQL . $fieldName[$i];
-                    $deleteSQL = $deleteSQL . $fieldName[$i] . " = " . "'$fieldData[$i]'";
-                    $code = $code . $fieldName[$i] . " = " . "'$fieldData[$i]'";
+                    $code = $code . $fieldName[$i];
                     if ($i < count($fieldName) - 1) {
-                        $insertSQL = $insertSQL . ", ";
-                        $deleteSQL = $deleteSQL . " AND ";
-                        $code = $code . " AND ";
+                        $code = $code . ", ";
                     } else {
-                        $insertSQL = $insertSQL . ") VALUES(";
-                        $deleteSQL = $deleteSQL . ";";
-                        $code = $code . ";";
+                        $code = $code . ") VALUES(";
                         for ($j = 0; $j < count($fieldData); $j++) {
                             if ($fieldData[$j] == "") {
                                 echo json_encode(array("status" => "error", "msg" => "กรุณากรอกข้อมูล $fieldName[$i]!"));
                                 break;
                             } else {
-                                $insertSQL = $insertSQL . "'$fieldData[$j]'";
+                                $code = $code . "'$fieldData[$j]'";
                                 if ($j < count($fieldData) - 1) {
-                                    $insertSQL = $insertSQL . ", ";
+                                    $code = $code . ", ";
                                 } else {
-                                    $insertSQL = $insertSQL . ");";
-
+                                    $code = $code . ");";
+                                    echo json_encode(
+                                        array(
+                                            "status" => "success",
+                                            "msg" => "Generate sql code successfully.",
+                                            "code" => $code,
+                                            "type" => $type,
+                                            "quizid" => $quizid,
+                                            "table" => $table
+                                        )
+                                    );
                                 }
                             }
                         }
@@ -249,28 +258,32 @@ if ($type == 1) {
                     echo json_encode(array("status" => "error", "msg" => "กรุณากรอกข้อมูล $fieldName[$i]!"));
                     break;
                 } else {
-                    $insertSQL = $insertSQL . $fieldName[$i];
-                    $deleteSQL = $deleteSQL . $fieldName[$i] . " = " . "'$fieldData[$i]'";
+                    $code = $code . $fieldName[$i];
                     $code = $code . $fieldName[$i] . " = " . "'$fieldData[$i]'";
                     if ($i < count($fieldName) - 1) {
-                        $insertSQL = $insertSQL . ", ";
-                        $deleteSQL = $deleteSQL . " AND ";
-                        $code = $code . " AND ";
+                        $code = $code . ", ";
                     } else {
-                        $insertSQL = $insertSQL . ") VALUES(";
-                        $deleteSQL = $deleteSQL . ";";
-                        $code = $code . ";";
+                        $code = $code . ") VALUES(";
                         for ($j = 0; $j < count($fieldData); $j++) {
                             if ($fieldData[$j] == "") {
                                 echo json_encode(array("status" => "error", "msg" => "กรุณากรอกข้อมูล $fieldName[$i]!"));
                                 break;
                             } else {
-                                $insertSQL = $insertSQL . "'$fieldData[$j]'";
+                                $code = $code . "'$fieldData[$j]'";
                                 if ($j < count($fieldData) - 1) {
-                                    $insertSQL = $insertSQL . ", ";
+                                    $code = $code . ", ";
                                 } else {
-                                    $insertSQL = $insertSQL . ");";
-
+                                    $code = $code . ");";
+                                    echo json_encode(
+                                        array(
+                                            "status" => "success",
+                                            "msg" => "Generate sql code successfully.",
+                                            "code" => $code,
+                                            "type" => $type,
+                                            "quizid" => $quizid,
+                                            "table" => $table
+                                        )
+                                    );
                                 }
                             }
                         }

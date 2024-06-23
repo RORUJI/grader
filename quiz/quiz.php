@@ -228,6 +228,7 @@ if (!isset($_GET['quizid'])) {
                                             type: 'POST',
                                             url: 'form_storage/question_detail_form.php',
                                             data: {
+                                                table: result.table,
                                                 type: result.type,
                                                 code: result.code,
                                                 quizid: result.quizid
@@ -243,11 +244,10 @@ if (!isset($_GET['quizid'])) {
                                             type: 'POST',
                                             url: 'form_storage/question_detail_form.php',
                                             data: {
+                                                table: result.table,
                                                 type: result.type,
-                                                question: result.question,
-                                                selectSQL: result.selectSQL,
-                                                insertSQL: result.insertSQL,
-                                                deleteSQL: result.deleteSQL
+                                                code: result.code,
+                                                quizid: result.quizid
                                             },
                                             success: function (data) {
                                                 $('#input-field').html(data);

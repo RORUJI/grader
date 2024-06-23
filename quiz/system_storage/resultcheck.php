@@ -5,6 +5,7 @@ if (!isset($_SESSION['username']) && !isset($_POST['code']) && !isset($_POST['qu
     /*Create a temporarily table and get a select code.*/
     include_once ("create_temptable.php");
     $code = $_POST['code'];
+    $table = $_POST['table'];
     $type = $_POST['type'];
     $quizid = $_POST['quizid'];
     if ($code == "") {
@@ -49,7 +50,17 @@ if (!isset($_SESSION['username']) && !isset($_POST['code']) && !isset($_POST['qu
                 echo json_encode(array('status' => 'error', 'msg' => 'Something went wrong, please try again!'));
             }
         } else {
-
+            $insertcode = str_replace($table, $usertable, $code);
+            $query = $conn->query($insertcode);
+            $checkresultcode = str_replace("\$usertable", $usertable, $loadresult['resultcode']);
+            $checkresult = $conn->query($checkresultcode);
+            if ($checkresult->num_rows == 1) {
+                echo json_encode(array('status' => 'success', 'msg' => 'Correct'));
+                $droptable = $conn->query("DROP TABLE $usertable");
+            } else {
+                echo json_encode(array('status' => 'error', 'msg' => 'คำตอบของคุณไม่ถูกต้อง!'));
+                $droptable = $conn->query("DROP TABLE $usertable");
+            }
         }
     }
 }
