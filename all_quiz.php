@@ -94,7 +94,7 @@ $result = $conn->query($sql);
                     <div class="col-4 Column3-question">
                     <?php while ($row = $result->fetch_assoc()) : ?>
                         <div class="graph3 col mx-1">
-                            <a href="grader_question2.php?questionID=<?php echo $row['questionID']; ?>" class="graph3-text">ข้อที่ <?php echo $row['questionID']; ?></a>
+                            <a href="quiz/quiz.php?quiz=<?php echo $row['questionID']; ?>" class="graph3-text">ข้อที่ <?php echo $row['questionID']; ?></a>
                         </div>
                         <?php endwhile; ?>
                     </div>

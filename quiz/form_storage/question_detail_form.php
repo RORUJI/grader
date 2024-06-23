@@ -8,32 +8,20 @@
 </head>
 
 <body>
-    <form action="system_storage/insertion_question.php" method="post" id="insert-form" class="w-100">
+    <form action="system_storage/resultcheck.php" method="post" id="insert-form" class="w-100">
+        <input type="hidden" name="quizid" value="<?php echo $_POST['quizid']; ?>">
         <input type="hidden" name="type" id="type" value=<?php echo $_POST['type']; ?>>
-        <input type="hidden" name="quiz" value="<?php echo $_POST['question']; ?>">
-        <div class="row p-2">
-            <div class="col p-2 type-select rounded">
-                <label for="question" class="form-label fw-bold">โจทย์ปัญหา</label>
-                <span class="form-control">
-                    <?php echo $_POST['question']; ?>
-                </span>
-            </div>
-        </div>
-        <div class="row p-2">
+        <div class="row px-2 mb-3">
             <div class="col p-2 me-3 type-select rounded">
-                <label for="answer-code" class="form-label fw-bold">ANSWER CODE</label>
-                <textarea name="answercode" class="form-control" cols="30"
-                    rows="10"><?php echo $_POST['answercode']; ?></textarea>
-            </div>
-            <div class="col p-2 me-3 type-select rounded">
-                <label for="result-code" class="form-label fw-bold">RESULT CODE</label>
-                <textarea name="resultcode" class="form-control" cols="30"
-                    rows="10"><?php echo $_POST['resultcode']; ?></textarea>
-            </div>
-            <div class="col p-2 me-3 type-select rounded">
-                <label for="temptable-code" class="form-label fw-bold">TEMPTABLE CODE</label>
-                <textarea name="temptablecode" class="form-control" cols="30"
-                    rows="10"><?php echo $_POST['temptablecode']; ?></textarea>
+                <label for="select-SQL-code" class="form-label fw-bold">CODE</label>
+                <?php if (isset($_POST['code'])): ?>
+                    <textarea name="code" class="form-control" cols="30"
+                        rows="10"><?php echo $_POST['code']; ?></textarea>
+                <?php endif; ?>
+                <?php if (!isset($_POST['code'])): ?>
+                    <textarea name="code" class="form-control bg-body" cols="30"
+                        rows="10">NOT SELECT SQL CODE.</textarea>
+                <?php endif; ?>
             </div>
         </div>
         <button type="submit" id="btn-create" class="btn btn-primary">สร้างโจทย์</button>

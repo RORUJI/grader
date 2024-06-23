@@ -2,7 +2,7 @@
 $question = "";
 if ($type == 1) {
     $selectStr = array();
-    $selectSQLStr = explode(" ", $answercode);
+    $selectSQLStr = explode(" ", $selectSQL);
     foreach ($selectSQLStr as $key => $value) {
         $selectStr[] = $value;
     }
@@ -45,17 +45,8 @@ if ($type == 1) {
             $question = $question . " " . $selectStr[$i] . " ";
         }
     }
-    echo json_encode(
-        array(
-            "status" => "success",
-            "msg" => "ทำการสร้างโจทย์ปัญหาของคุณสำเร็จแล้ว",
-            "question" => $question,
-            "answercode" => $answercode,
-            "resultcode" => $resultcode,
-            "temptablecode" => $temptablecode,
-            "type" => $type
-        )
-    );
+    echo json_encode(array("status" => "success", "msg" => "ทำการสร้างโจทย์ปัญหาของคุณสำเร็จแล้ว",
+        "question" => $question, "selectSQL" => $selectSQL, "table" => $table, "type" => $type));
 } else if ($type == 2) {
     $fieldNameStr = array();
     $fieldDataStr = array();
@@ -75,18 +66,9 @@ if ($type == 1) {
         }
     }
     $question = $question . "ลงในตาราง $table";
-    $temptablecode = "SELECT * FROM $table";
-    echo json_encode(
-        array(
-            "status" => "success",
-            "msg" => "ทำการสร้างโจทย์ปัญหาของคุณสำเร็จแล้ว",
-            "question" => $question,
-            "answercode" => $answercode,
-            "resultcode" => $resultcode,
-            "temptablecode" => $temptablecode,
-            "type" => $type
-        )
-    );
+    echo json_encode(array("status" => "success", "msg" => "ทำการสร้างโจทย์ปัญหาของคุณสำเร็จแล้ว",
+    "question" => $question, "selectSQL" => $selectSQL, "insertSQL" => $insertSQL,
+    "deleteSQL" => $deleteSQL, "type" => $type));
 } else if ($type == 3) {
     $fieldNameStr = array();
     $fieldDataStr = array();
@@ -106,17 +88,9 @@ if ($type == 1) {
         }
     }
     $question = "$question ออกจากตาราง $table";
-    echo json_encode(
-        array(
-            "status" => "success",
-            "msg" => "ทำการสร้างโจทย์ปัญหาของคุณสำเร็จแล้ว",
-            "question" => $question,
-            "selectSQL" => $selectSQL,
-            "insertSQL" => $insertSQL,
-            "deleteSQL" => $deleteSQL,
-            "type" => $type
-        )
-    );
+    echo json_encode(array("status" => "success", "msg" => "ทำการสร้างโจทย์ปัญหาของคุณสำเร็จแล้ว",
+    "question" => $question, "selectSQL" => $selectSQL, "insertSQL" => $insertSQL,
+    "deleteSQL" => $deleteSQL, "type" => $type));
 } else {
     $question = "จงแก้ไขข้อมูลในตาราง $table ที่มี ";
     for ($i = 0; $i < count($fieldName); $i++) {
@@ -135,17 +109,8 @@ if ($type == 1) {
             }
         }
     }
-    echo json_encode(
-        array(
-            "status" => "success",
-            "msg" => "ทำการสร้างโจทย์ปัญหาของคุณสำเร็จแล้ว",
-            "question" => $question,
-            "selectSQL" => $selectSQL,
-            "insertSQL" => $insertSQL,
-            "updateSQL" => $returnSQL,
-            "beforeSQL" => $beforeSQL,
-            "type" => $type
-        )
-    );
+    echo json_encode(array("status" => "success", "msg" => "ทำการสร้างโจทย์ปัญหาของคุณสำเร็จแล้ว",
+    "question" => $question, "selectSQL" => $selectSQL, "insertSQL" => $insertSQL,
+    "updateSQL" => $returnSQL, "beforeSQL" => $beforeSQL, "type" => $type));
 }
 ?>

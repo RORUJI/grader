@@ -12,78 +12,148 @@ include_once "../dbconnect.php";
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.2/font/bootstrap-icons.min.css">
-    <link rel="stylesheet" href="../style.css?v<?php echo time(); ?>">
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+    <link rel="stylesheet" href="../style2.css?v<?php echo time(); ?>">
     <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
     <title>Grader</title>
 </head>
 
-<body class="bg-primary">
-    <nav class="navbar navbar-expand-lg bg-body">
-        <div class="container">
-            <a class="navbar-brand" href="home.php">
-                <h2 class="text-primary fw-bold">G r a d e r</h2>
-            </a>
-            <div class="justify-content-end align-items-center">
-                <?php if (!isset($_SESSION['levelID'])): ?>
-                    <a href="login.php" class="btn btn-primary ms-3">Login</a>
-                <?php endif; ?>
-                <?php if (isset($_SESSION['levelID'])): ?>
-                    <span class="text-primary fw-bold"><i class="bi bi-person-fill"></i> Username:&nbsp;</span>
-                    <span>
-                        <?php echo $_SESSION['username']; ?>
+<body>
+    <nav class="sidebar">
+        <header>
+            <div class="image-text">
+                <span class="image">
+                    <img src="../User.jpg" alt="">
+                </span>
+                
+                <div class="text header-text">
+                    <span class="name">
+                        <?php if (!isset($_SESSION['userID'])) : ?>
+                            Guest
+                        <?php endif; ?>
                     </span>
-                    <a href="system/logout_system.php" id="signout-btn" class="btn btn-danger ms-3">
-                        <i class="bi bi-door-closed-fill"></i>Logout</a>
-                <?php endif; ?>
-                <button type="button" class="btn btn-danger" id="btnBack">Back</button>
+                    <span class="profession">Web developer</span>
+                </div>
             </div>
+            
+            <i class='bx bx-chevron-right toggle'></i>
+
+        </header>
+
+        <div class="menu-bar">
+            <div class="menu">
+                <li class="search-box">
+                    <i class='bx bx-search icon'></i>
+                        <input type="search" placeholder="Search...">
+                </li>
+                <li class="nav-link">
+                    <a href="index2.php">
+                        <i class='bx bx-home icon'></i>
+                        <span class="text nav-text">Home</span>
+                    </a>
+                </li> 
+                <li class="nav-link">
+                    <a href="#">
+                        <i class='bx bxs-user icon'></i>
+                        <span class="text nav-text">Profile</span>
+                    </a>
+                </li> 
+            </div>
+            <div class="bottom-content">
+                    <li class="">
+                        <a href="login.php">
+                            <i class="bx bx-log-out icon"></i>
+                            <span class="text nav-text">Logout</span>
+                        </a>
+                    </li>
+
+                    <li class="mode">
+                        <div class="moon-sun">
+                            <i class="bx bx-moon icon moon"></i>
+                            <i class="bx bx-sun icon sun"></i>
+                        </div>
+                        <span class="mode-text text">Dark Mode</span>
+                        
+                        <div class="toggle-switch">
+                            <span class="switch"></span>
+                        </div>
+                    </li>
+                </div>
         </div>
     </nav>
 
-    <div class="container-fluid">
-        <div class="position-absolute top-50 start-50 translate-middle" style="width: 150vh; height: 75vh">
-            <form action="system_storage/question_generator.php" method="post" id="generatorForm"
-                class="bg-body p-3 w-100 h-100 rounded shadow-lg overflow-y-scroll">
-                <h2 class="fw-bold text-center">สร้างโจทย์ปัญหา</h2>
-                <hr>
-                <div class="mb">
-                    <div class="row p-2">
-                        <div id="type-select" class="col-3 p-2 bg-secondary-subtle rounded me-3">
-                            <label for="type" class="form-label fw-bold">เลือกประเภทของโจทย์</label>
-                            <select name="type" id="type" class="form-select">
-                                <option value="">เลือกประเภทของโจทย์</option>
-                                <?php $sql = "SELECT * FROM type";
-                                $result = $conn->query($sql);
-                                while ($row = $result->fetch_assoc()): ?>
-                                    <option value="<?php echo $row['typeID']; ?>">
-                                        <?php echo $row['type']; ?>
-                                    </option>
-                                <?php endwhile; ?>
-                            </select>
-                        </div>
-                        <div id="table-select" class="col p-2 bg-secondary-subtle rounded me-3">
-                            <div class="row">
-                                <div class="col">
-                                    <label for="table" class="form-label fw-bold">ตารางที่ต้องการใช้งาน</label>
-                                    <select name="table" id="table" class="form-select">
-                                        <option value="">เลือกตารางข้อมูล</option>
-                                        <option value="person">person</option>
-                                        <option value="gender">gender</option>
+    <section class="home">
+        <div class="text">
+            <div class="div-text"><br>
+                <div class="div-text">
+                <div class="div-grader">
+                    <form action="system_storage/question_generator.php" method="post" id="generatorForm"
+                        class="">
+                        <h2 class="fw-bold text-center">สร้างโจทย์ปัญหา</h2>
+                        <hr>
+                        <div class="mb">
+                            <div class="row p-2">
+                                <div id="type-select" class="col-3 p-2 rounded me-3 type-select">
+                                    <label for="type" class="form-label fw-bold">เลือกประเภทของโจทย์</label>
+                                    <select name="type" id="type" class="form-select">
+                                        <option value="">เลือกประเภทของโจทย์</option>
+                                        <?php $sql = "SELECT * FROM type";
+                                        $result = $conn->query($sql);
+                                        while ($row = $result->fetch_assoc()): ?>
+                                            <option value="<?php echo $row['typeID']; ?>">
+                                                <?php echo $row['type']; ?>
+                                            </option>
+                                        <?php endwhile; ?>
                                     </select>
+                                </div>
+                                <div id="table-select" class="col p-2 rounded me-3 type-select">
+                                    <div class="row">
+                                        <div class="col">
+                                            <label for="table" class="form-label fw-bold">ตารางที่ต้องการใช้งาน</label>
+                                            <select name="table" id="table" class="form-select">
+                                                <option value="">เลือกตารางข้อมูล</option>
+                                                <option value="person">person</option>
+                                                <option value="gender">gender</option>
+                                            </select>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
+                        <div class="mb-3">
+                            <div id="input-field"></div>
+                        </div>
+                    </form>
                 </div>
-                <div class="mb-3">
-                    <div id="input-field"></div>
                 </div>
-            </form>
+            </div>
         </div>
-    </div>
+    </section>
 
     <script>
+        const body = document.querySelector("body"),
+        sidebar = body.querySelector(".sidebar"),
+        toggle = body.querySelector(".toggle"),
+        searchBtn = body.querySelector(".search-box"),
+        modeSwtich = body.querySelector(".toggle-switch")
+        modeText = body.querySelector(".mode-text");
+
+        toggle.addEventListener("click", () => {
+            sidebar.classList.toggle("close");
+        });
+
+        modeSwtich.addEventListener("click", () => {
+            body.classList.toggle("dark");
+
+            if(body.classList.contains("dark")){
+                modeText.innerText = "Light Mode"
+            }else{
+                modeText.innerText = "Drak Mode"
+            }
+        });
+
         $(document).ready(function () {
             $('#type, #table').on('change', function (e) {
                 e.preventDefault();
@@ -134,14 +204,15 @@ include_once "../dbconnect.php";
                                 cancelButtonColor: '#d33'
                             }).then(function (r) {
                                 if (r.isConfirmed) {
-                                    if (result.type == 1) {
                                         $.ajax({
                                             type: 'POST',
                                             url: 'form_storage/question_detail_form.php',
                                             data: {
                                                 type: result.type,
                                                 question: result.question,
-                                                selectSQL: result.selectSQL
+                                                answercode: result.answercode,
+                                                resultcode: result.resultcode,
+                                                temptablecode: result.temptablecode
                                             },
                                             success: function (data) {
                                                 $('#input-field').html(data);
@@ -149,59 +220,6 @@ include_once "../dbconnect.php";
                                                 $('#table-select').remove();
                                             }
                                         });
-                                    } else if (result.type == 2) {
-                                        $.ajax({
-                                            type: 'POST',
-                                            url: 'form_storage/question_detail_form.php',
-                                            data: {
-                                                type: result.type,
-                                                question: result.question,
-                                                selectSQL: result.selectSQL,
-                                                insertSQL: result.insertSQL,
-                                                deleteSQL: result.deleteSQL
-                                            },
-                                            success: function (data) {
-                                                $('#input-field').html(data);
-                                                $('#type-select').remove();
-                                                $('#table-select').remove();
-                                            }
-                                        });
-                                    } else if (result.type == 3) {
-                                        $.ajax({
-                                            type: 'POST',
-                                            url: 'form_storage/question_detail_form.php',
-                                            data: {
-                                                type: result.type,
-                                                question: result.question,
-                                                selectSQL: result.selectSQL,
-                                                insertSQL: result.insertSQL,
-                                                deleteSQL: result.deleteSQL
-                                            },
-                                            success: function (data) {
-                                                $('#input-field').html(data);
-                                                $('#type-select').remove();
-                                                $('#table-select').remove();
-                                            }
-                                        });
-                                    } else {
-                                        $.ajax({
-                                            type: 'POST',
-                                            url: 'form_storage/question_detail_form.php',
-                                            data: {
-                                                type: result.type,
-                                                question: result.question,
-                                                selectSQL: result.selectSQL,
-                                                beforeSQL: result.beforeSQL,
-                                                insertSQL: result.insertSQL,
-                                                updateSQL: result.updateSQL
-                                            },
-                                            success: function (data) {
-                                                $('#input-field').html(data);
-                                                $('#type-select').remove();
-                                                $('#table-select').remove();
-                                            }
-                                        });
-                                    }
                                 } else {
 
                                 }

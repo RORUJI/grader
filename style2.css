@@ -301,7 +301,10 @@ body.dark .switch::before{
     overflow: scroll;
 }
 
-.home .div-text .type-select{
+.type-select,
+.question,
+.request-datas,
+.request-condition {
     background: var(--primary-color-light);
 }
 

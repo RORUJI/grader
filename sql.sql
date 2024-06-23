@@ -60,16 +60,14 @@ CREATE TABLE type (
 
 INSERT INTO type(type) VALUES('SELECT'), ('INSERT'), ('DELETE'), ('UPDATE');
 
-CREATE TABLE question (
-    questionID INT(3) NOT NULL AUTO_INCREMENT,
-    question VARCHAR(255) NOT NULL,
-    select_code text,
-    insert_code text,
-    delete_code text,
-    update_code text,
-    before_code text,
+CREATE TABLE quiz (
+    quizid INT(3) NOT NULL AUTO_INCREMENT,
+    quiz VARCHAR(255) NOT NULL,
+    answercode text NOT NULL,
+    resultcode text NOT NULL,
+    temptablecode text NOT NULL,
     typeID INT(3) NOT NULL,
-    PRIMARY KEY(questionID),
+    PRIMARY KEY(quizID),
     FOREIGN KEY(typeID) REFERENCES type(typeID)
 ) ENGINE = InnoDB DEFAULT CHARSET = utf8;
 

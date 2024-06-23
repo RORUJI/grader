@@ -3,38 +3,29 @@ session_start();
 include_once "../../dbconnect.php";
 $type = $_POST['type'];
 $table = $_POST['table'];
+$quizid = $_POST['quizid'];
 if ($type == 1) {
     if (!isset($_POST['data'])) {
         echo json_encode(array("status" => "error", "msg" => "กรุณาเลือกข้อมูลที่ต้องการ!"));
     } else {
         $data = $_POST['data'];
         $fieldName = [];
-        $answercode = "SELECT";
-        $resultcode = "SELECT";
-        $temptablecode = "SELECT";
+        $code = "SELECT";
         if ($data != "*") {
             foreach ($data as $key => $value) {
                 $fieldName[] = $value;
             }
             for ($i = 0; $i < count($fieldName); $i++) {
                 if ($i < count($fieldName) - 1) {
-                    $temptablecode = "$temptablecode $fieldName[$i],";
-                    $answercode = "$answercode $fieldName[$i],";
-                    $resultcode = "$resultcode $fieldName[$i],";
+                    $code = "$code $fieldName[$i],";
                 } else {
-                    $temptablecode = "$temptablecode $fieldName[$i]";
-                    $answercode = "$answercode $fieldName[$i]";
-                    $resultcode = "$resultcode $fieldName[$i]";
+                    $code = "$code $fieldName[$i]";
                 }
             }
         } else {
-            $answercode = $answercode . " *";
-            $resultcode = $resultcode . " *";
-            $temptablecode = $temptablecode . " *";
+            $code = $code . " *";
         }
-        $answercode = $answercode . " FROM $table";
-        $resultcode = $resultcode . " FROM $table";
-        $temptablecode = $temptablecode . " FROM $table";
+        $code = $code . " FROM $table";
         if (isset($_POST['join-checkbox'])) {
             if ($_POST['jointype'] == "") {
                 echo json_encode(array("status" => "error", "msg" => "กรุณาเลือกประเภทของการ JOIN"));
@@ -48,9 +39,7 @@ if ($type == 1) {
                 foreach ($joinData as $key => $value) {
                     $joinTableData[] = $value;
                 }
-                $answercode = $answercode . " $joinType $joinTableData[0] ON $table.$joinTableData[1] = $joinTableData[0].$joinTableData[1]";
-                $resultcode = $resultcode . " $joinType $joinTableData[0] ON $table.$joinTableData[1] = $joinTableData[0].$joinTableData[1]";
-                $temptablecode = $temptablecode . " $joinType $joinTableData[0] ON $table.$joinTableData[1] = $joinTableData[0].$joinTableData[1]";
+                $code = $code . " $joinType $joinTableData[0] ON $table.$joinTableData[1] = $joinTableData[0].$joinTableData[1]";
                 if (isset($_POST['condition-checkbox'])) {
                     $conditionData = $_POST['condition'];
                     if ($conditionData['field'][0] == "") {
@@ -63,9 +52,7 @@ if ($type == 1) {
                         $conditionField = $conditionData['field'][0];
                         $condition = $conditionData['condition'][0];
                         $conditionCompare = $conditionData['compare'][0];
-                        $answercode = $answercode . " WHERE " . $conditionField . " " . $condition . " " . "'$conditionCompare'";
-                        $resultcode = $resultcode . " WHERE " . $conditionField . " " . $condition . " " . "'$conditionCompare'";
-                        $temptablecode = $temptablecode . " WHERE " . $conditionField . " " . $condition . " " . "'$conditionCompare'";
+                        $code = $code . " WHERE " . $conditionField . " " . $condition . " " . "'$conditionCompare'";
                         if (isset($_POST['order-checkbox'])) {
                             $orderby = $_POST['orderby'];
                             $sort = $_POST['sort'];
@@ -74,13 +61,27 @@ if ($type == 1) {
                             } else if ($sort == "") {
                                 echo json_encode(array("status" => "error", "msg" => "กรุณาเลือกประเภทการจัดเรียง!"));
                             } else {
-                                $answercode = $answercode . " ORDER BY " . $orderby . " " . $sort;
-                                $resultcode = $resultcode . " ORDER BY " . $orderby . " " . $sort;
-                                $temptablecode = $temptablecode . " ORDER BY " . $orderby . " " . $sort;
-                                include_once "thai_translation.php";
+                                $code = $code . " ORDER BY " . $orderby . " " . $sort;
+                                echo json_encode(
+                                    array(
+                                        "status" => "success",
+                                        "msg" => "Generate sql code successfully.",
+                                        "code" => $code,
+                                        "type" => $type,
+                                        "quizid" => $quizid
+                                    )
+                                );
                             }
                         } else {
-                            include_once "thai_translation.php";
+                            echo json_encode(
+                                array(
+                                    "status" => "success",
+                                    "msg" => "Generate sql code successfully.",
+                                    "code" => $code,
+                                    "type" => $type,
+                                    "quizid" => $quizid
+                                )
+                            );
                         }
                     }
                 } else if (isset($_POST['order-checkbox'])) {
@@ -91,13 +92,27 @@ if ($type == 1) {
                     } else if ($sort == "") {
                         echo json_encode(array("status" => "error", "msg" => "กรุณาเลือกประเภทการจัดเรียง!"));
                     } else {
-                        $answercode = $answercode . " ORDER BY " . $orderby . " " . $sort;
-                        $resultcode = $resultcode . " ORDER BY " . $orderby . " " . $sort;
-                        $temptablecode = $temptablecode . " ORDER BY " . $orderby . " " . $sort;
-                        include_once "thai_translation.php";
+                        $code = $code . " ORDER BY " . $orderby . " " . $sort;
+                        echo json_encode(
+                            array(
+                                "status" => "success",
+                                "msg" => "Generate sql code successfully.",
+                                "code" => $code,
+                                "type" => $type,
+                                "quizid" => $quizid
+                            )
+                        );
                     }
                 } else {
-                    include_once "thai_translation.php";
+                    echo json_encode(
+                        array(
+                            "status" => "success",
+                            "msg" => "Generate sql code successfully.",
+                            "code" => $code,
+                            "type" => $type,
+                            "quizid" => $quizid
+                        )
+                    );
                 }
             }
         } else {
@@ -113,9 +128,7 @@ if ($type == 1) {
                     $conditionField = $conditionData['field'][0];
                     $condition = $conditionData['condition'][0];
                     $conditionCompare = $conditionData['compare'][0];
-                    $answercode = $answercode . " WHERE " . $conditionField . " " . $condition . " " . "'$conditionCompare'";
-                    $resultcode = $resultcode . " WHERE " . $conditionField . " " . $condition . " " . "'$conditionCompare'";
-                    $temptablecode = $temptablecode . " WHERE " . $conditionField . " " . $condition . " " . "'$conditionCompare'";
+                    $code = $code . " WHERE " . $conditionField . " " . $condition . " " . "'$conditionCompare'";
                     if (isset($_POST['order-checkbox'])) {
                         $orderby = $_POST['orderby'];
                         $sort = $_POST['sort'];
@@ -124,13 +137,27 @@ if ($type == 1) {
                         } else if ($sort == "") {
                             echo json_encode(array("status" => "error", "msg" => "กรุณาเลือกประเภทการจัดเรียง!"));
                         } else {
-                            $answercode = $answercode . " " . "ORDER BY " . $orderby . " " . $sort;
-                            $resultcode = $resultcode . " " . "ORDER BY " . $orderby . " " . $sort;
-                            $temptablecode = $temptablecode . " " . "ORDER BY " . $orderby . " " . $sort;
-                            echo json_encode(array("status" => "success", "msg" => $temptablecode));
+                            $code = $code . " " . "ORDER BY " . $orderby . " " . $sort;
+                            echo json_encode(
+                                array(
+                                    "status" => "success",
+                                    "msg" => "Generate sql code successfully.",
+                                    "code" => $code,
+                                    "type" => $type,
+                                    "quizid" => $quizid
+                                )
+                            );
                         }
                     } else {
-                        include_once "thai_translation.php";
+                        echo json_encode(
+                            array(
+                                "status" => "success",
+                                "msg" => "Generate sql code successfully.",
+                                "code" => $code,
+                                "type" => $type,
+                                "quizid" => $quizid
+                            )
+                        );
                     }
                 }
             } else {
@@ -142,13 +169,27 @@ if ($type == 1) {
                     } else if ($sort == "") {
                         echo json_encode(array("status" => "error", "msg" => "กรุณาเลือกประเภทการจัดเรียง!"));
                     } else {
-                        $answercode = $answercode . " ORDER BY " . $orderby . " " . $sort;
-                        $resultcode = $resultcode . " ORDER BY " . $orderby . " " . $sort;
-                        $temptablecode = $temptablecode . " ORDER BY " . $orderby . " " . $sort;
-                        include_once "thai_translation.php";
+                        $code = $code . " ORDER BY " . $orderby . " " . $sort;
+                        echo json_encode(
+                            array(
+                                "status" => "success",
+                                "msg" => "Generate sql code successfully.",
+                                "code" => $code,
+                                "type" => $type,
+                                "quizid" => $quizid
+                            )
+                        );
                     }
                 } else {
-                    include_once "thai_translation.php";
+                    echo json_encode(
+                        array(
+                            "status" => "success",
+                            "msg" => "Generate sql code successfully.",
+                            "code" => $code,
+                            "type" => $type,
+                            "quizid" => $quizid
+                        )
+                    );
                 }
             }
         }
@@ -156,8 +197,9 @@ if ($type == 1) {
 } else if ($type == 2) {
     $fieldName = [];
     $fieldData = [];
-    $answercode = "INSERT INTO $table(";
-    $resultcode = "SELECT * FROM \$usertable WHERE ";
+    $insertSQL = "INSERT INTO $table(";
+    $deleteSQL = "DELETE FROM $table WHERE ";
+    $code = "SELECT * FROM $table WHERE ";
     if (isset($_POST['field-data'])) {
         if ($_POST['field-name'] != "*") {
             $fieldName = $_POST['field-name'];
@@ -167,25 +209,28 @@ if ($type == 1) {
                     echo json_encode(array("status" => "error", "msg" => "กรุณากรอกข้อมูล $fieldName[$i]!"));
                     break;
                 } else {
-                    $answercode = $answercode . $fieldName[$i];
-                    $resultcode = $resultcode . $fieldName[$i] . " = " . "'$fieldData[$i]'";
+                    $insertSQL = $insertSQL . $fieldName[$i];
+                    $deleteSQL = $deleteSQL . $fieldName[$i] . " = " . "'$fieldData[$i]'";
+                    $code = $code . $fieldName[$i] . " = " . "'$fieldData[$i]'";
                     if ($i < count($fieldName) - 1) {
-                        $answercode = $answercode . ", ";
-                        $resultcode = $resultcode . " AND ";
+                        $insertSQL = $insertSQL . ", ";
+                        $deleteSQL = $deleteSQL . " AND ";
+                        $code = $code . " AND ";
                     } else {
-                        $answercode = $answercode . ") VALUES(";
-                        $resultcode = $resultcode . ";";
+                        $insertSQL = $insertSQL . ") VALUES(";
+                        $deleteSQL = $deleteSQL . ";";
+                        $code = $code . ";";
                         for ($j = 0; $j < count($fieldData); $j++) {
                             if ($fieldData[$j] == "") {
                                 echo json_encode(array("status" => "error", "msg" => "กรุณากรอกข้อมูล $fieldName[$i]!"));
                                 break;
                             } else {
-                                $answercode = $answercode . "'$fieldData[$j]'";
+                                $insertSQL = $insertSQL . "'$fieldData[$j]'";
                                 if ($j < count($fieldData) - 1) {
-                                    $answercode = $answercode . ", ";
+                                    $insertSQL = $insertSQL . ", ";
                                 } else {
-                                    $answercode = $answercode . ");";
-                                    include_once "thai_translation.php";
+                                    $insertSQL = $insertSQL . ");";
+
                                 }
                             }
                         }
@@ -204,25 +249,28 @@ if ($type == 1) {
                     echo json_encode(array("status" => "error", "msg" => "กรุณากรอกข้อมูล $fieldName[$i]!"));
                     break;
                 } else {
-                    $answercode = $answercode . $fieldName[$i];
-                    $resultcode = $resultcode . $fieldName[$i] . " = " . "'$fieldData[$i]'";
+                    $insertSQL = $insertSQL . $fieldName[$i];
+                    $deleteSQL = $deleteSQL . $fieldName[$i] . " = " . "'$fieldData[$i]'";
+                    $code = $code . $fieldName[$i] . " = " . "'$fieldData[$i]'";
                     if ($i < count($fieldName) - 1) {
-                        $answercode = $answercode . ", ";
-                        $resultcode = $resultcode . " AND ";
+                        $insertSQL = $insertSQL . ", ";
+                        $deleteSQL = $deleteSQL . " AND ";
+                        $code = $code . " AND ";
                     } else {
-                        $answercode = $answercode . ") VALUES(";
-                        $resultcode = $resultcode . ";";
+                        $insertSQL = $insertSQL . ") VALUES(";
+                        $deleteSQL = $deleteSQL . ";";
+                        $code = $code . ";";
                         for ($j = 0; $j < count($fieldData); $j++) {
                             if ($fieldData[$j] == "") {
                                 echo json_encode(array("status" => "error", "msg" => "กรุณากรอกข้อมูล $fieldName[$i]!"));
                                 break;
                             } else {
-                                $answercode = $answercode . "'$fieldData[$j]'";
+                                $insertSQL = $insertSQL . "'$fieldData[$j]'";
                                 if ($j < count($fieldData) - 1) {
-                                    $answercode = $answercode . ", ";
+                                    $insertSQL = $insertSQL . ", ";
                                 } else {
-                                    $answercode = $answercode . ");";
-                                    include_once "thai_translation.php";
+                                    $insertSQL = $insertSQL . ");";
+
                                 }
                             }
                         }
@@ -238,7 +286,7 @@ if ($type == 1) {
     $fieldData = [];
     $insertSQL = "INSERT INTO $table(";
     $deleteSQL = "DELETE FROM $table WHERE ";
-    $resultcode = "SELECT * FROM $table WHERE ";
+    $code = "SELECT * FROM $table WHERE ";
     if (isset($_POST['field-data'])) {
         if ($_POST['field-name'] != "*") {
             $fieldName = $_POST['field-name'];
@@ -250,15 +298,15 @@ if ($type == 1) {
                 } else {
                     $insertSQL = $insertSQL . $fieldName[$i];
                     $deleteSQL = $deleteSQL . $fieldName[$i] . " = " . "'$fieldData[$i]'";
-                    $resultcode = $resultcode . $fieldName[$i] . " = " . "'$fieldData[$i]'";
+                    $code = $code . $fieldName[$i] . " = " . "'$fieldData[$i]'";
                     if ($i < count($fieldName) - 1) {
                         $insertSQL = $insertSQL . ", ";
                         $deleteSQL = $deleteSQL . " AND ";
-                        $resultcode = $resultcode . " AND ";
+                        $code = $code . " AND ";
                     } else {
                         $insertSQL = $insertSQL . ") VALUES(";
                         $deleteSQL = $deleteSQL . ";";
-                        $resultcode = $resultcode . ";";
+                        $code = $code . ";";
                         for ($j = 0; $j < count($fieldData); $j++) {
                             if ($fieldData[$j] == "") {
                                 echo json_encode(array("status" => "error", "msg" => "กรุณากรอกข้อมูล $fieldName[$i]!"));
@@ -269,7 +317,7 @@ if ($type == 1) {
                                     $insertSQL = $insertSQL . ", ";
                                 } else {
                                     $insertSQL = $insertSQL . ");";
-                                    include_once "thai_translation.php";
+
                                 }
                             }
                         }
@@ -290,15 +338,15 @@ if ($type == 1) {
                 } else {
                     $insertSQL = $insertSQL . $fieldName[$i];
                     $deleteSQL = $deleteSQL . $fieldName[$i] . " = " . "'$fieldData[$i]'";
-                    $resultcode = $resultcode . $fieldName[$i] . " = " . "'$fieldData[$i]'";
+                    $code = $code . $fieldName[$i] . " = " . "'$fieldData[$i]'";
                     if ($i < count($fieldName) - 1) {
                         $insertSQL = $insertSQL . ", ";
                         $deleteSQL = $deleteSQL . " AND ";
-                        $resultcode = $resultcode . " AND ";
+                        $code = $code . " AND ";
                     } else {
                         $insertSQL = $insertSQL . ") VALUES(";
                         $deleteSQL = $deleteSQL . ";";
-                        $resultcode = $resultcode . ";";
+                        $code = $code . ";";
                         for ($j = 0; $j < count($fieldData); $j++) {
                             if ($fieldData[$j] == "") {
                                 echo json_encode(array("status" => "error", "msg" => "กรุณากรอกข้อมูล $fieldName[$i]!"));
@@ -309,7 +357,7 @@ if ($type == 1) {
                                     $insertSQL = $insertSQL . ", ";
                                 } else {
                                     $insertSQL = $insertSQL . ");";
-                                    include_once "thai_translation.php";
+
                                 }
                             }
                         }
@@ -323,7 +371,7 @@ if ($type == 1) {
 } else {
     $updateSQL = "UPDATE $table SET ";
     $returnSQL = "UPDATE $table SET ";
-    $resultcode = "SELECT * FROM $table WHERE ";
+    $code = "SELECT * FROM $table WHERE ";
     $beforeSQL = "SELECT * FROM $table WHERE ";
     $insertSQL = "INSERT INTO $table(";
     $fieldName = $_POST['field-name'];
@@ -340,19 +388,19 @@ if ($type == 1) {
             } else {
                 $updateSQL = $updateSQL . "$fieldName[$i] = '$afterUpdate[$i]'";
                 $returnSQL = $returnSQL . "$fieldName[$i] = '$beforeUpdate[$i]'";
-                $resultcode = $resultcode . "$fieldName[$i] = '$afterUpdate[$i]'";
+                $code = $code . "$fieldName[$i] = '$afterUpdate[$i]'";
                 $beforeSQL = $beforeSQL . "$fieldName[$i] = '$beforeUpdate[$i]'";
                 $insertSQL = $insertSQL . "$fieldName[$i]";
                 if ($i < count($beforeUpdate) - 1) {
                     $updateSQL = $updateSQL . ", ";
                     $returnSQL = $returnSQL . ", ";
-                    $resultcode = $resultcode . " AND ";
+                    $code = $code . " AND ";
                     $beforeSQL = $beforeSQL . " AND ";
                     $insertSQL = $insertSQL . ", ";
                 } else {
                     $updateSQL = $updateSQL . " WHERE ";
                     $returnSQL = $returnSQL . " WHERE ";
-                    $resultcode = $resultcode . ";";
+                    $code = $code . ";";
                     $beforeSQL = $beforeSQL . ";";
                     $insertSQL = $insertSQL . ") VALUES(";
                     for ($j = 0; $j < count($afterUpdate); $j++) {
@@ -367,7 +415,7 @@ if ($type == 1) {
                             $updateSQL = $updateSQL . ";";
                             $returnSQL = $returnSQL . ";";
                             $insertSQL = $insertSQL . ");";
-                            include_once "thai_translation.php";
+
                         }
                     }
                 }
@@ -390,19 +438,19 @@ if ($type == 1) {
             } else {
                 $updateSQL = $updateSQL . "$fieldName[$i] = '$afterUpdate[$i]'";
                 $returnSQL = $returnSQL . "$fieldName[$i] = '$beforeUpdate[$i]'";
-                $resultcode = $resultcode . "$fieldName[$i] = '$afterUpdate[$i]'";
+                $code = $code . "$fieldName[$i] = '$afterUpdate[$i]'";
                 $beforeSQL = $beforeSQL . "$beforeSQL[$i] = '$beforeUpdate[$i]'";
                 $insertSQL = $insertSQL . "$fieldName[$i]";
                 if ($i < count($beforeUpdate) - 1) {
                     $updateSQL = $updateSQL . ", ";
                     $returnSQL = $returnSQL . ", ";
-                    $resultcode = $resultcode . " AND ";
+                    $code = $code . " AND ";
                     $beforeSQL = $beforeSQL . " AND ";
                     $insertSQL = $insertSQL . ", ";
                 } else {
                     $updateSQL = $updateSQL . " WHERE ";
                     $returnSQL = $returnSQL . " WHERE ";
-                    $resultcode = $resultcode . ";";
+                    $code = $code . ";";
                     $beforeSQL = $beforeSQL . ";";
                     $insertSQL = $insertSQL . ") VALUES(";
                     for ($j = 0; $j < count($afterUpdate); $j++) {
@@ -417,7 +465,7 @@ if ($type == 1) {
                             $updateSQL = $updateSQL . ";";
                             $returnSQL = $returnSQL . ";";
                             $insertSQL = $insertSQL . ");";
-                            include_once "thai_translation.php";
+
                         }
                     }
                 }

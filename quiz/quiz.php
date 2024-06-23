@@ -1,6 +1,23 @@
 <?php
 session_start();
+$_SESSION['username'] = "nitipat";
 include_once "../dbconnect.php";
+
+if (!isset($_GET['quizid'])) {
+    header("location: ../index.php");
+} else {
+    $quizid = $_GET['quizid'];
+    $sql = "SELECT * FROM quiz";
+    $result = $conn->query($sql);
+    if ($quizid < 1 || $quizid > $result->num_rows) {
+        header("location: ../index.php");
+    } else {
+        $sql = "SELECT * FROM quiz INNER JOIN type ON quiz.typeID = type.typeID 
+        WHERE quizid = '$quizid'";
+        $query = $conn->query($sql);
+        $result = $query->fetch_assoc();
+    }
+}
 ?>
 
 <!DOCTYPE html>
@@ -27,17 +44,17 @@ include_once "../dbconnect.php";
                 <span class="image">
                     <img src="../User.jpg" alt="">
                 </span>
-                
+
                 <div class="text header-text">
                     <span class="name">
-                        <?php if (!isset($_SESSION['userID'])) : ?>
+                        <?php if (!isset($_SESSION['userID'])): ?>
                             Guest
                         <?php endif; ?>
                     </span>
                     <span class="profession">Web developer</span>
                 </div>
             </div>
-            
+
             <i class='bx bx-chevron-right toggle'></i>
 
         </header>
@@ -46,41 +63,41 @@ include_once "../dbconnect.php";
             <div class="menu">
                 <li class="search-box">
                     <i class='bx bx-search icon'></i>
-                        <input type="search" placeholder="Search...">
+                    <input type="search" placeholder="Search...">
                 </li>
                 <li class="nav-link">
                     <a href="index2.php">
                         <i class='bx bx-home icon'></i>
                         <span class="text nav-text">Home</span>
                     </a>
-                </li> 
+                </li>
                 <li class="nav-link">
                     <a href="#">
                         <i class='bx bxs-user icon'></i>
                         <span class="text nav-text">Profile</span>
                     </a>
-                </li> 
+                </li>
             </div>
             <div class="bottom-content">
-                    <li class="">
-                        <a href="login.php">
-                            <i class="bx bx-log-out icon"></i>
-                            <span class="text nav-text">Logout</span>
-                        </a>
-                    </li>
+                <li class="">
+                    <a href="login.php">
+                        <i class="bx bx-log-out icon"></i>
+                        <span class="text nav-text">Logout</span>
+                    </a>
+                </li>
 
-                    <li class="mode">
-                        <div class="moon-sun">
-                            <i class="bx bx-moon icon moon"></i>
-                            <i class="bx bx-sun icon sun"></i>
-                        </div>
-                        <span class="mode-text text">Dark Mode</span>
-                        
-                        <div class="toggle-switch">
-                            <span class="switch"></span>
-                        </div>
-                    </li>
-                </div>
+                <li class="mode">
+                    <div class="moon-sun">
+                        <i class="bx bx-moon icon moon"></i>
+                        <i class="bx bx-sun icon sun"></i>
+                    </div>
+                    <span class="mode-text text">Dark Mode</span>
+
+                    <div class="toggle-switch">
+                        <span class="switch"></span>
+                    </div>
+                </li>
+            </div>
         </div>
     </nav>
 
@@ -88,45 +105,47 @@ include_once "../dbconnect.php";
         <div class="text">
             <div class="div-text"><br>
                 <div class="div-text">
-                <div class="div-grader">
-                    <form action="system_storage/question_generator.php" method="post" id="generatorForm"
-                        class="">
-                        <h2 class="fw-bold text-center">สร้างโจทย์ปัญหา</h2>
-                        <hr>
-                        <div class="mb">
-                            <div class="row p-2">
-                                <div id="type-select" class="col-3 p-2 rounded me-3 type-select">
-                                    <label for="type" class="form-label fw-bold">เลือกประเภทของโจทย์</label>
-                                    <select name="type" id="type" class="form-select">
-                                        <option value="">เลือกประเภทของโจทย์</option>
-                                        <?php $sql = "SELECT * FROM type";
-                                        $result = $conn->query($sql);
-                                        while ($row = $result->fetch_assoc()): ?>
-                                            <option value="<?php echo $row['typeID']; ?>">
-                                                <?php echo $row['type']; ?>
-                                            </option>
-                                        <?php endwhile; ?>
-                                    </select>
+                    <div class="div-grader">
+                        <form action="system_storage/code_generator.php" method="post" id="generatorForm" class="">
+                            <h2 class="fw-bold text-center">สร้างโจทย์ปัญหา</h2>
+                            <hr>
+                            <div class="mb">
+                                <div class="row p-2">
+                                    <div class="col p-2 rounded me-3 type-select">
+                                        <label for="quiz" class="form-label fw-bold">คำถาม</label>
+                                        <span class="form-control"><?php echo $result['quiz']; ?></span>
+                                        <input type="hidden" name="quizid" value="<?php echo $_GET['quizid']; ?>">
+                                    </div>
                                 </div>
-                                <div id="table-select" class="col p-2 rounded me-3 type-select">
-                                    <div class="row">
-                                        <div class="col">
-                                            <label for="table" class="form-label fw-bold">ตารางที่ต้องการใช้งาน</label>
-                                            <select name="table" id="table" class="form-select">
-                                                <option value="">เลือกตารางข้อมูล</option>
-                                                <option value="person">person</option>
-                                                <option value="gender">gender</option>
-                                            </select>
+                            </div>
+                            <div class="mb">
+                                <div class="row p-2">
+                                    <div id="type-select" class="col-3 p-2 rounded me-3 type-select">
+                                        <label for="type" class="form-label fw-bold">ประเภทของโจทย์</label>
+                                        <input type="hidden" name="type" id="type"
+                                            value="<?php echo $result['typeID']; ?>">
+                                        <span class="form-control"><?php echo $result['type']; ?></span>
+                                    </div>
+                                    <div id="table-select" class="col p-2 rounded me-3 type-select">
+                                        <div class="row">
+                                            <div class="col">
+                                                <label for="table"
+                                                    class="form-label fw-bold">ตารางที่ต้องการใช้งาน</label>
+                                                <select name="table" id="table" class="form-select">
+                                                    <option value="">เลือกตารางข้อมูล</option>
+                                                    <option value="person">person</option>
+                                                    <option value="gender">gender</option>
+                                                </select>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
-                        </div>
-                        <div class="mb-3">
-                            <div id="input-field"></div>
-                        </div>
-                    </form>
-                </div>
+                            <div class="mb-3">
+                                <div id="input-field"></div>
+                            </div>
+                        </form>
+                    </div>
                 </div>
             </div>
         </div>
@@ -134,10 +153,10 @@ include_once "../dbconnect.php";
 
     <script>
         const body = document.querySelector("body"),
-        sidebar = body.querySelector(".sidebar"),
-        toggle = body.querySelector(".toggle"),
-        searchBtn = body.querySelector(".search-box"),
-        modeSwtich = body.querySelector(".toggle-switch")
+            sidebar = body.querySelector(".sidebar"),
+            toggle = body.querySelector(".toggle"),
+            searchBtn = body.querySelector(".search-box"),
+            modeSwtich = body.querySelector(".toggle-switch")
         modeText = body.querySelector(".mode-text");
 
         toggle.addEventListener("click", () => {
@@ -147,9 +166,9 @@ include_once "../dbconnect.php";
         modeSwtich.addEventListener("click", () => {
             body.classList.toggle("dark");
 
-            if(body.classList.contains("dark")){
+            if (body.classList.contains("dark")) {
                 modeText.innerText = "Light Mode"
-            }else{
+            } else {
                 modeText.innerText = "Drak Mode"
             }
         });
@@ -210,8 +229,8 @@ include_once "../dbconnect.php";
                                             url: 'form_storage/question_detail_form.php',
                                             data: {
                                                 type: result.type,
-                                                question: result.question,
-                                                selectSQL: result.selectSQL
+                                                code: result.code,
+                                                quizid: result.quizid
                                             },
                                             success: function (data) {
                                                 $('#input-field').html(data);
