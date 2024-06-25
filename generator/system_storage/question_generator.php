@@ -236,9 +236,8 @@ if ($type == 1) {
 } else if ($type == 3) {
     $fieldName = [];
     $fieldData = [];
-    $insertSQL = "INSERT INTO $table(";
-    $deleteSQL = "DELETE FROM $table WHERE ";
-    $resultcode = "SELECT * FROM $table WHERE ";
+    $answercode = "DELETE FROM $table WHERE ";
+    $resultcode = "SELECT * FROM \$usertable WHERE ";
     if (isset($_POST['field-data'])) {
         if ($_POST['field-name'] != "*") {
             $fieldName = $_POST['field-name'];
@@ -248,29 +247,20 @@ if ($type == 1) {
                     echo json_encode(array("status" => "error", "msg" => "กรุณากรอกข้อมูล $fieldName[$i]!"));
                     break;
                 } else {
-                    $insertSQL = $insertSQL . $fieldName[$i];
-                    $deleteSQL = $deleteSQL . $fieldName[$i] . " = " . "'$fieldData[$i]'";
+                    $answercode = $answercode . $fieldName[$i] . " = " . "'$fieldData[$i]'";
                     $resultcode = $resultcode . $fieldName[$i] . " = " . "'$fieldData[$i]'";
                     if ($i < count($fieldName) - 1) {
-                        $insertSQL = $insertSQL . ", ";
-                        $deleteSQL = $deleteSQL . " AND ";
+                        $answercode = $answercode . " AND ";
                         $resultcode = $resultcode . " AND ";
                     } else {
-                        $insertSQL = $insertSQL . ") VALUES(";
-                        $deleteSQL = $deleteSQL . ";";
+                        $answercode = $answercode . ";";
                         $resultcode = $resultcode . ";";
                         for ($j = 0; $j < count($fieldData); $j++) {
                             if ($fieldData[$j] == "") {
                                 echo json_encode(array("status" => "error", "msg" => "กรุณากรอกข้อมูล $fieldName[$i]!"));
                                 break;
                             } else {
-                                $insertSQL = $insertSQL . "'$fieldData[$j]'";
-                                if ($j < count($fieldData) - 1) {
-                                    $insertSQL = $insertSQL . ", ";
-                                } else {
-                                    $insertSQL = $insertSQL . ");";
-                                    include_once "thai_translation.php";
-                                }
+                                include_once "thai_translation.php";
                             }
                         }
                     }
@@ -288,29 +278,20 @@ if ($type == 1) {
                     echo json_encode(array("status" => "error", "msg" => "กรุณากรอกข้อมูล $fieldName[$i]!"));
                     break;
                 } else {
-                    $insertSQL = $insertSQL . $fieldName[$i];
-                    $deleteSQL = $deleteSQL . $fieldName[$i] . " = " . "'$fieldData[$i]'";
+                    $answercode = $answercode . $fieldName[$i] . " = " . "'$fieldData[$i]'";
                     $resultcode = $resultcode . $fieldName[$i] . " = " . "'$fieldData[$i]'";
                     if ($i < count($fieldName) - 1) {
-                        $insertSQL = $insertSQL . ", ";
-                        $deleteSQL = $deleteSQL . " AND ";
+                        $answercode = $answercode . " AND ";
                         $resultcode = $resultcode . " AND ";
                     } else {
-                        $insertSQL = $insertSQL . ") VALUES(";
-                        $deleteSQL = $deleteSQL . ";";
+                        $answercode = $answercode . ";";
                         $resultcode = $resultcode . ";";
                         for ($j = 0; $j < count($fieldData); $j++) {
                             if ($fieldData[$j] == "") {
                                 echo json_encode(array("status" => "error", "msg" => "กรุณากรอกข้อมูล $fieldName[$i]!"));
                                 break;
                             } else {
-                                $insertSQL = $insertSQL . "'$fieldData[$j]'";
-                                if ($j < count($fieldData) - 1) {
-                                    $insertSQL = $insertSQL . ", ";
-                                } else {
-                                    $insertSQL = $insertSQL . ");";
-                                    include_once "thai_translation.php";
-                                }
+                                include_once "thai_translation.php";
                             }
                         }
                     }
@@ -321,11 +302,8 @@ if ($type == 1) {
         echo json_encode(array("status" => "error", "msg" => "กรุณาเลือกข้อมูล!"));
     }
 } else {
-    $updateSQL = "UPDATE $table SET ";
-    $returnSQL = "UPDATE $table SET ";
-    $resultcode = "SELECT * FROM $table WHERE ";
-    $beforeSQL = "SELECT * FROM $table WHERE ";
-    $insertSQL = "INSERT INTO $table(";
+    $answercode = "UPDATE $table SET ";
+    $resultcode = "SELECT * FROM \$usertable WHERE ";
     $fieldName = $_POST['field-name'];
     $beforeUpdate = $_POST['before-update-field'];
     $afterUpdate = $_POST['after-update-field'];
@@ -338,35 +316,20 @@ if ($type == 1) {
                 echo json_encode(array("status" => "error", "msg" => "กรุณากรอกข้อมูลหลังแก้ไข!"));
                 break;
             } else {
-                $updateSQL = $updateSQL . "$fieldName[$i] = '$afterUpdate[$i]'";
-                $returnSQL = $returnSQL . "$fieldName[$i] = '$beforeUpdate[$i]'";
+                $answercode = $answercode . "$fieldName[$i] = '$afterUpdate[$i]'";
                 $resultcode = $resultcode . "$fieldName[$i] = '$afterUpdate[$i]'";
-                $beforeSQL = $beforeSQL . "$fieldName[$i] = '$beforeUpdate[$i]'";
-                $insertSQL = $insertSQL . "$fieldName[$i]";
                 if ($i < count($beforeUpdate) - 1) {
-                    $updateSQL = $updateSQL . ", ";
-                    $returnSQL = $returnSQL . ", ";
+                    $answercode = $answercode . ", ";
                     $resultcode = $resultcode . " AND ";
-                    $beforeSQL = $beforeSQL . " AND ";
-                    $insertSQL = $insertSQL . ", ";
                 } else {
-                    $updateSQL = $updateSQL . " WHERE ";
-                    $returnSQL = $returnSQL . " WHERE ";
+                    $answercode = $answercode . " WHERE ";
                     $resultcode = $resultcode . ";";
-                    $beforeSQL = $beforeSQL . ";";
-                    $insertSQL = $insertSQL . ") VALUES(";
                     for ($j = 0; $j < count($afterUpdate); $j++) {
-                        $updateSQL = $updateSQL . $fieldName[$j] . " " . "'$beforeUpdate[$j]'";
-                        $returnSQL = $returnSQL . $fieldName[$j] . " = " . "'$afterUpdate[$j]'";
-                        $insertSQL = $insertSQL . "'$beforeUpdate[$j]'";
+                        $answercode = $answercode . $fieldName[$j] . " " . "'$beforeUpdate[$j]'";
                         if ($j < count($afterUpdate) - 1) {
-                            $updateSQL = $updateSQL . " AND ";
-                            $returnSQL = $returnSQL . " AND ";
-                            $insertSQL = $insertSQL . ", ";
+                            $answercode = $answercode . " AND ";
                         } else {
-                            $updateSQL = $updateSQL . ";";
-                            $returnSQL = $returnSQL . ";";
-                            $insertSQL = $insertSQL . ");";
+                            $answercode = $answercode . ";";
                             include_once "thai_translation.php";
                         }
                     }
@@ -388,35 +351,20 @@ if ($type == 1) {
                 echo json_encode(array("status" => "error", "msg" => "กรุณากรอกข้อมูลหลังแก้ไข!"));
                 break;
             } else {
-                $updateSQL = $updateSQL . "$fieldName[$i] = '$afterUpdate[$i]'";
-                $returnSQL = $returnSQL . "$fieldName[$i] = '$beforeUpdate[$i]'";
+                $answercode = $answercode . "$fieldName[$i] = '$afterUpdate[$i]'";
                 $resultcode = $resultcode . "$fieldName[$i] = '$afterUpdate[$i]'";
-                $beforeSQL = $beforeSQL . "$beforeSQL[$i] = '$beforeUpdate[$i]'";
-                $insertSQL = $insertSQL . "$fieldName[$i]";
                 if ($i < count($beforeUpdate) - 1) {
-                    $updateSQL = $updateSQL . ", ";
-                    $returnSQL = $returnSQL . ", ";
+                    $answercode = $answercode . ", ";
                     $resultcode = $resultcode . " AND ";
-                    $beforeSQL = $beforeSQL . " AND ";
-                    $insertSQL = $insertSQL . ", ";
                 } else {
-                    $updateSQL = $updateSQL . " WHERE ";
-                    $returnSQL = $returnSQL . " WHERE ";
+                    $answercode = $answercode . " WHERE ";
                     $resultcode = $resultcode . ";";
-                    $beforeSQL = $beforeSQL . ";";
-                    $insertSQL = $insertSQL . ") VALUES(";
                     for ($j = 0; $j < count($afterUpdate); $j++) {
-                        $updateSQL = $updateSQL . $fieldName[$j] . " = " . "'$beforeUpdate[$j]'";
-                        $returnSQL = $returnSQL . $fieldName[$j] . " = " . "'$afterUpdate[$j]'";
-                        $insertSQL = $insertSQL . "'$beforeUpdate[$j]'";
+                        $answercode = $answercode . $fieldName[$j] . " = " . "'$beforeUpdate[$j]'";
                         if ($j < count($afterUpdate) - 1) {
-                            $updateSQL = $updateSQL . " AND ";
-                            $returnSQL = $returnSQL . " AND ";
-                            $insertSQL = $insertSQL . ", ";
+                            $answercode = $answercode . " AND ";
                         } else {
-                            $updateSQL = $updateSQL . ";";
-                            $returnSQL = $returnSQL . ";";
-                            $insertSQL = $insertSQL . ");";
+                            $answercode = $answercode . ";";
                             include_once "thai_translation.php";
                         }
                     }

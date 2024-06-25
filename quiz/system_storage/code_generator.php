@@ -297,9 +297,7 @@ if ($type == 1) {
 } else if ($type == 3) {
     $fieldName = [];
     $fieldData = [];
-    $insertSQL = "INSERT INTO $table(";
-    $deleteSQL = "DELETE FROM $table WHERE ";
-    $code = "SELECT * FROM $table WHERE ";
+    $code = "DELETE FROM $table WHERE ";
     if (isset($_POST['field-data'])) {
         if ($_POST['field-name'] != "*") {
             $fieldName = $_POST['field-name'];
@@ -309,29 +307,26 @@ if ($type == 1) {
                     echo json_encode(array("status" => "error", "msg" => "กรุณากรอกข้อมูล $fieldName[$i]!"));
                     break;
                 } else {
-                    $insertSQL = $insertSQL . $fieldName[$i];
-                    $deleteSQL = $deleteSQL . $fieldName[$i] . " = " . "'$fieldData[$i]'";
                     $code = $code . $fieldName[$i] . " = " . "'$fieldData[$i]'";
                     if ($i < count($fieldName) - 1) {
-                        $insertSQL = $insertSQL . ", ";
-                        $deleteSQL = $deleteSQL . " AND ";
                         $code = $code . " AND ";
                     } else {
-                        $insertSQL = $insertSQL . ") VALUES(";
-                        $deleteSQL = $deleteSQL . ";";
                         $code = $code . ";";
                         for ($j = 0; $j < count($fieldData); $j++) {
                             if ($fieldData[$j] == "") {
                                 echo json_encode(array("status" => "error", "msg" => "กรุณากรอกข้อมูล $fieldName[$i]!"));
                                 break;
                             } else {
-                                $insertSQL = $insertSQL . "'$fieldData[$j]'";
-                                if ($j < count($fieldData) - 1) {
-                                    $insertSQL = $insertSQL . ", ";
-                                } else {
-                                    $insertSQL = $insertSQL . ");";
-
-                                }
+                                echo json_encode(
+                                    array(
+                                        "status" => "success",
+                                        "msg" => "Generate sql code successfully.",
+                                        "code" => $code,
+                                        "type" => $type,
+                                        "quizid" => $quizid,
+                                        "table" => $table
+                                    )
+                                );
                             }
                         }
                     }
@@ -349,29 +344,26 @@ if ($type == 1) {
                     echo json_encode(array("status" => "error", "msg" => "กรุณากรอกข้อมูล $fieldName[$i]!"));
                     break;
                 } else {
-                    $insertSQL = $insertSQL . $fieldName[$i];
-                    $deleteSQL = $deleteSQL . $fieldName[$i] . " = " . "'$fieldData[$i]'";
                     $code = $code . $fieldName[$i] . " = " . "'$fieldData[$i]'";
                     if ($i < count($fieldName) - 1) {
-                        $insertSQL = $insertSQL . ", ";
-                        $deleteSQL = $deleteSQL . " AND ";
                         $code = $code . " AND ";
                     } else {
-                        $insertSQL = $insertSQL . ") VALUES(";
-                        $deleteSQL = $deleteSQL . ";";
                         $code = $code . ";";
                         for ($j = 0; $j < count($fieldData); $j++) {
                             if ($fieldData[$j] == "") {
                                 echo json_encode(array("status" => "error", "msg" => "กรุณากรอกข้อมูล $fieldName[$i]!"));
                                 break;
                             } else {
-                                $insertSQL = $insertSQL . "'$fieldData[$j]'";
-                                if ($j < count($fieldData) - 1) {
-                                    $insertSQL = $insertSQL . ", ";
-                                } else {
-                                    $insertSQL = $insertSQL . ");";
-
-                                }
+                                echo json_encode(
+                                    array(
+                                        "status" => "success",
+                                        "msg" => "Generate sql code successfully.",
+                                        "code" => $code,
+                                        "type" => $type,
+                                        "quizid" => $quizid,
+                                        "table" => $table
+                                    )
+                                );
                             }
                         }
                     }
@@ -382,11 +374,7 @@ if ($type == 1) {
         echo json_encode(array("status" => "error", "msg" => "กรุณาเลือกข้อมูล!"));
     }
 } else {
-    $updateSQL = "UPDATE $table SET ";
-    $returnSQL = "UPDATE $table SET ";
-    $code = "SELECT * FROM $table WHERE ";
-    $beforeSQL = "SELECT * FROM $table WHERE ";
-    $insertSQL = "INSERT INTO $table(";
+    $code = "UPDATE $table SET ";
     $fieldName = $_POST['field-name'];
     $beforeUpdate = $_POST['before-update-field'];
     $afterUpdate = $_POST['after-update-field'];
@@ -399,38 +387,29 @@ if ($type == 1) {
                 echo json_encode(array("status" => "error", "msg" => "กรุณากรอกข้อมูลหลังแก้ไข!"));
                 break;
             } else {
-                $updateSQL = $updateSQL . "$fieldName[$i] = '$afterUpdate[$i]'";
-                $returnSQL = $returnSQL . "$fieldName[$i] = '$beforeUpdate[$i]'";
                 $code = $code . "$fieldName[$i] = '$afterUpdate[$i]'";
-                $beforeSQL = $beforeSQL . "$fieldName[$i] = '$beforeUpdate[$i]'";
-                $insertSQL = $insertSQL . "$fieldName[$i]";
                 if ($i < count($beforeUpdate) - 1) {
-                    $updateSQL = $updateSQL . ", ";
-                    $returnSQL = $returnSQL . ", ";
-                    $code = $code . " AND ";
-                    $beforeSQL = $beforeSQL . " AND ";
-                    $insertSQL = $insertSQL . ", ";
+                    $code = $code . ", ";
                 } else {
-                    $updateSQL = $updateSQL . " WHERE ";
-                    $returnSQL = $returnSQL . " WHERE ";
-                    $code = $code . ";";
-                    $beforeSQL = $beforeSQL . ";";
-                    $insertSQL = $insertSQL . ") VALUES(";
+                    $code = $code . " WHERE ";
                     for ($j = 0; $j < count($afterUpdate); $j++) {
-                        $updateSQL = $updateSQL . $fieldName[$j] . " " . "'$beforeUpdate[$j]'";
-                        $returnSQL = $returnSQL . $fieldName[$j] . " = " . "'$afterUpdate[$j]'";
-                        $insertSQL = $insertSQL . "'$beforeUpdate[$j]'";
+                        $code = $code . $fieldName[$j] . " = " . "'$beforeUpdate[$j]'";
                         if ($j < count($afterUpdate) - 1) {
-                            $updateSQL = $updateSQL . " AND ";
-                            $returnSQL = $returnSQL . " AND ";
-                            $insertSQL = $insertSQL . ", ";
+                            $code = $code . " AND ";
                         } else {
-                            $updateSQL = $updateSQL . ";";
-                            $returnSQL = $returnSQL . ";";
-                            $insertSQL = $insertSQL . ");";
-
+                            $code = $code . ";";
                         }
                     }
+                    echo json_encode(
+                        array(
+                            "status" => "success",
+                            "msg" => "Generate sql code successfully.",
+                            "code" => $code,
+                            "type" => $type,
+                            "quizid" => $quizid,
+                            "table" => $table
+                        )
+                    );
                 }
             }
         }
@@ -449,38 +428,29 @@ if ($type == 1) {
                 echo json_encode(array("status" => "error", "msg" => "กรุณากรอกข้อมูลหลังแก้ไข!"));
                 break;
             } else {
-                $updateSQL = $updateSQL . "$fieldName[$i] = '$afterUpdate[$i]'";
-                $returnSQL = $returnSQL . "$fieldName[$i] = '$beforeUpdate[$i]'";
                 $code = $code . "$fieldName[$i] = '$afterUpdate[$i]'";
-                $beforeSQL = $beforeSQL . "$beforeSQL[$i] = '$beforeUpdate[$i]'";
-                $insertSQL = $insertSQL . "$fieldName[$i]";
                 if ($i < count($beforeUpdate) - 1) {
-                    $updateSQL = $updateSQL . ", ";
-                    $returnSQL = $returnSQL . ", ";
-                    $code = $code . " AND ";
-                    $beforeSQL = $beforeSQL . " AND ";
-                    $insertSQL = $insertSQL . ", ";
+                    $code = $code . ", ";
                 } else {
-                    $updateSQL = $updateSQL . " WHERE ";
-                    $returnSQL = $returnSQL . " WHERE ";
-                    $code = $code . ";";
-                    $beforeSQL = $beforeSQL . ";";
-                    $insertSQL = $insertSQL . ") VALUES(";
+                    $code = $code . " WHERE ";
                     for ($j = 0; $j < count($afterUpdate); $j++) {
-                        $updateSQL = $updateSQL . $fieldName[$j] . " = " . "'$beforeUpdate[$j]'";
-                        $returnSQL = $returnSQL . $fieldName[$j] . " = " . "'$afterUpdate[$j]'";
-                        $insertSQL = $insertSQL . "'$beforeUpdate[$j]'";
+                        $code = $code . $fieldName[$j] . " = " . "'$beforeUpdate[$j]'";
                         if ($j < count($afterUpdate) - 1) {
-                            $updateSQL = $updateSQL . " AND ";
-                            $returnSQL = $returnSQL . " AND ";
-                            $insertSQL = $insertSQL . ", ";
+                            $code = $code . " AND ";
                         } else {
-                            $updateSQL = $updateSQL . ";";
-                            $returnSQL = $returnSQL . ";";
-                            $insertSQL = $insertSQL . ");";
-
+                            $code = $code . ";";
                         }
                     }
+                    echo json_encode(
+                        array(
+                            "status" => "success",
+                            "msg" => "Generate sql code successfully.",
+                            "code" => $code,
+                            "type" => $type,
+                            "quizid" => $quizid,
+                            "table" => $table
+                        )
+                    );
                 }
             }
         }

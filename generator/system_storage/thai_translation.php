@@ -106,14 +106,15 @@ if ($type == 1) {
         }
     }
     $question = "$question ออกจากตาราง $table";
+    $temptablecode = "SELECT * FROM $table";
     echo json_encode(
         array(
             "status" => "success",
             "msg" => "ทำการสร้างโจทย์ปัญหาของคุณสำเร็จแล้ว",
             "question" => $question,
-            "selectSQL" => $selectSQL,
-            "insertSQL" => $insertSQL,
-            "deleteSQL" => $deleteSQL,
+            "answercode" => $answercode,
+            "resultcode" => $resultcode,
+            "temptablecode" => $temptablecode,
             "type" => $type
         )
     );
@@ -135,15 +136,15 @@ if ($type == 1) {
             }
         }
     }
+    $temptablecode = "SELECT * FROM $table";
     echo json_encode(
         array(
             "status" => "success",
             "msg" => "ทำการสร้างโจทย์ปัญหาของคุณสำเร็จแล้ว",
             "question" => $question,
-            "selectSQL" => $selectSQL,
-            "insertSQL" => $insertSQL,
-            "updateSQL" => $returnSQL,
-            "beforeSQL" => $beforeSQL,
+            "answercode" => $answercode,
+            "resultcode" => $resultcode,
+            "temptablecode" => $temptablecode,
             "type" => $type
         )
     );

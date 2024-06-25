@@ -223,74 +223,22 @@ if (!isset($_GET['quizid'])) {
                                 cancelButtonColor: '#d33'
                             }).then(function (r) {
                                 if (r.isConfirmed) {
-                                    if (result.type == 1) {
-                                        $.ajax({
-                                            type: 'POST',
-                                            url: 'form_storage/question_detail_form.php',
-                                            data: {
-                                                table: result.table,
-                                                type: result.type,
-                                                code: result.code,
-                                                quizid: result.quizid
-                                            },
-                                            success: function (data) {
-                                                $('#input-field').html(data);
-                                                $('#type-select').remove();
-                                                $('#table-select').remove();
-                                            }
-                                        });
-                                    } else if (result.type == 2) {
-                                        $.ajax({
-                                            type: 'POST',
-                                            url: 'form_storage/question_detail_form.php',
-                                            data: {
-                                                table: result.table,
-                                                type: result.type,
-                                                code: result.code,
-                                                quizid: result.quizid
-                                            },
-                                            success: function (data) {
-                                                $('#input-field').html(data);
-                                                $('#type-select').remove();
-                                                $('#table-select').remove();
-                                            }
-                                        });
-                                    } else if (result.type == 3) {
-                                        $.ajax({
-                                            type: 'POST',
-                                            url: 'form_storage/question_detail_form.php',
-                                            data: {
-                                                type: result.type,
-                                                question: result.question,
-                                                selectSQL: result.selectSQL,
-                                                insertSQL: result.insertSQL,
-                                                deleteSQL: result.deleteSQL
-                                            },
-                                            success: function (data) {
-                                                $('#input-field').html(data);
-                                                $('#type-select').remove();
-                                                $('#table-select').remove();
-                                            }
-                                        });
-                                    } else {
-                                        $.ajax({
-                                            type: 'POST',
-                                            url: 'form_storage/question_detail_form.php',
-                                            data: {
-                                                type: result.type,
-                                                question: result.question,
-                                                selectSQL: result.selectSQL,
-                                                beforeSQL: result.beforeSQL,
-                                                insertSQL: result.insertSQL,
-                                                updateSQL: result.updateSQL
-                                            },
-                                            success: function (data) {
-                                                $('#input-field').html(data);
-                                                $('#type-select').remove();
-                                                $('#table-select').remove();
-                                            }
-                                        });
-                                    }
+                                    $.ajax({
+                                        type: 'POST',
+                                        url: 'form_storage/question_detail_form.php',
+                                        data: {
+                                            table: result.table,
+                                            type: result.type,
+                                            code: result.code,
+                                            quizid: result.quizid
+                                        },
+                                        success: function (data) {
+                                            $('#input-field').html(data);
+                                            $('#type-select').remove();
+                                            $('#table-select').remove();
+                                        }
+                                    });
+
                                 } else {
 
                                 }

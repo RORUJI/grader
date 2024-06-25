@@ -49,7 +49,7 @@ if (!isset($_SESSION['username']) && !isset($_POST['code']) && !isset($_POST['qu
             } catch (Exception $e) {
                 echo json_encode(array('status' => 'error', 'msg' => 'Something went wrong, please try again!'));
             }
-        } else {
+        } else if ($type == 2) {
             $insertcode = str_replace($table, $usertable, $code);
             $query = $conn->query($insertcode);
             $checkresultcode = str_replace("\$usertable", $usertable, $loadresult['resultcode']);
@@ -60,6 +60,28 @@ if (!isset($_SESSION['username']) && !isset($_POST['code']) && !isset($_POST['qu
             } else {
                 echo json_encode(array('status' => 'error', 'msg' => 'คำตอบของคุณไม่ถูกต้อง!'));
                 $droptable = $conn->query("DROP TABLE $usertable");
+            }
+        } else if ($type == 3) {
+            $deletecode = str_replace($table, $usertable, $code);
+            $query = $conn->query($deletecode);
+            $checkresultcode = str_replace("\$usertable", $usertable, $loadresult['resultcode']);
+            $checkresult = $conn->query($checkresultcode);
+            if ($checkresult->num_rows == 0) {
+                echo json_encode(array('status' => 'success', 'msg' => 'Correct'));
+                $droptable = $conn->query("DROP TABLE $usertable");
+            } else {
+                echo json_encode(array('status' => 'error', 'msg' => 'คำตอบของคุณไม่ถูกต้อง!'));
+                $droptable = $conn->query("DROP TABLE $usertable");
+            }
+        } else {
+            $updatecode = str_replace($table, $usertable, $code);
+            $query = $conn->query($updatecode);
+            $checkresultcode = str_replace("\$usertable", $usertable, $loadresult['resultcode']);
+            $checkresult = $conn->query($checkresultcode);
+            if ($checkresult->num_rows == 1) {
+                echo json_encode(array('status' => 'success', 'msg' => 'Correct'));
+            } else {
+                echo json_encode(array('status' => 'error', 'msg' => 'คำตอบของคุณไม่ถูกต้อง!'));
             }
         }
     }

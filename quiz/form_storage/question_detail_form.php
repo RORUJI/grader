@@ -25,8 +25,8 @@
                 <?php endif; ?>
             </div>
         </div>
-        <button type="submit" id="btn-create" class="btn btn-primary">สร้างโจทย์</button>
-        <button type="button" id="btn-return" class="btn btn-danger">ย้อนกลับ</button>
+        <button type="submit" id="btn-create" class="btn btn-primary">Send</button>
+        <button type="button" id="btn-return" class="btn btn-danger">Back</button>
     </form>
 </body>
 
