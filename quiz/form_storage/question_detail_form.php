@@ -16,12 +16,10 @@
             <div class="col p-2 me-3 type-select rounded">
                 <label for="select-SQL-code" class="form-label fw-bold">CODE</label>
                 <?php if (isset($_POST['code'])): ?>
-                    <textarea name="code" class="form-control" cols="30"
-                        rows="10"><?php echo $_POST['code']; ?></textarea>
+                    <textarea name="code" class="form-control" cols="30" rows="10"><?php echo $_POST['code']; ?></textarea>
                 <?php endif; ?>
                 <?php if (!isset($_POST['code'])): ?>
-                    <textarea name="code" class="form-control bg-body" cols="30"
-                        rows="10">NOT SELECT SQL CODE.</textarea>
+                    <textarea name="code" class="form-control bg-body" cols="30" rows="10">NOT SELECT SQL CODE.</textarea>
                 <?php endif; ?>
             </div>
         </div>
@@ -59,10 +57,24 @@
                             icon: 'success',
                             title: 'สำเร็จ!',
                             text: result.msg,
-                            showConfirmButton: false,
+                            showConfirmButton: true,
                             timer: 1500
                         }).then(function (r) {
-                            window.location.reload();
+                            if (r.isConfirmed) {
+                                $.ajax({
+                                    type: 'POST',
+                                    url: 'system_storage/load_usertable.php',
+                                    data: {
+                                        resultcode: result.resultcode,
+                                        table: result.table
+                                    },
+                                    success: function (data) {
+                                        window.location.href = 'form_storage/show_usertable.php';
+                                    }
+                                })
+                            } else {
+                                
+                            }
                         });
                     } else {
                         Swal.fire({

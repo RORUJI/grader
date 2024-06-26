@@ -41,8 +41,7 @@ if (!isset($_SESSION['username']) && !isset($_POST['code']) && !isset($_POST['qu
                             $i++;
                             continue;
                         } else {
-                            echo json_encode(array('status' => 'success', 'msg' => 'Correct'));
-                            $droptable = $conn->query("DROP TABLE $usertable");
+                            echo json_encode(array('status' => 'success', 'msg' => 'Correct', 'resultcode' => $code, 'table' => $table));
                         }
                     }
                 }
@@ -55,8 +54,8 @@ if (!isset($_SESSION['username']) && !isset($_POST['code']) && !isset($_POST['qu
             $checkresultcode = str_replace("\$usertable", $usertable, $loadresult['resultcode']);
             $checkresult = $conn->query($checkresultcode);
             if ($checkresult->num_rows == 1) {
-                echo json_encode(array('status' => 'success', 'msg' => 'Correct'));
-                $droptable = $conn->query("DROP TABLE $usertable");
+                echo json_encode(array('status' => 'success', 'msg' => 'Correct', 'resultcode' => $code, 'table' => $table));
+                
             } else {
                 echo json_encode(array('status' => 'error', 'msg' => 'คำตอบของคุณไม่ถูกต้อง!'));
                 $droptable = $conn->query("DROP TABLE $usertable");

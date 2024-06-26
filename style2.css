@@ -365,6 +365,18 @@ body.dark .switch::before{
     transition: var(--tran-05);
 }
 
+.div-text .div-graph .Column4{
+    font-size: 5vw;
+    font-weight: 500;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--primary-color-light);
+    border-radius: 18px;
+    width: 100%;
+    margin-right: 1.2vw;
+}
+
 .div-text .div-graph a:hover .Column3{
     background: var(--primary-color);
 }
