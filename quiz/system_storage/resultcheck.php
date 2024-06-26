@@ -54,8 +54,8 @@ if (!isset($_SESSION['username']) && !isset($_POST['code']) && !isset($_POST['qu
             $checkresultcode = str_replace("\$usertable", $usertable, $loadresult['resultcode']);
             $checkresult = $conn->query($checkresultcode);
             if ($checkresult->num_rows == 1) {
-                echo json_encode(array('status' => 'success', 'msg' => 'Correct', 'resultcode' => $code, 'table' => $table));
-                
+                $selectcode = str_replace($table, $usertable, $selectcode);
+                echo json_encode(array('status' => 'success', 'msg' => 'Correct', 'resultcode' => $selectcode, 'table' => $usertable));
             } else {
                 echo json_encode(array('status' => 'error', 'msg' => 'คำตอบของคุณไม่ถูกต้อง!'));
                 $droptable = $conn->query("DROP TABLE $usertable");

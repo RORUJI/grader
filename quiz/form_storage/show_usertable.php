@@ -4,6 +4,8 @@ include_once ('../../dbconnect.php');
 $usertable_code = $_SESSION[$_SESSION['username']];
 $usertable = $_SESSION['usertable'];
 $query = $conn->query($usertable_code);
+$sql = "SELECT COLUMN_NAME FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_SCHEMA = 'grader' AND TABLE_NAME = '$usertable'";
+$tablehead = $conn->query($sql);
 ?>
 
 <!DOCTYPE html>
@@ -86,8 +88,14 @@ $query = $conn->query($usertable_code);
     <section class="home">
         <div class="text">
             <div class="div-text">
-                <table class="table">
-                    <?php echo $_SESSION['usertable']; ?>
+                <table class="table table-striped table-bordered table-hover">
+                    <thead>
+                        <?php while ($row = $tablehead->fetch_array()): ?>
+                            <?php for ($i = 0; $i < $tablehead->field_count; $i++): ?>
+                                <th scope="row"><?php echo $row[$i]; ?></th>
+                            <?php endfor; ?>
+                        <?php endwhile; ?>
+                    </thead>
                     <tbody>
                         <?php
                         while ($row = $query->fetch_array()):
