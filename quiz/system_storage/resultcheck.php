@@ -79,8 +79,10 @@ if (!isset($_SESSION['username']) && !isset($_POST['code']) && !isset($_POST['qu
             $checkresult = $conn->query($checkresultcode);
             if ($checkresult->num_rows == 1) {
                 echo json_encode(array('status' => 'success', 'msg' => 'Correct'));
+                $droptable = $conn->query("DROP TABLE $usertable");
             } else {
                 echo json_encode(array('status' => 'error', 'msg' => 'คำตอบของคุณไม่ถูกต้อง!'));
+                $droptable = $conn->query("DROP TABLE $usertable");
             }
         }
     }

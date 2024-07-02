@@ -3,7 +3,7 @@ session_start();
 
 include_once "dbconnect.php";
 
-$sql = "SELECT * FROM question";
+$sql = "SELECT * FROM quiz";
 $result = $conn->query($sql);
 ?>
 
@@ -94,7 +94,7 @@ $result = $conn->query($sql);
                     <div class="col-4 Column3-question">
                     <?php while ($row = $result->fetch_assoc()) : ?>
                         <div class="graph3 col mx-1">
-                            <a href="quiz/quiz.php?quiz=<?php echo $row['questionID']; ?>" class="graph3-text">ข้อที่ <?php echo $row['questionID']; ?></a>
+                            <a href="quiz/quiz.php?quizid=<?php echo $row['quizid']; ?>" class="graph3-text">ข้อที่ <?php echo $row['quizid']; ?></a>
                         </div>
                         <?php endwhile; ?>
                     </div>
