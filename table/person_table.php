@@ -1,8 +1,15 @@
 <?php
 session_start();
-include_once ("../dbconnect.php");
-$sql = "SELECT * FROM person";
-$query = $conn->query($sql);
+if (!isset($_SESSION['userid'])) {
+
+    header('location: ../index.php');
+
+} else {
+
+    include_once ("../dbconnect.php");
+    $sql = "SELECT * FROM person";
+    $query = $conn->query($sql);
+
 ?>
 
 <!DOCTYPE html>
@@ -29,11 +36,9 @@ $query = $conn->query($sql);
 
                 <div class="text header-text">
                     <span class="name">
-                        <?php if (!isset($_SESSION['userID'])): ?>
-                            Guest
-                        <?php endif; ?>
+                        <?php echo $_SESSION['username']; ?>
                     </span>
-                    <span class="profession">Test</span>
+                    <span class="profession">Web developer</span>
                 </div>
             </div>
 
@@ -48,7 +53,7 @@ $query = $conn->query($sql);
                     <input type="search" placeholder="Search...">
                 </li>
                 <li class="nav-link">
-                    <a href="index2.php">
+                    <a href="../index.php">
                         <i class='bx bx-home icon'></i>
                         <span class="text nav-text">Home</span>
                     </a>
@@ -62,7 +67,7 @@ $query = $conn->query($sql);
             </div>
             <div class="bottom-content">
                 <li class="">
-                    <a href="login.php">
+                    <a href="../system/logout_system.php">
                         <i class="bx bx-log-out icon"></i>
                         <span class="text nav-text">Logout</span>
                     </a>
@@ -127,3 +132,5 @@ $query = $conn->query($sql);
 </body>
 
 </html>
+
+<?php } ?>

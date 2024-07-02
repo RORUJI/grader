@@ -14,7 +14,8 @@
 
 <body>
     <div class="position-absolute top-50 start-50 translate-middle">
-        <form action="system/login_system.php" method="post" id="signinForm" class="signin-form bg-body rounded shadow-lg">
+        <form action="system/login_system.php" method="post" id="signinForm"
+            class="signin-form bg-body rounded shadow-lg">
             <div class="p-3">
                 <h2 class="fw-bold text-center">L o g i n</h2>
                 <hr>
@@ -31,7 +32,8 @@
                     You don't have an account?
                     <a href="register.php" class="signin-link text-primary">Register!</a>
                 </div>
-                <button type="submit" name="signin-btn" id="signin-btn" class="btn btn-primary fw-bold w-100">LOGIN</button>
+                <button type="submit" name="signin-btn" id="signin-btn"
+                    class="btn btn-primary fw-bold w-100">LOGIN</button>
             </div>
         </form>
     </div>
@@ -59,9 +61,9 @@
                                 text: result.msg,
                                 showConfirmButton: false,
                                 timer: 1500
-                            }).then(function() {
-                                if (result.levelID == 1) {
-                                    window.location.href = 'index2.php';
+                            }).then(function () {
+                                if (result.level == 1) {
+                                    window.location.href = 'index.php';
                                 } else {
                                     window.location.href = 'adminpage/home.php';
                                 }

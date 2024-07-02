@@ -30,9 +30,6 @@ $result = $conn->query($sql);
                 <input class="form-check-input" id="all-request" name="data" type="checkbox" value="*">
                 <label for="select-all-data" class="form-check-label">ทั้งหมด</label>
             </div>
-            <div class="mb">
-                <button type="submit" class="btn btn-primary">สร้างโจทย์ปัญหา</button>
-            </div>
         </div>
         <div class="col mx-3 p-2 rounded type-select">
             <input type="checkbox" name="condition-checkbox" id="condition-checkbox" class="form-check-input" value="">

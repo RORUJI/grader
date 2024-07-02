@@ -1,15 +1,14 @@
 <?php
 session_start();
-$_SESSION['username'] = "nitipat";
 include_once "../dbconnect.php";
 
-if (!isset($_GET['quizid'])) {
+if (!isset($_GET['quizid']) || !isset($_SESSION['userid'])) {
     header("location: ../index.php");
 } else {
     $quizid = $_GET['quizid'];
     $sql = "SELECT * FROM quiz";
-    $result = $conn->query($sql);
-    if ($quizid < 1 || $quizid > $result->num_rows) {
+    $results = $conn->query($sql);
+    if ($quizid < 1 || $quizid > $results->num_rows) {
         header("location: ../index.php");
     } else {
         $sql = "SELECT * FROM quiz INNER JOIN type ON quiz.typeID = type.typeID 
@@ -47,9 +46,7 @@ if (!isset($_GET['quizid'])) {
 
                 <div class="text header-text">
                     <span class="name">
-                        <?php if (!isset($_SESSION['userID'])): ?>
-                            Guest
-                        <?php endif; ?>
+                        <?php echo $_SESSION['username']; ?>
                     </span>
                     <span class="profession">Web developer</span>
                 </div>
@@ -66,7 +63,7 @@ if (!isset($_GET['quizid'])) {
                     <input type="search" placeholder="Search...">
                 </li>
                 <li class="nav-link">
-                    <a href="index2.php">
+                    <a href="../index.php">
                         <i class='bx bx-home icon'></i>
                         <span class="text nav-text">Home</span>
                     </a>
@@ -80,7 +77,7 @@ if (!isset($_GET['quizid'])) {
             </div>
             <div class="bottom-content">
                 <li class="">
-                    <a href="login.php">
+                    <a href="../system/logout_system.php">
                         <i class="bx bx-log-out icon"></i>
                         <span class="text nav-text">Logout</span>
                     </a>
@@ -106,8 +103,8 @@ if (!isset($_GET['quizid'])) {
             <div class="div-text"><br>
                 <div class="div-text">
                     <div class="div-grader">
-                        <form action="system_storage/code_generator.php" method="post" id="generatorForm" class="">
-                            <h2 class="fw-bold text-center">สร้างโจทย์ปัญหา</h2>
+                        <form action="system_storage/code_generator.php" method="post" id="generatorForm" class="p-2">
+                            <h2 class="fw-bold text-center">SQL Quiz</h2>
                             <hr>
                             <div class="mb">
                                 <div class="row p-2">
@@ -143,6 +140,15 @@ if (!isset($_GET['quizid'])) {
                             </div>
                             <div class="mb-3">
                                 <div id="input-field"></div>
+                            </div>
+                            <div class="mb-3">
+                                <?php if ($quizid > 1): ?>
+                                    <a href="quiz.php?quizid=<?php echo $quizid - 1; ?>" class="btn btn-danger" id="back-btn">Back</a>
+                                <?php endif; ?>
+                                <button type="submit" class="btn btn-primary" id="submit-btn">Submit</button>
+                                <?php if ($quizid < $results->num_rows): ?>
+                                    <a href="quiz.php?quizid=<?php echo $quizid + 1; ?>" class="btn btn-success" id="next-btn">Next</a>
+                                <?php endif; ?>
                             </div>
                         </form>
                     </div>

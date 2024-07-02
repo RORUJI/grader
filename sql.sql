@@ -7,7 +7,7 @@ CREATE TABLE level (
 INSERT INTO level(levelname) VALUES('Member'), ('Admin');
 
 CREATE TABLE user (
-    userID INT(3) NOT NULL AUTO_INCREMENT,
+    userid INT(3) NOT NULL AUTO_INCREMENT,
     username VARCHAR(255) NOT NULL,
     password VARCHAR(255) NOT NULL,
     email VARCHAR(255) NOT NULL,

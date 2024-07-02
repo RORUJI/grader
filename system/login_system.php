@@ -17,14 +17,14 @@
             $result = mysqli_query($conn, $sql);
             if (mysqli_num_rows($result) == 1) {
                 $row = mysqli_fetch_assoc($result);
-                $_SESSION['userID'] = $row['userID'];
+                $_SESSION['userid'] = $row['userid'];
                 $_SESSION['username'] = $row['username'];
-                $_SESSION['levelID'] = $row['levelID'];
+                $_SESSION['level'] = $row['levelID'];
                 echo json_encode(
                     array(
                         'status' => 'success', 
                         'msg' => 'SignIn Successfully!', 
-                        'levelID' => $_SESSION['levelID']
+                        'level' => $_SESSION['level']
                     )
                 );
             } else {

@@ -23,8 +23,8 @@
                 <?php endif; ?>
             </div>
         </div>
-        <button type="submit" id="btn-create" class="btn btn-primary">Send</button>
-        <button type="button" id="btn-return" class="btn btn-danger">Back</button>
+            <button type="submit" id="btn-create" class="btn btn-primary">Send</button>
+            <button type="button" id="btn-return" class="btn btn-danger">Back</button>
     </form>
 </body>
 
@@ -32,6 +32,12 @@
 
 <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
 <script>
+    $(document).ready(function() {
+        $('#submit-btn').remove();
+        $('#next-btn').remove();
+        $('#back-btn').remove();
+    });
+
     $(document).ready(function () {
         $('#btn-return').on('click', function (e) {
             window.location.reload();
@@ -57,24 +63,10 @@
                             icon: 'success',
                             title: 'สำเร็จ!',
                             text: result.msg,
-                            showConfirmButton: true,
+                            showConfirmButton: false,
                             timer: 1500
-                        }).then(function (r) {
-                            if (r.isConfirmed) {
-                                $.ajax({
-                                    type: 'POST',
-                                    url: 'system_storage/load_usertable.php',
-                                    data: {
-                                        resultcode: result.resultcode,
-                                        table: result.table
-                                    },
-                                    success: function (data) {
-                                        window.location.href = 'form_storage/show_usertable.php';
-                                    }
-                                })
-                            } else {
-                                
-                            }
+                        }).then(function() {
+                            window.location.reload();
                         });
                     } else {
                         Swal.fire({

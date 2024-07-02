@@ -2,7 +2,6 @@
 if (!isset($_SESSION['username']) && !isset($_POST['code']) && !isset($_POST['quizid'])) {
     header("location: ../../index.php");
 } else {
-    /*Create a temporarily table and get a select code.*/
     include_once ("create_temptable.php");
     $code = $_POST['code'];
     $table = $_POST['table'];
@@ -19,8 +18,8 @@ if (!isset($_SESSION['username']) && !isset($_POST['code']) && !isset($_POST['qu
                     echo json_encode(array('status' => 'error', 'msg' => 'Num rows incorrect'));
                     $droptable = $conn->query("DROP TABLE $usertable");
                 } else if ($queryofquiz->field_count != $queryofuser->field_count) {
-                    $droptable = $conn->query("DROP TABLE $usertable");
                     echo json_encode(array('status' => 'error', 'msg' => 'Field count incorrect'));
+                    $droptable = $conn->query("DROP TABLE $usertable");
                 } else {
                     $i = 1;
                     while (($rowofquiz = $queryofquiz->fetch_array()) && ($rowofuser = $queryofuser->fetch_array())) {
@@ -36,12 +35,14 @@ if (!isset($_SESSION['username']) && !isset($_POST['code']) && !isset($_POST['qu
                             }
                         }
                         if (isset($result) && $result == 'false') {
+                            $droptable = $conn->query("DROP TABLE $usertable");
                             break;
                         } else if ($i < $queryofuser->num_rows) {
                             $i++;
                             continue;
                         } else {
-                            echo json_encode(array('status' => 'success', 'msg' => 'Correct', 'resultcode' => $code, 'table' => $table));
+                            echo json_encode(array('status' => 'success', 'msg' => 'Correct'));
+                            $droptable = $conn->query("DROP TABLE $usertable");
                         }
                     }
                 }
@@ -56,6 +57,7 @@ if (!isset($_SESSION['username']) && !isset($_POST['code']) && !isset($_POST['qu
             if ($checkresult->num_rows == 1) {
                 $selectcode = str_replace($table, $usertable, $selectcode);
                 echo json_encode(array('status' => 'success', 'msg' => 'Correct', 'resultcode' => $selectcode, 'table' => $usertable));
+                $droptable = $conn->query("DROP TABLE $usertable");
             } else {
                 echo json_encode(array('status' => 'error', 'msg' => 'คำตอบของคุณไม่ถูกต้อง!'));
                 $droptable = $conn->query("DROP TABLE $usertable");
