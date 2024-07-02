@@ -25,6 +25,33 @@ CREATE TABLE gender (
 
 INSERT INTO gender(gender) VALUES('Male'), ('Female');
 
+CREATE TABLE manu_category (
+    manu_categoryid INT(3) NOT NULL AUTO_INCREMENT,
+    manu_category VARCHAR(255) NOT NULL,
+    PRIMARY KEY(manu_categoryid)
+) ENGINE = InnoDB DEFAULT CHARSET = utf8;
+
+INSERT INTO manu_category(manu_category) VALUES('Coffee'), ('Tea'), ('Other');
+
+CREATE TABLE manu_type (
+    manu_typeid INT(3) NOT NULL AUTO_INCREMENT,
+    manu_type VARCHAR(255) NOT NULL,
+    PRIMARY KEY(manu_typeid)
+) ENGINE = InnoDB DEFAULT CHARSET = utf8;
+
+INSERT INTO manu_type(manu_type) VALUES('Hot'), ('Cold'), ('Blended');
+
+CREATE TABLE manu (
+    manuid INT(3) NOT NULL,
+    manuname VARCHAR(255) NOT NULL,
+    manu_categoryid INT(3) NOT NULL,
+    manu_typeid INT(3) NOT NULL,
+    manu_price INT(3) NOT NULL,
+    PRIMARY KEY(manuid),
+    FOREIGN KEY(manu_categoryid) REFERENCES manu_category(manu_categoryid),
+    FOREIGN KEY(manu_typeid) REFERENCES manu_type(manu_typeid)
+) ENGINE = InnoDB DEFAULT CHARSET = utf8;
+
 CREATE TABLE person (
     personID INT(3) NOT NULL AUTO_INCREMENT,
     firstname VARCHAR(255) NOT NULL,

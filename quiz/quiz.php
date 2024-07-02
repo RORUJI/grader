@@ -132,6 +132,9 @@ if (!isset($_GET['quizid']) || !isset($_SESSION['userid'])) {
                                                     <option value="">เลือกตารางข้อมูล</option>
                                                     <option value="person">person</option>
                                                     <option value="gender">gender</option>
+                                                    <option value="manu">manu</option>
+                                                    <option value="manu_category">manu_category</option>
+                                                    <option value="manu_type">manu_type</option>
                                                 </select>
                                             </div>
                                         </div>
@@ -143,11 +146,13 @@ if (!isset($_GET['quizid']) || !isset($_SESSION['userid'])) {
                             </div>
                             <div class="mb-3">
                                 <?php if ($quizid > 1): ?>
-                                    <a href="quiz.php?quizid=<?php echo $quizid - 1; ?>" class="btn btn-danger" id="back-btn">Back</a>
+                                    <a href="quiz.php?quizid=<?php echo $quizid - 1; ?>" class="btn btn-danger"
+                                        id="back-btn">Back</a>
                                 <?php endif; ?>
                                 <button type="submit" class="btn btn-primary" id="submit-btn">Submit</button>
                                 <?php if ($quizid < $results->num_rows): ?>
-                                    <a href="quiz.php?quizid=<?php echo $quizid + 1; ?>" class="btn btn-success" id="next-btn">Next</a>
+                                    <a href="quiz.php?quizid=<?php echo $quizid + 1; ?>" class="btn btn-success"
+                                        id="next-btn">Next</a>
                                 <?php endif; ?>
                             </div>
                         </form>

@@ -121,6 +121,9 @@ if ($_SESSION['level'] != 2) {
                                                         <option value="">เลือกตารางข้อมูล</option>
                                                         <option value="person">person</option>
                                                         <option value="gender">gender</option>
+                                                        <option value="manu">manu</option>
+                                                        <option value="manu_category">manu_category</option>
+                                                        <option value="manu_type">manu_type</option>
                                                     </select>
                                                 </div>
                                             </div>
