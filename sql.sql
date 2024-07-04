@@ -19,7 +19,7 @@ CREATE TABLE user (
 
 CREATE TABLE gender (
     genderID INT(3) NOT NULL AUTO_INCREMENT,
-    gender VARCHAR(255) NOT NULL,
+    gendername VARCHAR(255) NOT NULL,
     PRIMARY KEY(genderID)
 ) ENGINE = InnoDB DEFAULT CHARSET = utf8;
 
