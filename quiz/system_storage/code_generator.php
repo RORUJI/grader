@@ -259,7 +259,6 @@ if ($type == 1) {
                     break;
                 } else {
                     $code = $code . $fieldName[$i];
-                    $code = $code . $fieldName[$i] . " = " . "'$fieldData[$i]'";
                     if ($i < count($fieldName) - 1) {
                         $code = $code . ", ";
                     } else {

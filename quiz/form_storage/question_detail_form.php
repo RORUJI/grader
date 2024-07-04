@@ -23,8 +23,8 @@
                 <?php endif; ?>
             </div>
         </div>
-            <button type="submit" id="btn-create" class="btn btn-primary">Send</button>
-            <button type="button" id="btn-return" class="btn btn-danger">Back</button>
+        <button type="button" id="btn-return" class="btn btn-danger">Back</button>
+        <button type="submit" id="btn-create" class="btn btn-primary">Submit</button>
     </form>
 </body>
 
@@ -32,7 +32,7 @@
 
 <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
 <script>
-    $(document).ready(function() {
+    $(document).ready(function () {
         $('#submit-btn').remove();
         $('#next-btn').remove();
         $('#back-btn').remove();
@@ -66,7 +66,18 @@
                             showConfirmButton: false,
                             timer: 1500
                         }).then(function() {
-                            window.location.reload();
+                            $.ajax({
+                                type: 'POST',
+                                url: 'system_storage/enterscore.php',
+                                data: {
+                                    score: result.score,
+                                    userid: result.userid,
+                                    quizid: result.quizid
+                                },
+                                success: function (data) {
+                                    window.location.reload();
+                                }
+                            })
                         });
                     } else {
                         Swal.fire({

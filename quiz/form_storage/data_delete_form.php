@@ -44,9 +44,6 @@ if (isset($_POST['field-name'])) {
                         placeholder="กรุณากรอก <?php echo $data; ?>">
                 </div>
             <?php endforeach; ?>
-            <div class="mb">
-                <button type="submit" class="btn btn-primary w-100">Submit</button>
-            </div>
         </div>
     </body>
 

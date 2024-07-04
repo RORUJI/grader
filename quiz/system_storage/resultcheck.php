@@ -2,7 +2,7 @@
 if (!isset($_SESSION['username']) && !isset($_POST['code']) && !isset($_POST['quizid'])) {
     header("location: ../../index.php");
 } else {
-    include_once ("create_temptable.php");
+    include_once "create_temptable.php";
     $code = $_POST['code'];
     $table = $_POST['table'];
     $type = $_POST['type'];
@@ -15,10 +15,10 @@ if (!isset($_SESSION['username']) && !isset($_POST['code']) && !isset($_POST['qu
             $queryofuser = $conn->query($code);
             try {
                 if ($queryofquiz->num_rows != $queryofuser->num_rows) {
-                    echo json_encode(array('status' => 'error', 'msg' => 'Num rows incorrect'));
+                    echo json_encode(array('status' => 'error', 'msg' => 'คำตอบของคุณไม่ถูกต้อง!'));
                     $droptable = $conn->query("DROP TABLE $usertable");
                 } else if ($queryofquiz->field_count != $queryofuser->field_count) {
-                    echo json_encode(array('status' => 'error', 'msg' => 'Field count incorrect'));
+                    echo json_encode(array('status' => 'error', 'msg' => 'คำตอบของคุณไม่ถูกต้อง!'));
                     $droptable = $conn->query("DROP TABLE $usertable");
                 } else {
                     $i = 1;
@@ -41,48 +41,115 @@ if (!isset($_SESSION['username']) && !isset($_POST['code']) && !isset($_POST['qu
                             $i++;
                             continue;
                         } else {
-                            echo json_encode(array('status' => 'success', 'msg' => 'Correct'));
+                            if ($code == $selectcode) {
+                                $score = 2;
+                            } else {
+                                $score = 1;
+                            }
+                            echo json_encode(
+                                array(
+                                    'status' => 'success',
+                                    'msg' => 'Correct',
+                                    'score' => $score,
+                                    'userid' => $_SESSION['userid'],
+                                    'quizid' => $quizid
+                                )
+                            );
                             $droptable = $conn->query("DROP TABLE $usertable");
                         }
                     }
                 }
             } catch (Exception $e) {
-                echo json_encode(array('status' => 'error', 'msg' => 'Something went wrong, please try again!'));
+                echo json_encode(array('status' => 'error', 'msg' => 'คำตอบของคุณไม่ถูกต้อง!'));
+                $droptable = $conn->query("DROP TABLE $usertable");
             }
         } else if ($type == 2) {
-            $insertcode = str_replace($table, $usertable, $code);
-            $query = $conn->query($insertcode);
-            $checkresultcode = str_replace("\$usertable", $usertable, $loadresult['resultcode']);
-            $checkresult = $conn->query($checkresultcode);
-            if ($checkresult->num_rows == 1) {
-                $selectcode = str_replace($table, $usertable, $selectcode);
-                echo json_encode(array('status' => 'success', 'msg' => 'Correct', 'resultcode' => $selectcode, 'table' => $usertable));
-                $droptable = $conn->query("DROP TABLE $usertable");
-            } else {
+            try {
+                $insertcode = str_replace("INTO $table", "INTO $usertable", $code);
+                $query = $conn->query($insertcode);
+                $checkresultcode = str_replace("\$usertable", $usertable, $loadresult['resultcode']);
+                $checkresult = $conn->query($checkresultcode);
+                if ($checkresult->num_rows == 1) {
+                    if ($code == $loadresult['answercode']) {
+                        $score = 2;
+                    } else {
+                        $score = 1;
+                    }
+                    echo json_encode(
+                        array(
+                            'status' => 'success',
+                            'msg' => 'Correct',
+                            'score' => $score,
+                            'userid' => $_SESSION['userid'],
+                            'quizid' => $quizid
+                        )
+                    );
+                    $droptable = $conn->query("DROP TABLE $usertable");
+                } else {
+                    echo json_encode(array('status' => 'error', 'msg' => 'คำตอบของคุณไม่ถูกต้อง!'));
+                    $droptable = $conn->query("DROP TABLE $usertable");
+                }
+            } catch (Exception $e) {
                 echo json_encode(array('status' => 'error', 'msg' => 'คำตอบของคุณไม่ถูกต้อง!'));
                 $droptable = $conn->query("DROP TABLE $usertable");
             }
         } else if ($type == 3) {
-            $deletecode = str_replace($table, $usertable, $code);
-            $query = $conn->query($deletecode);
-            $checkresultcode = str_replace("\$usertable", $usertable, $loadresult['resultcode']);
-            $checkresult = $conn->query($checkresultcode);
-            if ($checkresult->num_rows == 0) {
-                echo json_encode(array('status' => 'success', 'msg' => 'Correct'));
-                $droptable = $conn->query("DROP TABLE $usertable");
-            } else {
+            try {
+                $deletecode = str_replace("FROM $table", "FROM $usertable", $code);
+                $query = $conn->query($deletecode);
+                $checkresultcode = str_replace("\$usertable", $usertable, $loadresult['resultcode']);
+                $checkresult = $conn->query($checkresultcode);
+                if ($checkresult->num_rows == 0) {
+                    if ($code == $loadresult['answercode']) {
+                        $score = 2;
+                    } else {
+                        $score = 1;
+                    }
+                    echo json_encode(
+                        array(
+                            'status' => 'success',
+                            'msg' => 'Correct',
+                            'score' => $score,
+                            'userid' => $_SESSION['userid'],
+                            'quizid' => $quizid
+                        )
+                    );
+                    $droptable = $conn->query("DROP TABLE $usertable");
+                } else {
+                    echo json_encode(array('status' => 'error', 'msg' => 'คำตอบของคุณไม่ถูกต้อง!'));
+                    $droptable = $conn->query("DROP TABLE $usertable");
+                }
+            } catch (Exception $e) {
                 echo json_encode(array('status' => 'error', 'msg' => 'คำตอบของคุณไม่ถูกต้อง!'));
                 $droptable = $conn->query("DROP TABLE $usertable");
             }
         } else {
-            $updatecode = str_replace($table, $usertable, $code);
-            $query = $conn->query($updatecode);
-            $checkresultcode = str_replace("\$usertable", $usertable, $loadresult['resultcode']);
-            $checkresult = $conn->query($checkresultcode);
-            if ($checkresult->num_rows == 1) {
-                echo json_encode(array('status' => 'success', 'msg' => 'Correct'));
-                $droptable = $conn->query("DROP TABLE $usertable");
-            } else {
+            try {
+                $updatecode = str_replace("UPDATE $table", "UPDATE $usertable", $code);
+                $query = $conn->query($updatecode);
+                $checkresultcode = str_replace("\$usertable", $usertable, $loadresult['resultcode']);
+                $checkresult = $conn->query($checkresultcode);
+                if ($checkresult->num_rows == 1) {
+                    if ($code == $loadresult['answercode']) {
+                        $score = 2;
+                    } else {
+                        $score = 1;
+                    }
+                    echo json_encode(
+                        array(
+                            'status' => 'success',
+                            'msg' => 'Correct',
+                            'score' => $score,
+                            'userid' => $_SESSION['userid'],
+                            'quizid' => $quizid
+                        )
+                    );
+                    $droptable = $conn->query("DROP TABLE $usertable");
+                } else {
+                    echo json_encode(array('status' => 'error', 'msg' => 'คำตอบของคุณไม่ถูกต้อง!'));
+                    $droptable = $conn->query("DROP TABLE $usertable");
+                }
+            } catch (Exception $e) {
                 echo json_encode(array('status' => 'error', 'msg' => 'คำตอบของคุณไม่ถูกต้อง!'));
                 $droptable = $conn->query("DROP TABLE $usertable");
             }
