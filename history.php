@@ -51,7 +51,7 @@ if (!isset($_SESSION['userid'])) {
                         <input type="search" placeholder="Search...">
                     </li>
                     <li class="nav-link">
-                        <a href="index2.php">
+                        <a href="index.php">
                             <i class='bx bx-home icon'></i>
                             <span class="text nav-text">Home</span>
                         </a>
@@ -108,7 +108,6 @@ if (!isset($_SESSION['userid'])) {
                                     <td><?php echo $row['quiz']; ?></td>
                                     <td><?php echo $row['score']; ?>/2</td>
                                     <td><?php echo $row['recordtime']; ?></td>
-                                    <td></td>
                                 </tr>
                             <?php endwhile; ?>
                         </tbody>
@@ -126,7 +125,6 @@ if (!isset($_SESSION['userid'])) {
                                 <td>สรุป</td>
                                 <td>คะแนนรวมทั้งหมด</td>
                                 <td><?php echo $yourscore['sum(score)']; ?>/<?php echo $sumscore['count(*)'] * 2; ?></td>
-                                <td></td>
                             </tr>
                         </tfoot>
                     </table>
