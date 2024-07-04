@@ -325,7 +325,7 @@ if ($type == 1) {
                     $answercode = $answercode . " WHERE ";
                     $resultcode = $resultcode . ";";
                     for ($j = 0; $j < count($afterUpdate); $j++) {
-                        $answercode = $answercode . $fieldName[$j] . " " . "'$beforeUpdate[$j]'";
+                        $answercode = $answercode . $fieldName[$j] . " = " . "'$beforeUpdate[$j]'";
                         if ($j < count($afterUpdate) - 1) {
                             $answercode = $answercode . " AND ";
                         } else {
