@@ -8,8 +8,8 @@ if (!isset($_SESSION['username']) && !isset($_POST['quizid'])) {
     //Load sql code from table.
     $loadtable = $conn->query("SELECT * FROM quiz WHERE quizid = '$quizid' LIMIT 1");
     $loadresult = $loadtable->fetch_assoc();
-    $username = strtolower($_SESSION['username']);
-    $usertable = "temp$username";
+    $userid = $_SESSION['userid'];
+    $usertable = "temp$userid";
     $selectcode = str_replace("\$usertable", $usertable, $loadresult['temptablecode']);
     //Create temporarily table.
     $temptable = $conn->query("CREATE TABLE $usertable AS $selectcode");
