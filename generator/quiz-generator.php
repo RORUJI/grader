@@ -1,13 +1,13 @@
 <?php
-
 session_start();
 include_once "../dbconnect.php";
 
 if ($_SESSION['level'] != 2) {
-
-    header('location: ../index.php');
-
+    header("location: ../index.php");
 } else {
+    $typeSql = "SELECT * FROM type";
+    $typeQuery = $conn->query($typeSql);
+
     $tableSql = "SELECT table_name FROM information_schema.tables WHERE table_schema = 'grader'
     AND table_type = 'BASE TABLE' AND table_name NOT LIKE 'mysql_%' AND table_name NOT LIKE 
     'information_schema_%' AND table_name NOT LIKE 'performance_schema_%' AND table_name NOT LIKE 'sys_%' AND
@@ -27,9 +27,6 @@ if ($_SESSION['level'] != 2) {
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.2/font/bootstrap-icons.min.css">
         <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
         <link rel="stylesheet" href="../style2.css?v<?php echo time(); ?>">
-        <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
-        <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-
         <title>Grader</title>
     </head>
 
@@ -100,44 +97,41 @@ if ($_SESSION['level'] != 2) {
                 <div class="div-text"><br>
                     <div class="div-text">
                         <div class="div-grader">
-                            <form action="system_storage/question_generator.php" method="post" id="generatorForm" class="">
-                                <h2 class="fw-bold text-center">สร้างโจทย์ปัญหา</h2>
+                            <form action="system_storage/question_generator.php" class="p-3" id="generatorForm"
+                                method="post">
+                                <h2 class="fw-bold text-center">Quiz Generator</h2>
                                 <hr>
-                                <div class="mb">
-                                    <div class="row p-2">
-                                        <div id="type-select" class="col-3 p-2 rounded me-3 type-select">
-                                            <label for="type" class="form-label fw-bold">เลือกประเภทของโจทย์</label>
-                                            <select name="type" id="type" class="form-select form-select-sm">
-                                                <option value="">เลือกประเภทของโจทย์</option>
-                                                <?php $sql = "SELECT * FROM type";
-                                                $result = $conn->query($sql);
-                                                while ($row = $result->fetch_assoc()): ?>
-                                                    <option value="<?php echo $row['typeID']; ?>">
-                                                        <?php echo $row['type']; ?>
-                                                    </option>
-                                                <?php endwhile; ?>
-                                            </select>
-                                        </div>
-                                        <div id="table-select" class="col p-2 rounded me-3 type-select">
-                                            <div class="row">
-                                                <div class="col">
-                                                    <label for="table"
-                                                        class="form-label fw-bold">ตารางที่ต้องการใช้งาน</label>
-                                                    <select name="table" id="table" class="form-select form-select-sm">
-                                                        <option value="">เลือกตารางข้อมูล</option>
-                                                        <?php while ($row = $tableQuery->fetch_assoc()): ?>
-                                                            <option value="<?php echo $row['table_name']; ?>">
-                                                                <?php echo $row['table_name']; ?>
-                                                            </option>
-                                                        <?php endwhile; ?>
-                                                    </select>
-                                                </div>
-                                            </div>
-                                        </div>
+                                <div class="row mb-3">
+                                    <div class="col-3 p-2 mx-3 rounded type-select" id="type-select">
+                                        <label for="type" class="form-label fw-bold">Select Type</label>
+                                        <select name="type" id="type" class="form-select form-select-sm">
+                                            <option value="" selected>Select Type</option>
+                                            <?php while ($row = $typeQuery->fetch_assoc()): ?>
+                                                <option value="<?php echo $row['typeID']; ?>">
+                                                    <?php echo $row['type']; ?>
+                                                </option>
+                                            <?php endwhile; ?>
+                                        </select>
+                                    </div>
+
+                                    <div class="col p-2 me-3 rounded type-select" id="type-select">
+                                        <label for="table" class="form-label fw-bold">Select Table</label>
+                                        <select name="table" id="table" class="form-select form-select-sm">
+                                            <option value="" selected>Select Table</option>
+                                            <?php while ($row = $tableQuery->fetch_assoc()): ?>
+                                                <option value="<?php echo $row['table_name']; ?>">
+                                                    <?php echo $row['table_name']; ?>
+                                                </option>
+                                            <?php endwhile; ?>
+                                        </select>
                                     </div>
                                 </div>
-                                <div class="mb-3">
-                                    <div id="input-field"></div>
+
+                                <div class="row">
+                                    <div class="col-3 p-2 mx-3 rounded type-select">
+                                        <label for="request-data" class="form-label fw-bold">Select Data Request</label>
+                                        <div id="selectData"></div>
+                                    </div>
                                 </div>
                             </form>
                         </div>
@@ -146,28 +140,15 @@ if ($_SESSION['level'] != 2) {
             </div>
         </section>
 
+        <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+
+        <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+        <script src="../change-mode.js"></script>
+
+        <script src="select-data.js"></script>
+
         <script>
-            const body = document.querySelector("body"),
-                sidebar = body.querySelector(".sidebar"),
-                toggle = body.querySelector(".toggle"),
-                searchBtn = body.querySelector(".search-box"),
-                modeSwtich = body.querySelector(".toggle-switch")
-            modeText = body.querySelector(".mode-text");
-
-            toggle.addEventListener("click", () => {
-                sidebar.classList.toggle("close");
-            });
-
-            modeSwtich.addEventListener("click", () => {
-                body.classList.toggle("dark");
-
-                if (body.classList.contains("dark")) {
-                    modeText.innerText = "Light Mode"
-                } else {
-                    modeText.innerText = "Dark Mode"
-                }
-            });
-
             $(document).ready(function () {
                 $('#type, #table').on('change', function (e) {
                     e.preventDefault();

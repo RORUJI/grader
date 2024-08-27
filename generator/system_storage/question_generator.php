@@ -102,35 +102,115 @@ if ($type == 1) {
             }
         } else {
             if (isset($_POST['condition-checkbox'])) {
-                $conditionData = $_POST['condition'];
-                if ($conditionData['field'][0] == "") {
-                    echo json_encode(array("status" => "error", "msg" => "กรุณาเลือกคอลัมส์สำหรับเงื่อนไข!"));
-                } else if ($conditionData['condition'][0] == "") {
-                    echo json_encode(array("status" => "error", "msg" => "กรุณาเลือกเงื่อนไข!"));
-                } else if ($conditionData['compare'][0] == "") {
-                    echo json_encode(array("status" => "error", "msg" => "กรุณากรอกข้อมูลเทียบ!"));
+                $answercode = $answercode . " WHERE ";
+                $resultcode = $resultcode . " WHERE ";
+                $temptablecode = $temptablecode . " WHERE ";
+                $clauseCount = $_POST['clauseCount'];
+                if (empty($clauseCount)) {
+                    echo json_encode(array("status" => "error", "msg" => "กรุณาใส่จำนวนเงื่อนไข!"));
                 } else {
-                    $conditionField = $conditionData['field'][0];
-                    $condition = $conditionData['condition'][0];
-                    $conditionCompare = $conditionData['compare'][0];
-                    $answercode = $answercode . " WHERE " . $conditionField . " " . $condition . " " . "'$conditionCompare'";
-                    $resultcode = $resultcode . " WHERE " . $conditionField . " " . $condition . " " . "'$conditionCompare'";
-                    $temptablecode = $temptablecode . " WHERE " . $conditionField . " " . $condition . " " . "'$conditionCompare'";
-                    if (isset($_POST['order-checkbox'])) {
-                        $orderby = $_POST['orderby'];
-                        $sort = $_POST['sort'];
-                        if ($orderby == "") {
-                            echo json_encode(array("status" => "error", "msg" => "กรุณาเลือกคอลัมส์ที่ต้องการจัดเรียง!"));
-                        } else if ($sort == "") {
-                            echo json_encode(array("status" => "error", "msg" => "กรุณาเลือกประเภทการจัดเรียง!"));
+                    $msg = "";
+                    $columnNameArray = $_POST['columnName'];
+                    $operatorArray = $_POST['operator'];
+                    $valueArray = $_POST['value'];
+
+                    if ($clauseCount > 1) {
+                        $logicalOperatorArray = $_POST['logicalOperator'];
+
+                        for ($i = 0; $i < $clauseCount; $i++) {
+                            $count = $i + 1;
+
+                            if ($columnNameArray[$i] == "") {
+                                echo json_encode(array(
+                                    "status" => "error",
+                                    "msg" => "กรุณาเลือกคอลัมส์สำหรับเงื่อนไขที่ $count!"
+                                ));
+                                break;
+                            } else if ($operatorArray[$i] == "") {
+                                echo json_encode(array(
+                                    "status" => "error",
+                                    "msg" => "กรุณาเลือกเงื่อนไขที่ $count!"
+                                ));
+                                break;
+                            } else if ($valueArray[$i] == "") {
+                                echo json_encode(array(
+                                    "status" => "error",
+                                    "msg" => "กรุณากรอกข้อมูลเทียบที่ $count!"
+                                ));
+                                break;
+                            } else if ($i < $clauseCount - 1 && $logicalOperatorArray[$i] == "") {
+                                echo json_encode(array(
+                                    "status" => "error",
+                                    "msg" => "กรุณาใส่ Logical Operator ที่ $count!"
+                                ));
+                                break;
+                            } else {
+                                if ($i < $clauseCount - 1) {
+                                    $answercode = $answercode . $columnNameArray[$i] . " " . $operatorArray[$i] . " " . "'$valueArray[$i]'" . " " . $logicalOperatorArray[$i] . " ";
+                                    $resultcode = $resultcode . $columnNameArray[$i] . " " . $operatorArray[$i] . " " . "'$valueArray[$i]'" . " " . $logicalOperatorArray[$i] . " ";
+                                    $temptablecode = $temptablecode . $columnNameArray[$i] . " " . $operatorArray[$i] . " " . "'$valueArray[$i]'" . " " . $logicalOperatorArray[$i] . " ";
+                                } else {
+                                    $answercode = $answercode . $columnNameArray[$i] . " " . $operatorArray[$i] . " " . "'$valueArray[$i]'";
+                                    $resultcode = $resultcode . $columnNameArray[$i] . " " . $operatorArray[$i] . " " . "'$valueArray[$i]'";
+                                    $temptablecode = $temptablecode . $columnNameArray[$i] . " " . $operatorArray[$i] . " " . "'$valueArray[$i]'";
+                                }
+                                continue;
+                            }
+                        }
+                        if (isset($_POST['order-checkbox'])) {
+                            $orderby = $_POST['orderby'];
+                            $sort = $_POST['sort'];
+                            if ($orderby == "") {
+                                echo json_encode(array("status" => "error", "msg" => "กรุณาเลือกคอลัมส์ที่ต้องการจัดเรียง!"));
+                            } else if ($sort == "") {
+                                echo json_encode(array("status" => "error", "msg" => "กรุณาเลือกประเภทการจัดเรียง!"));
+                            } else {
+                                $answercode = $answercode . " " . "ORDER BY " . $orderby . " " . $sort;
+                                $resultcode = $resultcode . " " . "ORDER BY " . $orderby . " " . $sort;
+                                $temptablecode = $temptablecode . " " . "ORDER BY " . $orderby . " " . $sort;
+                                echo json_encode(array("status" => "success", "msg" => $temptablecode));
+                            }
                         } else {
-                            $answercode = $answercode . " " . "ORDER BY " . $orderby . " " . $sort;
-                            $resultcode = $resultcode . " " . "ORDER BY " . $orderby . " " . $sort;
-                            $temptablecode = $temptablecode . " " . "ORDER BY " . $orderby . " " . $sort;
-                            echo json_encode(array("status" => "success", "msg" => $temptablecode));
+                            include_once "thai_translation.php";
                         }
                     } else {
-                        include_once "thai_translation.php";
+                        if ($columnNameArray[0] == "") {
+                            echo json_encode(array(
+                                "status" => "error",
+                                "msg" => "กรุณาเลือกคอลัมส์สำหรับเงื่อนไข!"
+                            ));
+                        } else if ($operatorArray[0] == "") {
+                            echo json_encode(array(
+                                "status" => "error",
+                                "msg" => "กรุณาเลือกเงื่อนไข!"
+                            ));
+                        } else if ($valueArray[0] == "") {
+                            echo json_encode(array(
+                                "status" => "error",
+                                "msg" => "กรุณากรอกข้อมูลเทียบ!"
+                            ));
+                        } else {
+                            $answercode = $answercode . $columnNameArray[0] . " " . $operatorArray[0] . " " . "'$valueArray[0]'";
+                            $resultcode = $resultcode . $columnNameArray[0] . " " . $operatorArray[0] . " " . "'$valueArray[0]'";
+                            $temptablecode = $temptablecode . $columnNameArray[0] . " " . $operatorArray[0] . " " . "'$valueArray[0]'";
+
+                            if (isset($_POST['order-checkbox'])) {
+                                $orderby = $_POST['orderby'];
+                                $sort = $_POST['sort'];
+                                if ($orderby == "") {
+                                    echo json_encode(array("status" => "error", "msg" => "กรุณาเลือกคอลัมส์ที่ต้องการจัดเรียง!"));
+                                } else if ($sort == "") {
+                                    echo json_encode(array("status" => "error", "msg" => "กรุณาเลือกประเภทการจัดเรียง!"));
+                                } else {
+                                    $answercode = $answercode . " " . "ORDER BY " . $orderby . " " . $sort;
+                                    $resultcode = $resultcode . " " . "ORDER BY " . $orderby . " " . $sort;
+                                    $temptablecode = $temptablecode . " " . "ORDER BY " . $orderby . " " . $sort;
+                                    echo json_encode(array("status" => "success", "msg" => $temptablecode));
+                                }
+                            } else {
+                                include_once "thai_translation.php";
+                            }
+                        }
                     }
                 }
             } else {

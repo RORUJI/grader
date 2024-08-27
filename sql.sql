@@ -23,7 +23,7 @@ CREATE TABLE gender (
     PRIMARY KEY(genderID)
 ) ENGINE = InnoDB DEFAULT CHARSET = utf8;
 
-INSERT INTO gender(gender) VALUES('Male'), ('Female');
+INSERT INTO gender(gendername) VALUES('Male'), ('Female');
 
 CREATE TABLE manu_category (
     manu_categoryid INT(3) NOT NULL AUTO_INCREMENT,

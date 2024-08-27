@@ -18,7 +18,7 @@ $result = $conn->query($sql);
             <label for="request-data" class="form-label fw-bold">ต้องการเรียกข้อมูลอะไรบ้าง</label>
             <!--PHP SELECT TABLE FIELD LOOP-->
             <?php while ($row = $result->fetch_array()): ?>
-                <div class="mb-3">
+                <div class="mb-2">
                     <input type="checkbox" name="data[]" id="request-data" class="form-check-input request-data"
                         value="<?php echo $row[0]; ?>">
                     <label for="select-data" class="form-check-label">
