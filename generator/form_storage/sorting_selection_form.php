@@ -21,8 +21,8 @@ if (isset($_POST['order-checkbox'])) {
     <body>
         <div class="row">
             <div class="col mb-3">
-                <label for="sort" class="form-label fw-bold">เรียงลำดับ</label>
-                <select name="orderby" class="form-select">
+                <label for="sort" class="form-label">เรียงลำดับ</label>
+                <select name="orderby" class="form-select form-select-sm">
                     <option value="">เรียงลำดับโดย</option>
                     <?php
                     $result = $conn->query($sql);
@@ -35,8 +35,8 @@ if (isset($_POST['order-checkbox'])) {
                 </select>
             </div>
             <div class="col mb-3">
-                <label for="sort" class="form-label fw-bold">เรียงลำดับจาก</label>
-                <select class="form-select" name="sort">
+                <label for="sort" class="form-label">เรียงลำดับจาก</label>
+                <select class="form-select form-select-sm" name="sort">
                     <option value="">เรียงลำดับ</option>
                     <option value="ASC">น้อยไปมาก</option>
                     <option value="DESC">มากไปน้อย</option>

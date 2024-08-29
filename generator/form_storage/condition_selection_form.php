@@ -21,7 +21,7 @@ if (isset($_POST['condition-checkbox'])) {
     <body>
         <input type="hidden" id="table" value="<?php echo $table; ?>">
         <div class="row">
-            <div class="mb-3">
+            <div class="mb-2">
                 <div class="input-group input-group-sm" style="width: 190px;">
                     <span class="input-group-text">จำนวนของเงื่อนไข</span>
                     <select name="clauseCount" id="clauseCount" class="form-select form-select-sm">

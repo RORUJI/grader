@@ -100,11 +100,11 @@ if ($_SESSION['level'] != 2) {
                 <div class="div-text"><br>
                     <div class="div-text">
                         <div class="div-grader">
-                            <form action="system_storage/question_generator.php" method="post" id="generatorForm" class="">
+                            <form action="system_storage/question_generator.php" method="post" id="generatorForm" class="p-3">
                                 <h2 class="fw-bold text-center">สร้างโจทย์ปัญหา</h2>
                                 <hr>
                                 <div class="mb">
-                                    <div class="row p-2">
+                                    <div class="row p-2" id="selectField">
                                         <div id="type-select" class="col-3 p-2 rounded me-3 type-select">
                                             <label for="type" class="form-label fw-bold">เลือกประเภทของโจทย์</label>
                                             <select name="type" id="type" class="form-select form-select-sm">
@@ -118,7 +118,7 @@ if ($_SESSION['level'] != 2) {
                                                 <?php endwhile; ?>
                                             </select>
                                         </div>
-                                        <div id="table-select" class="col p-2 rounded me-3 type-select">
+                                        <div id="table-select" class="col p-2 rounded me-2 type-select">
                                             <div class="row">
                                                 <div class="col">
                                                     <label for="table"
@@ -230,8 +230,7 @@ if ($_SESSION['level'] != 2) {
                                             },
                                             success: function (data) {
                                                 $('#input-field').html(data);
-                                                $('#type-select').remove();
-                                                $('#table-select').remove();
+                                                $('#selectField').remove();
                                             }
                                         });
                                     } else {

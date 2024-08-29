@@ -19,7 +19,7 @@ $result = $conn->query($sql);
             <label for="request-insert-data" class="form-label fw-bold">ต้องการใส่ข้อมูลอะไรบ้าง</label>
             <!--PHP INSERT TABLE FIELD LOOP-->
             <?php while ($row = $result->fetch_array()): ?>
-                <div class="mb-3">
+                <div class="mb-2">
                     <input type="checkbox" name="field-name[]" id="request-data" class="form-check-input request-data"
                         value="<?php echo $row[0]; ?>">
                     <label for="select-data" class="form-check-label">
@@ -30,7 +30,7 @@ $result = $conn->query($sql);
             <input class="form-check-input" id="all-select" name="field-name" type="checkbox" value="*">
             <label for="select-all-data" class="form-check-label">ทั้งหมด</label>
         </div>
-        <div id="input-update" class="col mx-1"></div>
+        <div id="input-update" class="d-flex flex-column col ms-3 me-2 p-2 rounded type-select"></div>
     </div>
 </body>
 

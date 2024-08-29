@@ -26,29 +26,36 @@ $result = $conn->query($sql);
                     </label>
                 </div>
             <?php endwhile; ?>
-            <div class="mb-3">
+            <div class="mb-2">
                 <input class="form-check-input" id="all-request" name="data" type="checkbox" value="*">
                 <label for="select-all-data" class="form-check-label">ทั้งหมด</label>
             </div>
-            <div class="mb">
-                <button type="submit" class="btn btn-primary">สร้างโจทย์ปัญหา</button>
-            </div>
         </div>
-        <div class="col mx-3 p-2 rounded type-select">
-            <input type="checkbox" name="condition-checkbox" id="condition-checkbox" class="form-check-input" value="">
-            <label for="set-order" class="form-check-label fw-bold">กำหนดเงื่อนไข</label>
-            <div class="row">
-                <div id="input-condition-field"></div>
+        <div class="d-flex flex-column col ms-3 me-2 p-2 rounded type-select position-relative">
+            <div class="checkbox-text" style="flex-grow: 1;">
+                <input type="checkbox" name="condition-checkbox" id="condition-checkbox" class="form-check-input"
+                    value="">
+                <label for="set-order" class="form-check-label fw-bold">กำหนดเงื่อนไข</label>
+                <div class="row">
+                    <div id="input-condition-field"></div>
+                </div>
             </div>
-            <input type="checkbox" name="order-checkbox" id="order-checkbox" class="form-check-input" value="">
-            <label for="set-order" class="form-check-label fw-bold">กำหนดการเรียงลำดับ</label>
-            <div class="row">
-                <div id="input-sort-field"></div>
+            <div class="checkbox-text" style="flex-grow: 1;">
+                <input type="checkbox" name="order-checkbox" id="order-checkbox" class="form-check-input" value="">
+                <label for="set-order" class="form-check-label fw-bold">กำหนดการเรียงลำดับ</label>
+                <div class="row">
+                    <div id="input-sort-field"></div>
+                </div>
             </div>
-            <input type="checkbox" name="join-checkbox" id="join-checkbox" class="form-check-input" value="">
-            <label for="set-join" class="form-check-label fw-bold">กำหนดการ JOIN</label>
-            <div class="row">
-                <div id="input-join-field"></div>
+            <div class="checkbox-text" style="flex-grow: 1;">
+                <input type="checkbox" name="join-checkbox" id="join-checkbox" class="form-check-input" value="">
+                <label for="set-join" class="form-check-label fw-bold">กำหนดการ JOIN</label>
+                <div class="row">
+                    <div id="input-join-field"></div>
+                </div>
+            </div>
+            <div class="text-end">
+                <button type="submit" class="btn btn-primary btn-sm">Create</button>
             </div>
         </div>
     </div>

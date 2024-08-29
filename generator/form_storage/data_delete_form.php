@@ -32,21 +32,21 @@ if (isset($_POST['field-name'])) {
     </head>
 
     <body>
-        <div class="col p-2 rounded type-select">
+        <div class="txtDeleteData" style="flex-grow: 1;">
             <label for="request-data" class="form-label fw-bold">ใส่ข้อมูล</label>
             <!--PHP DATA FIELD LOOP-->
             <?php foreach ($datas as $data): ?>
-                <div class="mb-3">
+                <div class="mb-2">
                     <label for="input-data" class="form-label">
                         <?php echo $data; ?>
                     </label>
-                    <input type="text" name="field-data[]" id="" class="form-control" value=""
+                    <input type="text" name="field-data[]" id="" class="form-control form-control-sm" value=""
                         placeholder="กรุณากรอก <?php echo $data; ?>">
                 </div>
             <?php endforeach; ?>
-            <div class="mb">
-                <button type="submit" class="btn btn-primary w-100">Submit</button>
-            </div>
+        </div>
+        <div class="text-end">
+            <button class="btn btn-primary btn-sm">Create</button>
         </div>
     </body>
 

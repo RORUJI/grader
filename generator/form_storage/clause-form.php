@@ -18,7 +18,9 @@ $table = $_POST['table'];
 <body>
     <div class="row row-cols-4 mb-2">
         <div class="col">
-            <label for="select-field" class="form-label">เลือกคอล์มส์</label>
+            <?php if ($_POST['count'] != ""): ?>
+                <label for="select-field" class="form-label">เลือกคอล์มส์</label>
+            <?php endif; ?>
             <?php for ($i = 0; $i < $_POST['count']; $i++): ?>
                 <?php
                 $sql = "SELECT COLUMN_NAME FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_SCHEMA = 'grader' AND TABLE_NAME = '$table'";
@@ -36,22 +38,28 @@ $table = $_POST['table'];
         </div>
 
         <div class="col">
-            <label for="select-condition" class="form-label">เลือกเงื่อนไข</label>
+            <?php if ($_POST['count'] != ""): ?>
+                <label for="select-condition" class="form-label">เลือกเงื่อนไข</label>
+            <?php endif; ?>
             <?php for ($i = 0; $i < $_POST['count']; $i++): ?>
                 <select class="form-select form-select-sm mb-1" name="operator[]">
                     <option value="">เลือกเงื่อนไข</option>
                     <option value=">">มากกว่า</option>
                     <option value="<">น้อยกว่า</option>
                     <option value="=">เท่ากับ</option>
+                    <option value=">=">มากกว่าหรือเท่ากับ</option>
+                    <option value="<=">น้อยกว่าหรือเท่ากับ</option>
+                    <option value="<>">ไม่เท่ากับ</option>
                 </select>
             <?php endfor; ?>
         </div>
 
         <div class="col">
-            <label for="compare" class="form-label">กรอกตัวเปรียบเทียบ</label>
+            <?php if ($_POST['count'] != ""): ?>
+                <label for="compare" class="form-label">Value</label>
+            <?php endif; ?>
             <?php for ($i = 0; $i < $_POST['count']; $i++): ?>
-                <input type="text" class="form-control form-control-sm mb-1" name="value[]"
-                    placeholder="กรอกตัวเปรียบเทียบ" value="">
+                <input type="text" class="form-control form-control-sm mb-1" name="value[]" placeholder="Value" value="">
             <?php endfor; ?>
         </div>
 
