@@ -19,61 +19,50 @@ if (isset($_POST['condition-checkbox'])) {
     </head>
 
     <body>
-        <?php $i = 0; ?>
-        <?php while ($i < 1): ?>
-            <?php
-            $result = $conn->query($sql);
-            ?>
-            <div class="row row-cols-4">
-                <div class="col mb-3">
-                    <?php if ($i < 1): ?>
-                        <label for="select-field" class="form-label">เลือกคอล์มส์</label>
-                    <?php endif; ?>
-                    <select class="form-select" name="condition[field][]">
-                        <option value="">เลือกคอล์มส์</option>
-                        <?php while ($row = $result->fetch_array()): ?>
-                            <option value="<?php echo $row[0]; ?>">
-                                <?php echo $row[0]; ?>
-                            </option>
-                        <?php endwhile; ?>
+        <input type="hidden" id="table" value="<?php echo $table; ?>">
+        <div class="row">
+            <div class="mb-2">
+                <div class="input-group input-group-sm" style="width: 190px;">
+                    <span class="input-group-text">จำนวนของเงื่อนไข</span>
+                    <select name="clauseCount" id="clauseCount" class="form-select form-select-sm">
+                        <option value="">?</option>
+                        <?php
+                        $clauseCount = 1;
+                        while ($clauseCount <= 5):
+                            ?>
+                            <option value="<?php echo $clauseCount; ?>"><?php echo $clauseCount; ?></option>
+                            <?php
+                            $clauseCount++;
+                        endwhile;
+                        ?>
                     </select>
                 </div>
-                <div class="col mb-3'">
-                    <?php if ($i < 1): ?>
-                        <label for="select-condition" class="form-label">เลือกเงื่อนไข</label>
-                    <?php endif; ?>
-                    <select class="form-select" name="condition[condition][]">
-                        <option value="">เลือกเงื่อนไข</option>
-                        <option value=">">มากกว่า</option>
-                        <option value="<">น้อยกว่า</option>
-                        <option value="=">เท่ากับ</option>
-                    </select>
-                </div>
-                <div class="col mb-3">
-                    <?php if ($i < 1): ?>
-                        <label for="compare" class="form-label">กรอกตัวเปรียบเทียบ</label>
-                    <?php endif; ?>
-                    <input type="text" class="form-control" name="condition[compare][]" placeholder="กรอกตัวเปรียบเทียบ"
-                        value="">
-                </div>
-                <?php if ($i < 1): ?>
-                    <!-- <div class="col mb-3">
-                        <label for="select-compare" class="form-label">เลือกตัวเชื่อม</label>
-                        <select name="conditionLink" class="form-select">
-                            <option value="">เลือกตัวเชื่อม</option>
-                            <option value="AND">AND</option>
-                            <option value="OR">OR</option>
-                        </select>
-                    </div> -->
-                <?php endif; ?>
+
             </div>
-            <?php
-            $i++;
-            ?>
-        <?php endwhile; ?>
+        </div>
+
+        <div class="row" id="clauseField"></div>
 
         <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
-        <script></script>
+        <script>
+            $('#clauseCount').change(function () {
+                let table = document.getElementById('table');
+                table = table.value;
+                let clauseCountValue = clauseCount.value;
+                console.log(clauseCountValue);
+                $.ajax({
+                    type: "POST",
+                    url: "form_storage/clause-form.php",
+                    data: {
+                        count: clauseCountValue,
+                        table: table
+                    },
+                    success: function (data) {
+                        $('#clauseField').html(data)
+                    }
+                });
+            });
+        </script>
     </body>
 
     </html>

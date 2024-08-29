@@ -8,6 +8,12 @@ if (!isset($_GET['quizid']) || !isset($_SESSION['userid'])) {
     $quizid = $_GET['quizid'];
     $sql = "SELECT * FROM quiz";
     $results = $conn->query($sql);
+    $tableSql = "SELECT table_name FROM information_schema.tables WHERE table_schema = 'grader'
+    AND table_type = 'BASE TABLE' AND table_name NOT LIKE 'mysql_%' AND table_name NOT LIKE 
+    'information_schema_%' AND table_name NOT LIKE 'performance_schema_%' AND table_name NOT LIKE 'sys_%' AND
+    table_name != 'quiz' AND table_name != 'score' AND table_name != 'type' AND table_name != 'user' AND
+    table_name != 'level'";
+    $tableQuery = $conn->query($tableSql);
     if ($quizid < 1 || $quizid > $results->num_rows) {
         header("location: ../index.php");
     } else {
@@ -103,14 +109,14 @@ if (!isset($_GET['quizid']) || !isset($_SESSION['userid'])) {
             <div class="div-text"><br>
                 <div class="div-text">
                     <div class="div-grader">
-                        <form action="system_storage/code_generator.php" method="post" id="generatorForm" class="p-2">
+                        <form action="system_storage/code_generator.php" method="post" id="generatorForm" class="p-3">
                             <h2 class="fw-bold text-center">SQL Quiz</h2>
                             <hr>
                             <div class="mb">
                                 <div class="row p-2">
                                     <div class="col p-2 rounded me-3 type-select">
                                         <label for="quiz" class="form-label fw-bold">คำถาม</label>
-                                        <span class="form-control"><?php echo $result['quiz']; ?></span>
+                                        <span class="form-control form-control-sm"><?php echo $result['quiz']; ?></span>
                                         <input type="hidden" name="quizid" value="<?php echo $_GET['quizid']; ?>">
                                     </div>
                                 </div>
@@ -121,39 +127,45 @@ if (!isset($_GET['quizid']) || !isset($_SESSION['userid'])) {
                                         <label for="type" class="form-label fw-bold">ประเภทของโจทย์</label>
                                         <input type="hidden" name="type" id="type"
                                             value="<?php echo $result['typeID']; ?>">
-                                        <span class="form-control"><?php echo $result['type']; ?></span>
+                                        <span class="form-control form-control-sm"><?php echo $result['type']; ?></span>
                                     </div>
                                     <div id="table-select" class="col p-2 rounded me-3 type-select">
                                         <div class="row">
                                             <div class="col">
                                                 <label for="table"
                                                     class="form-label fw-bold">ตารางที่ต้องการใช้งาน</label>
-                                                <select name="table" id="table" class="form-select">
+                                                <select name="table" id="table" class="form-select form-select-sm">
                                                     <option value="">เลือกตารางข้อมูล</option>
-                                                    <option value="person">person</option>
-                                                    <option value="gender">gender</option>
-                                                    <option value="manu">manu</option>
-                                                    <option value="manu_category">manu_category</option>
-                                                    <option value="manu_type">manu_type</option>
+                                                    <?php while ($row = $tableQuery->fetch_assoc()): ?>
+                                                        <option value="<?php echo $row['table_name']; ?>">
+                                                            <?php echo $row['table_name']; ?>
+                                                        </option>
+                                                    <?php endwhile; ?>
                                                 </select>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
-                            <div class="mb-3">
+                            <div class="mb-2">
                                 <div id="input-field"></div>
                             </div>
-                            <div class="mb-3">
-                                <?php if ($quizid > 1): ?>
-                                    <a href="quiz.php?quizid=<?php echo $quizid - 1; ?>" class="btn btn-danger"
-                                        id="back-btn">Back</a>
-                                <?php endif; ?>
-                                <button type="submit" class="btn btn-primary" id="submit-btn">Submit</button>
-                                <?php if ($quizid < $results->num_rows): ?>
-                                    <a href="quiz.php?quizid=<?php echo $quizid + 1; ?>" class="btn btn-success"
-                                        id="next-btn">Next</a>
-                                <?php endif; ?>
+                            <div class="row p-2 me-1">
+                                <div class="col p-2 me-3 rounded type-select">
+                                    <?php if ($quizid > 1): ?>
+                                        <a href="quiz.php?quizid=<?php echo $quizid - 1; ?>" class="btn btn-danger btn-sm w-100"
+                                            id="back-btn"><--Back---</a>
+                                    <?php endif; ?>
+                                </div>
+                                <div class="col p-2 me-3 rounded type-select">
+                                    <button type="submit" class="btn btn-primary btn-sm w-100" id="submit-btn">Submit</button>
+                                </div>
+                                <div class="col p-2 rounded type-select">
+                                    <?php if ($quizid < $results->num_rows): ?>
+                                        <a href="quiz.php?quizid=<?php echo $quizid + 1; ?>" class="btn btn-success btn-sm w-100"
+                                            id="next-btn">---Next--></a>
+                                    <?php endif; ?>
+                                </div>
                             </div>
                         </form>
                     </div>
