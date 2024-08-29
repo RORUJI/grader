@@ -112,24 +112,24 @@ if (!isset($_GET['quizid']) || !isset($_SESSION['userid'])) {
                         <form action="system_storage/code_generator.php" method="post" id="generatorForm" class="p-3">
                             <h2 class="fw-bold text-center">SQL Quiz</h2>
                             <hr>
-                            <div class="mb">
+                            <div class="mb" id="showQuestion">
                                 <div class="row p-2">
-                                    <div class="col p-2 rounded me-3 type-select">
+                                    <div class="col p-2 rounded mx-2 type-select">
                                         <label for="quiz" class="form-label fw-bold">คำถาม</label>
                                         <span class="form-control form-control-sm"><?php echo $result['quiz']; ?></span>
                                         <input type="hidden" name="quizid" value="<?php echo $_GET['quizid']; ?>">
                                     </div>
                                 </div>
                             </div>
-                            <div class="mb">
+                            <div class="mb" id="selectObject">
                                 <div class="row p-2">
-                                    <div id="type-select" class="col-3 p-2 rounded me-3 type-select">
+                                    <div id="type-select" class="col-3 p-2 rounded mx-2 type-select">
                                         <label for="type" class="form-label fw-bold">ประเภทของโจทย์</label>
                                         <input type="hidden" name="type" id="type"
                                             value="<?php echo $result['typeID']; ?>">
                                         <span class="form-control form-control-sm"><?php echo $result['type']; ?></span>
                                     </div>
-                                    <div id="table-select" class="col p-2 rounded me-3 type-select">
+                                    <div id="table-select" class="col p-2 rounded mx-2 type-select">
                                         <div class="row">
                                             <div class="col">
                                                 <label for="table"
@@ -147,23 +147,22 @@ if (!isset($_GET['quizid']) || !isset($_SESSION['userid'])) {
                                     </div>
                                 </div>
                             </div>
-                            <div class="mb-2">
-                                <div id="input-field"></div>
-                            </div>
-                            <div class="row p-2 me-1">
-                                <div class="col p-2 me-3 rounded type-select">
+                            <div class="row p-2" id="input-field"></div>
+                            <div class="row p-2" id="buttonField">
+                                <div class="col p-2 mx-2 rounded type-select">
                                     <?php if ($quizid > 1): ?>
-                                        <a href="quiz.php?quizid=<?php echo $quizid - 1; ?>" class="btn btn-danger btn-sm w-100"
-                                            id="back-btn"><--Back---</a>
-                                    <?php endif; ?>
+                                        <a href="quiz.php?quizid=<?php echo $quizid - 1; ?>"
+                                            class="btn btn-danger btn-sm w-100" id="back-btn"> <--Back--- </a>
+                                            <?php endif; ?>
                                 </div>
-                                <div class="col p-2 me-3 rounded type-select">
-                                    <button type="submit" class="btn btn-primary btn-sm w-100" id="submit-btn">Submit</button>
+                                <div class="col p-2 mx-2 rounded type-select">
+                                    <button type="submit" class="btn btn-primary btn-sm w-100"
+                                        id="submit-btn">Submit</button>
                                 </div>
-                                <div class="col p-2 rounded type-select">
+                                <div class="col p-2 mx-2 rounded type-select">
                                     <?php if ($quizid < $results->num_rows): ?>
-                                        <a href="quiz.php?quizid=<?php echo $quizid + 1; ?>" class="btn btn-success btn-sm w-100"
-                                            id="next-btn">---Next--></a>
+                                        <a href="quiz.php?quizid=<?php echo $quizid + 1; ?>"
+                                            class="btn btn-success btn-sm w-100" id="next-btn"> ---Next--> </a>
                                     <?php endif; ?>
                                 </div>
                             </div>
@@ -172,6 +171,7 @@ if (!isset($_GET['quizid']) || !isset($_SESSION['userid'])) {
                 </div>
             </div>
         </div>
+        </div>
     </section>
 
     <script>
@@ -179,8 +179,8 @@ if (!isset($_GET['quizid']) || !isset($_SESSION['userid'])) {
             sidebar = body.querySelector(".sidebar"),
             toggle = body.querySelector(".toggle"),
             searchBtn = body.querySelector(".search-box"),
-            modeSwtich = body.querySelector(".toggle-switch")
-        modeText = body.querySelector(".mode-text");
+            modeSwtich = body.querySelector(".toggle-switch"),
+            modeText = body.querySelector(".mode-text");
 
         toggle.addEventListener("click", () => {
             sidebar.classList.toggle("close");
@@ -192,7 +192,7 @@ if (!isset($_GET['quizid']) || !isset($_SESSION['userid'])) {
             if (body.classList.contains("dark")) {
                 modeText.innerText = "Light Mode"
             } else {
-                modeText.innerText = "Drak Mode"
+                modeText.innerText = "Dark Mode"
             }
         });
 
@@ -257,8 +257,8 @@ if (!isset($_GET['quizid']) || !isset($_SESSION['userid'])) {
                                         },
                                         success: function (data) {
                                             $('#input-field').html(data);
-                                            $('#type-select').remove();
-                                            $('#table-select').remove();
+                                            $('#selectObject').remove();
+                                            $('#buttonField').remove();
                                         }
                                     });
 

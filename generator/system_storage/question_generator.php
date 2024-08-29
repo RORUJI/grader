@@ -153,25 +153,25 @@ if ($type == 1) {
                                     $answercode = $answercode . $columnNameArray[$i] . " " . $operatorArray[$i] . " " . "'$valueArray[$i]'";
                                     $resultcode = $resultcode . $columnNameArray[$i] . " " . $operatorArray[$i] . " " . "'$valueArray[$i]'";
                                     $temptablecode = $temptablecode . $columnNameArray[$i] . " " . $operatorArray[$i] . " " . "'$valueArray[$i]'";
+
+                                    if (isset($_POST['order-checkbox'])) {
+                                        $orderby = $_POST['orderby'];
+                                        $sort = $_POST['sort'];
+                                        if ($orderby == "") {
+                                            echo json_encode(array("status" => "error", "msg" => "กรุณาเลือกคอลัมส์ที่ต้องการจัดเรียง!"));
+                                        } else if ($sort == "") {
+                                            echo json_encode(array("status" => "error", "msg" => "กรุณาเลือกประเภทการจัดเรียง!"));
+                                        } else {
+                                            $answercode = $answercode . " " . "ORDER BY " . $orderby . " " . $sort;
+                                            $resultcode = $resultcode . " " . "ORDER BY " . $orderby . " " . $sort;
+                                            $temptablecode = $temptablecode . " " . "ORDER BY " . $orderby . " " . $sort;
+                                            include_once "thai_translation.php";
+                                        }
+                                    } else {
+                                        include_once "thai_translation.php";
+                                    }
                                 }
-                                continue;
                             }
-                        }
-                        if (isset($_POST['order-checkbox'])) {
-                            $orderby = $_POST['orderby'];
-                            $sort = $_POST['sort'];
-                            if ($orderby == "") {
-                                echo json_encode(array("status" => "error", "msg" => "กรุณาเลือกคอลัมส์ที่ต้องการจัดเรียง!"));
-                            } else if ($sort == "") {
-                                echo json_encode(array("status" => "error", "msg" => "กรุณาเลือกประเภทการจัดเรียง!"));
-                            } else {
-                                $answercode = $answercode . " " . "ORDER BY " . $orderby . " " . $sort;
-                                $resultcode = $resultcode . " " . "ORDER BY " . $orderby . " " . $sort;
-                                $temptablecode = $temptablecode . " " . "ORDER BY " . $orderby . " " . $sort;
-                                echo json_encode(array("status" => "success", "msg" => $temptablecode));
-                            }
-                        } else {
-                            include_once "thai_translation.php";
                         }
                     } else {
                         if ($columnNameArray[0] == "") {
