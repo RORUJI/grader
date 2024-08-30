@@ -109,7 +109,7 @@ if (!isset($_GET['quizid']) || !isset($_SESSION['userid'])) {
             <div class="div-text"><br>
                 <div class="div-text">
                     <div class="div-grader">
-                        <form action="system_storage/code_generator.php" method="post" id="generatorForm" class="p-3">
+                        <div class="formField p-3">
                             <h2 class="fw-bold text-center">SQL Quiz</h2>
                             <hr>
                             <div class="mb" id="showQuestion">
@@ -121,56 +121,83 @@ if (!isset($_GET['quizid']) || !isset($_SESSION['userid'])) {
                                     </div>
                                 </div>
                             </div>
-                            <div class="mb" id="selectObject">
-                                <div class="row p-2">
-                                    <div id="type-select" class="col-3 p-2 rounded mx-2 type-select">
-                                        <label for="type" class="form-label fw-bold">ประเภทของโจทย์</label>
-                                        <input type="hidden" name="type" id="type"
-                                            value="<?php echo $result['typeID']; ?>">
-                                        <span class="form-control form-control-sm"><?php echo $result['type']; ?></span>
-                                    </div>
-                                    <div id="table-select" class="col p-2 rounded mx-2 type-select">
-                                        <div class="row">
-                                            <div class="col">
-                                                <label for="table"
-                                                    class="form-label fw-bold">ตารางที่ต้องการใช้งาน</label>
-                                                <select name="table" id="table" class="form-select form-select-sm">
-                                                    <option value="">เลือกตารางข้อมูล</option>
-                                                    <?php while ($row = $tableQuery->fetch_assoc()): ?>
-                                                        <option value="<?php echo $row['table_name']; ?>">
-                                                            <?php echo $row['table_name']; ?>
-                                                        </option>
-                                                    <?php endwhile; ?>
-                                                </select>
+
+                            <form action="system_storage/code_generator.php" method="post" id="generatorForm">
+                                <input type="hidden" name="quizid" value="<?php echo $_GET['quizid']; ?>">
+                                <div class="mb" id="selectObject">
+                                    <div class="row p-2">
+                                        <div id="type-select" class="col-3 p-2 rounded mx-2 type-select">
+                                            <label for="type" class="form-label fw-bold">ประเภทของโจทย์</label>
+                                            <input type="hidden" name="type" id="type"
+                                                value="<?php echo $result['typeID']; ?>">
+                                            <span
+                                                class="form-control form-control-sm"><?php echo $result['type']; ?></span>
+                                        </div>
+                                        <div id="table-select" class="col p-2 rounded mx-2 type-select">
+                                            <div class="row">
+                                                <div class="col">
+                                                    <label for="table"
+                                                        class="form-label fw-bold">ตารางที่ต้องการใช้งาน</label>
+                                                    <select name="table" id="table" class="form-select form-select-sm">
+                                                        <option value="">เลือกตารางข้อมูล</option>
+                                                        <?php while ($row = $tableQuery->fetch_assoc()): ?>
+                                                            <option value="<?php echo $row['table_name']; ?>">
+                                                                <?php echo $row['table_name']; ?>
+                                                            </option>
+                                                        <?php endwhile; ?>
+                                                    </select>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
-                            </div>
-                            <div class="row p-2" id="input-field"></div>
-                            <div class="row p-2" id="buttonField">
-                                <div class="col p-2 mx-2 rounded type-select">
-                                    <?php if ($quizid > 1): ?>
-                                        <a href="quiz.php?quizid=<?php echo $quizid - 1; ?>"
-                                            class="btn btn-danger btn-sm w-100" id="back-btn"> <--Back--- </a>
-                                            <?php endif; ?>
+                                <div class="row p-2" id="input-field"></div>
+                                <div class="row p-2" id="buttonField">
+                                    <div class="col p-2 mx-2 rounded type-select">
+                                        <?php if ($quizid > 1): ?>
+                                            <a href="quiz.php?quizid=<?php echo $quizid - 1; ?>"
+                                                class="btn btn-danger btn-sm w-100" id="back-btn"> <--Back--- </a>
+                                                <?php endif; ?>
+                                    </div>
+                                    <div class="col p-2 mx-2 rounded type-select">
+                                        <button type="submit" class="btn btn-primary btn-sm w-100"
+                                            id="submit-btn">Submit</button>
+                                    </div>
+                                    <div class="col p-2 mx-2 rounded type-select">
+                                        <?php if ($quizid < $results->num_rows): ?>
+                                            <a href="quiz.php?quizid=<?php echo $quizid + 1; ?>"
+                                                class="btn btn-success btn-sm w-100" id="next-btn"> ---Next--> </a>
+                                        <?php endif; ?>
+                                    </div>
                                 </div>
-                                <div class="col p-2 mx-2 rounded type-select">
-                                    <button type="submit" class="btn btn-primary btn-sm w-100"
-                                        id="submit-btn">Submit</button>
+                            </form>
+
+                            <form action="system_storage/resultcheck.php" method="post" id="insert-form"
+                                style="display: none;">
+                                <div class="mb" id="questionDetailForm"></div>
+                                <div class="row p-2" id="buttonField">
+                                    <div class="col p-2 mx-2 rounded type-select">
+                                        <?php if ($quizid > 1): ?>
+                                            <a href="quiz.php?quizid=<?php echo $quizid - 1; ?>"
+                                                class="btn btn-danger btn-sm w-100" id="back-btn"> <--Back--- </a>
+                                                <?php endif; ?>
+                                    </div>
+                                    <div class="col p-2 mx-2 rounded type-select">
+                                        <button type="submit" class="btn btn-primary btn-sm w-100"
+                                            id="submit-btn">Submit</button>
+                                    </div>
+                                    <div class="col p-2 mx-2 rounded type-select">
+                                        <?php if ($quizid < $results->num_rows): ?>
+                                            <a href="quiz.php?quizid=<?php echo $quizid + 1; ?>"
+                                                class="btn btn-success btn-sm w-100" id="next-btn"> ---Next--> </a>
+                                        <?php endif; ?>
+                                    </div>
                                 </div>
-                                <div class="col p-2 mx-2 rounded type-select">
-                                    <?php if ($quizid < $results->num_rows): ?>
-                                        <a href="quiz.php?quizid=<?php echo $quizid + 1; ?>"
-                                            class="btn btn-success btn-sm w-100" id="next-btn"> ---Next--> </a>
-                                    <?php endif; ?>
-                                </div>
-                            </div>
-                        </form>
+                            </form>
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
         </div>
     </section>
 
@@ -256,9 +283,9 @@ if (!isset($_GET['quizid']) || !isset($_SESSION['userid'])) {
                                             quizid: result.quizid
                                         },
                                         success: function (data) {
-                                            $('#input-field').html(data);
-                                            $('#selectObject').remove();
-                                            $('#buttonField').remove();
+                                            $('#generatorForm').remove();
+                                            $('#insert-form').css('display', 'block');
+                                            $('#questionDetailForm').html(data);
                                         }
                                     });
 
