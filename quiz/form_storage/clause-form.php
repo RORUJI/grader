@@ -44,12 +44,13 @@ $table = $_POST['table'];
             <?php for ($i = 0; $i < $_POST['count']; $i++): ?>
                 <select class="form-select form-select-sm mb-1" name="operator[]">
                     <option value="">เลือกเงื่อนไข</option>
-                    <option value=">">มากกว่า</option>
-                    <option value="<">น้อยกว่า</option>
-                    <option value="=">เท่ากับ</option>
-                    <option value=">=">มากกว่าหรือเท่ากับ</option>
-                    <option value="<=">น้อยกว่าหรือเท่ากับ</option>
-                    <option value="<>">ไม่เท่ากับ</option>
+                    <option value=">">มากกว่า (>)</option>
+                    <option value="<">น้อยกว่า (<)</option>
+                    <option value="=">เท่ากับ (=)</option>
+                    <option value=">=">มากกว่าหรือเท่ากับ (>=)</option>
+                    <option value="<=">น้อยกว่าหรือเท่ากับ (<=)</option>
+                    <option value="<>">ไม่เท่ากับ (<>)</option>
+                    <option value="LIKE">รูปแบบ (LIKE)</option>
                 </select>
             <?php endfor; ?>
         </div>

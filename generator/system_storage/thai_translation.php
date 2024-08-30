@@ -19,7 +19,7 @@ if ($type == 1) {
             $question = $question . $selectStr[$i] . " ";
         } else if ($selectStr[$i] == "JOIN") {
             $question = $question . $selectStr[$i] . " กับตาราง ";
-        } else if ($selectStr[$i] == "ON" || strpos($selectStr[$i], ".") !== false || $selectStr[$i] == "=" || $selectStr[$i] == $table || $selectStr[$i] == "''") {
+        } else if ($selectStr[$i] == "ON" || strpos($selectStr[$i], ".") !== false || $selectStr[$i] == "=" || $selectStr[$i] == $table || $selectStr[$i] == "''" || $selectStr[$i] == "%") {
             continue;
         } else if ($selectStr[$i] == "WHERE") {
             $question = $question . " ที่ ";
@@ -41,6 +41,14 @@ if ($type == 1) {
             $question = $question . "จากน้อยไปมาก";
         } else if ($selectStr[$i] == "DESC") {
             $question = $question . "จากมากไปน้อย";
+        } else if ($selectStr[$i] == "LIKE") {
+            $question = $question . "มีรูปแบบเป็น";
+        } else if ($selectStr[$i] == ">=") {
+            $question = $question . "มากกว่าหรือเท่ากับ";
+        } else if ($selectStr[$i] == "<=") {
+            $question = $question . "น้อยกว่าหรือเท่ากับ";
+        } else if ($selectStr[$i] == "<>") {
+            $question = $question . "ไม่เท่ากับ";
         } else {
             $question = $question . " " . $selectStr[$i] . " ";
         }
