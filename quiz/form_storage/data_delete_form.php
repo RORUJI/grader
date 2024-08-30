@@ -32,19 +32,17 @@ if (isset($_POST['field-name'])) {
     </head>
 
     <body>
-        <div class="col p-2 rounded type-select">
-            <label for="request-data" class="form-label fw-bold">ใส่ข้อมูล</label>
-            <!--PHP DATA FIELD LOOP-->
-            <?php foreach ($datas as $data): ?>
-                <div class="mb-3">
-                    <label for="input-data" class="form-label">
-                        <?php echo $data; ?>
-                    </label>
-                    <input type="text" name="field-data[]" id="" class="form-control" value=""
-                        placeholder="กรุณากรอก <?php echo $data; ?>">
-                </div>
-            <?php endforeach; ?>
-        </div>
+        <label for="request-data" class="form-label fw-bold">ใส่ข้อมูล</label>
+        <!--PHP DATA FIELD LOOP-->
+        <?php foreach ($datas as $data): ?>
+            <div class="mb-2">
+                <label for="input-data" class="form-label">
+                    <?php echo $data; ?>
+                </label>
+                <input type="text" name="field-data[]" id="" class="form-control form-control-sm" value=""
+                    placeholder="กรุณากรอก <?php echo $data; ?>">
+            </div>
+        <?php endforeach; ?>
     </body>
 
     </html>

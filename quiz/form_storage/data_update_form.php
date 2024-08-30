@@ -32,37 +32,32 @@ if (isset($_POST['field-name'])) {
     </head>
 
     <body>
-        <div class="col p-2 rounded type-select">
-            <div class="row">
-                <div class="col">
-                    <label for="request-data" class="form-label fw-bold">ก่อนแก้ไข</label>
-                    <!--PHP DATA FIELD LOOP-->
-                    <?php foreach ($datas as $data): ?>
-                        <div class="mb-3">
-                            <label for="input-data" class="form-label">
-                                <?php echo $data; ?>
-                            </label>
-                            <input type="text" name="before-update-field[]" id="" class="form-control" value=""
-                                placeholder="กรุณากรอก <?php echo $data; ?>">
-                        </div>
-                    <?php endforeach; ?>
-                </div>
-                <div class="col">
-                    <label for="request-data" class="form-label fw-bold">หลังแก้ไข</label>
-                    <!--PHP DATA FIELD LOOP-->
-                    <?php foreach ($datas as $data): ?>
-                        <div class="mb-3">
-                            <label for="input-data" class="form-label">
-                                <?php echo $data; ?>
-                            </label>
-                            <input type="text" name="after-update-field[]" id="" class="form-control" value=""
-                                placeholder="กรุณากรอก <?php echo $data; ?>">
-                        </div>
-                    <?php endforeach; ?>
-                </div>
+        <div class="row">
+            <div class="col">
+                <label for="request-data" class="form-label fw-bold">ก่อนแก้ไข</label>
+                <!--PHP DATA FIELD LOOP-->
+                <?php foreach ($datas as $data): ?>
+                    <div class="mb-2">
+                        <label for="input-data" class="form-label">
+                            <?php echo $data; ?>
+                        </label>
+                        <input type="text" name="before-update-field[]" id="" class="form-control form-control-sm" value=""
+                            placeholder="กรุณากรอก <?php echo $data; ?>">
+                    </div>
+                <?php endforeach; ?>
             </div>
-            <div class="mb">
-                <button type="submit" class="btn btn-primary w-100">Submit</button>
+            <div class="col">
+                <label for="request-data" class="form-label fw-bold">หลังแก้ไข</label>
+                <!--PHP DATA FIELD LOOP-->
+                <?php foreach ($datas as $data): ?>
+                    <div class="mb-2">
+                        <label for="input-data" class="form-label">
+                            <?php echo $data; ?>
+                        </label>
+                        <input type="text" name="after-update-field[]" id="" class="form-control form-control-sm" value=""
+                            placeholder="กรุณากรอก <?php echo $data; ?>">
+                    </div>
+                <?php endforeach; ?>
             </div>
         </div>
     </body>

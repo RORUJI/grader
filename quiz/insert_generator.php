@@ -13,25 +13,23 @@ $result = $conn->query($sql);
 </head>
 
 <body>
-    <div class="row p-2">
-        <div class="col-3 p-2 rounded type-select">
-            <label for="request-insert-data" class="form-label fw-bold">ต้องการใส่ข้อมูลอะไรบ้าง</label>
-            <!--PHP INSERT TABLE FIELD LOOP-->
-            <?php while ($row = $result->fetch_array()): ?>
-                <div class="mb-3">
-                    <input type="checkbox" name="field-name[]" id="request-data" class="form-check-input request-data"
-                        value="<?php echo $row[0]; ?>">
-                    <label for="select-data" class="form-check-label">
-                        <?php echo $row[0]; ?>
-                    </label>
-                </div>
-            <?php endwhile; ?>
-            <input class="form-check-input" id="all-select" name="field-name" type="checkbox" value="*">
-            <label for="select-all-data" class="form-check-label">ทั้งหมด</label>
-        </div>
-        <div id="input-data" class="col">
+    <div class="col-3 mx-2 p-2 rounded type-select">
+        <label for="request-insert-data" class="form-label fw-bold">ต้องการใส่ข้อมูลอะไรบ้าง</label>
+        <!--PHP INSERT TABLE FIELD LOOP-->
+        <?php while ($row = $result->fetch_array()): ?>
+            <div class="mb-3">
+                <input type="checkbox" name="field-name[]" id="request-data" class="form-check-input request-data"
+                    value="<?php echo $row[0]; ?>">
+                <label for="select-data" class="form-check-label">
+                    <?php echo $row[0]; ?>
+                </label>
+            </div>
+        <?php endwhile; ?>
+        <input class="form-check-input" id="all-select" name="field-name" type="checkbox" value="*">
+        <label for="select-all-data" class="form-check-label">ทั้งหมด</label>
+    </div>
+    <div id="input-data" class="col mx-2 p-2 rounded type-select">
 
-        </div>
     </div>
 
     <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
