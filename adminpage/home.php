@@ -25,7 +25,7 @@ if (!isset($_SESSION['userid']) && !isset($_SESSION['username']) && !isset($_SES
                 <header>
                     <div class="image-text">
                         <span class="image">
-                            <img src="User.jpg" alt="">
+                            <img src="../User.jpg" alt="">
                         </span>
 
                         <div class="text header-text">
