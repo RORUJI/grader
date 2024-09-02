@@ -1,5 +1,6 @@
 <?php
 session_start();
+include_once "dbconnect.php";
 
 if (!isset($_SESSION['userid'])) {
 
@@ -7,6 +8,9 @@ if (!isset($_SESSION['userid'])) {
 
 } else {
 
+    $sql = "SELECT * FROM user INNER JOIN level ON user.levelid = level.levelid WHERE userid = '$_SESSION[userid]'";
+    $query = $conn->query($sql);
+    $result = $query->fetch_assoc();
     ?>
 
     <!DOCTYPE html>
@@ -92,23 +96,30 @@ if (!isset($_SESSION['userid'])) {
 
         <section class="home">
             <div class="text">
-                <div class="div-text"><br>
-                    <div class="timeline">TimeLine</div><br>
-                    <div class="div-graph">
-                        <div class="col-8 Column1">
-                            Ranking
-                        </div>
-                        <div class="col-4 Column2">
-                            <a href="all_quiz.php">
-                                <div class="Column3">SQL</div>
-                            </a>
-                            <a href="#">
-                                <div class="Column4">Introduction to SQL</div>
-                            </a>
+                <div class="div-text p-3">
+                    <div class="rounded-5 type-select text-center p-2 w-50">
+                        <h2 class="fw-bold">Profile</h2>
+                        <hr>
+                        <div class="rounded p-2 text-start">
+                            <div class="input-group input-group-sm mb-3">
+                                <label for="username" class="input-group-text" style="width: 9vw; font-size: 1vw;">Username</label>
+                                <span class="form-control form-control-sm"><?php echo $result['username']; ?></span>
+                            </div>
+                            <div class="input-group input-group-sm mb-3">
+                                <label for="email" class="input-group-text" style="width: 9vw; font-size: 1vw;">Email</label>
+                                <span class="form-control form-control-sm"><?php echo $result['email']; ?></span>
+                            </div>
+                            <div class="input-group input-group-sm mb-3">
+                                <label for="phoneNumber" class="input-group-text" style="width: 9vw; font-size: 1vw;">Phone Number</label>
+                                <span class="form-control form-control-sm"><?php echo $result['tel']; ?></span>
+                            </div>
+                            <div class="input-group input-group-sm mb-3">
+                                <label for="status" class="input-group-text" style="width: 9vw; font-size: 1vw;">Status</label>
+                                <span class="form-control form-control-sm"><?php echo $result['levelname']; ?></span>
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
         </section>
 
         <script src="change-mode.js"></script>
