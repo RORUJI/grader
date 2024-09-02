@@ -22,7 +22,7 @@ if (isset($_POST['join-checkbox'])) {
         <div class="row">
             <div class="col">
                 <label for="select-join-type" class="form-label fw-bold">JOIN</label>
-                <select class="form-select" name="jointype">"
+                <select class="form-select form-select-sm" name="jointype">"
                     <option value="">เลือกรูปแบบการ JOIN</option>
                     <option value="INNER JOIN">INNER JOIN</option>
                     <option value="LEFT JOIN">LEFT JOIN</option>
@@ -48,7 +48,7 @@ if (isset($_POST['join-checkbox'])) {
             ?>
             <div class="col">
                 <label for='select-join-table' class='form-label fw-bold'>ตารางที่ต้องการ JOIN</label>
-                <select name="jointable" class="form-select">
+                <select name="jointable" class="form-select form-select-sm">
                     <option value="">เลือกตารางที่ต้องการ JOIN</option>;
                     <?php
                     for ($i = 0; $i < count($tablename); $i++) {

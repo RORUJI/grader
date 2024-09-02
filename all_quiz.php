@@ -115,7 +115,7 @@ if (!isset($_SESSION['userid'])) {
             </div>
         </section>
 
-        <script src="scipt.js"></script>
+        <script src="change-mode.js"></script>
     </body>
 
     </html>
