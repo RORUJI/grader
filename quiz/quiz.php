@@ -80,6 +80,12 @@ if (!isset($_GET['quizid']) || !isset($_SESSION['userid'])) {
                         <span class="text nav-text">Profile</span>
                     </a>
                 </li>
+                <li class="nav-link">
+                    <a href="../history.php">
+                        <i class='bx bx-history icon'></i>
+                        <span class="text nav-text">History</span>
+                    </a>
+                </li>
             </div>
             <div class="bottom-content">
                 <li class="">

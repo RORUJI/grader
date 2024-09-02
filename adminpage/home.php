@@ -58,6 +58,12 @@ if (!isset($_SESSION['userid']) && !isset($_SESSION['username']) && !isset($_SES
                                 <span class="text nav-text">Profile</span>
                             </a>
                         </li>
+                        <li class="nav-link">
+                            <a href="../history.php">
+                                <i class='bx bx-history icon'></i>
+                                <span class="text nav-text">History</span>
+                            </a>
+                        </li>
                     </div>
                     <div class="bottom-content">
                         <li class="">
@@ -103,7 +109,7 @@ if (!isset($_SESSION['userid']) && !isset($_SESSION['username']) && !isset($_SES
                 </div>
             </section>
 
-            <script src="../scipt.js"></script>
+            <script src="../change-mode.js"></script>
         </body>
 
         </html>

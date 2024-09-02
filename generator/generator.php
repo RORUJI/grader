@@ -71,6 +71,12 @@ if ($_SESSION['level'] != 2) {
                             <span class="text nav-text">Profile</span>
                         </a>
                     </li>
+                    <li class="nav-link">
+                        <a href="../history.php">
+                            <i class='bx bx-history icon'></i>
+                            <span class="text nav-text">History</span>
+                        </a>
+                    </li>
                 </div>
                 <div class="bottom-content">
                     <li class="">
@@ -100,7 +106,8 @@ if ($_SESSION['level'] != 2) {
                 <div class="div-text"><br>
                     <div class="div-text">
                         <div class="div-grader">
-                            <form action="system_storage/question_generator.php" method="post" id="generatorForm" class="p-3">
+                            <form action="system_storage/question_generator.php" method="post" id="generatorForm"
+                                class="p-3">
                                 <h2 class="fw-bold text-center">สร้างโจทย์ปัญหา</h2>
                                 <hr>
                                 <div class="mb">
