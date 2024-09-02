@@ -214,7 +214,7 @@ if (!isset($_GET['quizid']) || !isset($_SESSION['userid'])) {
             searchBtn = body.querySelector(".search-box"),
             modeSwtich = body.querySelector(".toggle-switch"),
             modeText = body.querySelector(".mode-text");
-
+            
         toggle.addEventListener("click", () => {
             sidebar.classList.toggle("close");
         });

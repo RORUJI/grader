@@ -29,7 +29,7 @@ if (!isset($_SESSION['userid']) && !isset($_SESSION['username']) && !isset($_SES
                 <header>
                     <div class="image-text">
                         <span class="image">
-                            <img src="User.jpg" alt="">
+                            <img src="../User.jpg" alt="">
                         </span>
 
                         <div class="text header-text">
@@ -60,6 +60,12 @@ if (!isset($_SESSION['userid']) && !isset($_SESSION['username']) && !isset($_SES
                             <a href="#">
                                 <i class='bx bxs-user icon'></i>
                                 <span class="text nav-text">Profile</span>
+                            </a>
+                        </li>
+                        <li class="nav-link">
+                            <a href="../history">
+                                <i class='bx bx-history icon'></i>
+                                <span class="text nav-text">History</span>
                             </a>
                         </li>
                     </div>
