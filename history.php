@@ -107,10 +107,10 @@ if (!isset($_SESSION['userid'])) {
                             </tr>
                         </thead>
                         <tbody>
-                            <?php $count = 1;
+                            <?php
                             while ($row = $query->fetch_assoc()): ?>
                                 <tr>
-                                    <td><?php echo $count++; ?></td>
+                                    <td><?php echo $row['quizid']; ?></td>
                                     <td><?php echo $row['quiz']; ?></td>
                                     <td><?php echo $row['score']; ?>/2</td>
                                     <td><?php echo $row['recordtime']; ?></td>

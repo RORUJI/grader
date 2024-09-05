@@ -50,11 +50,9 @@ if ($type == 1) {
                 }
                 $answercode = $answercode . " $joinType $joinTableData[0] ON $table.$joinTableData[1] = $joinTableData[0].$joinTableData[1]";
                 $resultcode = $resultcode . " $joinType $joinTableData[0] ON $table.$joinTableData[1] = $joinTableData[0].$joinTableData[1]";
-                $temptablecode = $temptablecode . " $joinType $joinTableData[0] ON $table.$joinTableData[1] = $joinTableData[0].$joinTableData[1]";
                 if (isset($_POST['condition-checkbox'])) {
                     $answercode = $answercode . " WHERE ";
                     $resultcode = $resultcode . " WHERE ";
-                    $temptablecode = $temptablecode . " WHERE ";
                     $clauseCount = $_POST['clauseCount'];
                     if (empty($clauseCount)) {
                         echo json_encode(array("status" => "error", "msg" => "กรุณาใส่จำนวนเงื่อนไข!"));
@@ -98,11 +96,9 @@ if ($type == 1) {
                                     if ($i < $clauseCount - 1) {
                                         $answercode = $answercode . $columnNameArray[$i] . " " . $operatorArray[$i] . " " . "'$valueArray[$i]'" . " " . $logicalOperatorArray[$i] . " ";
                                         $resultcode = $resultcode . $columnNameArray[$i] . " " . $operatorArray[$i] . " " . "'$valueArray[$i]'" . " " . $logicalOperatorArray[$i] . " ";
-                                        $temptablecode = $temptablecode . $columnNameArray[$i] . " " . $operatorArray[$i] . " " . "'$valueArray[$i]'" . " " . $logicalOperatorArray[$i] . " ";
                                     } else {
                                         $answercode = $answercode . $columnNameArray[$i] . " " . $operatorArray[$i] . " " . "'$valueArray[$i]'";
                                         $resultcode = $resultcode . $columnNameArray[$i] . " " . $operatorArray[$i] . " " . "'$valueArray[$i]'";
-                                        $temptablecode = $temptablecode . $columnNameArray[$i] . " " . $operatorArray[$i] . " " . "'$valueArray[$i]'";
 
                                         if (isset($_POST['order-checkbox'])) {
                                             $orderby = $_POST['orderby'];
@@ -114,7 +110,6 @@ if ($type == 1) {
                                             } else {
                                                 $answercode = $answercode . " " . "ORDER BY " . $orderby . " " . $sort;
                                                 $resultcode = $resultcode . " " . "ORDER BY " . $orderby . " " . $sort;
-                                                $temptablecode = $temptablecode . " " . "ORDER BY " . $orderby . " " . $sort;
                                                 include_once "thai_translation.php";
                                             }
                                         } else {
@@ -142,7 +137,6 @@ if ($type == 1) {
                             } else {
                                 $answercode = $answercode . $columnNameArray[0] . " " . $operatorArray[0] . " " . "'$valueArray[0]'";
                                 $resultcode = $resultcode . $columnNameArray[0] . " " . $operatorArray[0] . " " . "'$valueArray[0]'";
-                                $temptablecode = $temptablecode . $columnNameArray[0] . " " . $operatorArray[0] . " " . "'$valueArray[0]'";
 
                                 if (isset($_POST['order-checkbox'])) {
                                     $orderby = $_POST['orderby'];
@@ -154,7 +148,6 @@ if ($type == 1) {
                                     } else {
                                         $answercode = $answercode . " " . "ORDER BY " . $orderby . " " . $sort;
                                         $resultcode = $resultcode . " " . "ORDER BY " . $orderby . " " . $sort;
-                                        $temptablecode = $temptablecode . " " . "ORDER BY " . $orderby . " " . $sort;
                                         include_once "thai_translation.php";
                                     }
                                 } else {
@@ -174,7 +167,6 @@ if ($type == 1) {
                         } else {
                             $answercode = $answercode . " " . "ORDER BY " . $orderby . " " . $sort;
                             $resultcode = $resultcode . " " . "ORDER BY " . $orderby . " " . $sort;
-                            $temptablecode = $temptablecode . " " . "ORDER BY " . $orderby . " " . $sort;
                             include_once "thai_translation.php";
                         }
                     } else {
@@ -186,7 +178,6 @@ if ($type == 1) {
             if (isset($_POST['condition-checkbox'])) {
                 $answercode = $answercode . " WHERE ";
                 $resultcode = $resultcode . " WHERE ";
-                $temptablecode = $temptablecode . " WHERE ";
                 $clauseCount = $_POST['clauseCount'];
                 if (empty($clauseCount)) {
                     echo json_encode(array("status" => "error", "msg" => "กรุณาใส่จำนวนเงื่อนไข!"));
@@ -230,11 +221,9 @@ if ($type == 1) {
                                 if ($i < $clauseCount - 1) {
                                     $answercode = $answercode . $columnNameArray[$i] . " " . $operatorArray[$i] . " " . "'$valueArray[$i]'" . " " . $logicalOperatorArray[$i] . " ";
                                     $resultcode = $resultcode . $columnNameArray[$i] . " " . $operatorArray[$i] . " " . "'$valueArray[$i]'" . " " . $logicalOperatorArray[$i] . " ";
-                                    $temptablecode = $temptablecode . $columnNameArray[$i] . " " . $operatorArray[$i] . " " . "'$valueArray[$i]'" . " " . $logicalOperatorArray[$i] . " ";
                                 } else {
                                     $answercode = $answercode . $columnNameArray[$i] . " " . $operatorArray[$i] . " " . "'$valueArray[$i]'";
                                     $resultcode = $resultcode . $columnNameArray[$i] . " " . $operatorArray[$i] . " " . "'$valueArray[$i]'";
-                                    $temptablecode = $temptablecode . $columnNameArray[$i] . " " . $operatorArray[$i] . " " . "'$valueArray[$i]'";
 
                                     if (isset($_POST['order-checkbox'])) {
                                         $orderby = $_POST['orderby'];
@@ -246,7 +235,6 @@ if ($type == 1) {
                                         } else {
                                             $answercode = $answercode . " " . "ORDER BY " . $orderby . " " . $sort;
                                             $resultcode = $resultcode . " " . "ORDER BY " . $orderby . " " . $sort;
-                                            $temptablecode = $temptablecode . " " . "ORDER BY " . $orderby . " " . $sort;
                                             include_once "thai_translation.php";
                                         }
                                     } else {
@@ -274,7 +262,6 @@ if ($type == 1) {
                         } else {
                             $answercode = $answercode . $columnNameArray[0] . " " . $operatorArray[0] . " " . "'$valueArray[0]'";
                             $resultcode = $resultcode . $columnNameArray[0] . " " . $operatorArray[0] . " " . "'$valueArray[0]'";
-                            $temptablecode = $temptablecode . $columnNameArray[0] . " " . $operatorArray[0] . " " . "'$valueArray[0]'";
 
                             if (isset($_POST['order-checkbox'])) {
                                 $orderby = $_POST['orderby'];
@@ -286,7 +273,6 @@ if ($type == 1) {
                                 } else {
                                     $answercode = $answercode . " " . "ORDER BY " . $orderby . " " . $sort;
                                     $resultcode = $resultcode . " " . "ORDER BY " . $orderby . " " . $sort;
-                                    $temptablecode = $temptablecode . " " . "ORDER BY " . $orderby . " " . $sort;
                                     include_once "thai_translation.php";
                                 }
                             } else {
@@ -306,7 +292,6 @@ if ($type == 1) {
                     } else {
                         $answercode = $answercode . " ORDER BY " . $orderby . " " . $sort;
                         $resultcode = $resultcode . " ORDER BY " . $orderby . " " . $sort;
-                        $temptablecode = $temptablecode . " ORDER BY " . $orderby . " " . $sort;
                         include_once "thai_translation.php";
                     }
                 } else {

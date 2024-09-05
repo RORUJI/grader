@@ -11,7 +11,7 @@ if (!isset($_SESSION['username']) && !isset($_POST['code']) && !isset($_POST['qu
         echo json_encode(array('status' => 'error', 'msg' => 'Please enter your code.'));
     } else {
         if ($type == 1) {
-            $queryofquiz = $conn->query($selectcode);
+            $queryofquiz = $conn->query($loadresult['resultcode']);
             $queryofuser = $conn->query($code);
             try {
                 if ($queryofquiz->num_rows != $queryofuser->num_rows) {
@@ -41,7 +41,7 @@ if (!isset($_SESSION['username']) && !isset($_POST['code']) && !isset($_POST['qu
                             $i++;
                             continue;
                         } else {
-                            if ($code == $selectcode) {
+                            if ($code == $loadresult['resultcode']) {
                                 $score = 2;
                             } else {
                                 $score = 1;
