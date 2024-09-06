@@ -2,7 +2,6 @@
 if (!isset($_SESSION['username']) && !isset($_POST['code']) && !isset($_POST['quizid'])) {
     header("location: ../../index.php");
 } else {
-    include_once "create_temptable.php";
     $code = $_POST['code'];
     $table = $_POST['table'];
     $type = $_POST['type'];
@@ -11,9 +10,10 @@ if (!isset($_SESSION['username']) && !isset($_POST['code']) && !isset($_POST['qu
         echo json_encode(array('status' => 'error', 'msg' => 'Please enter your code.'));
     } else {
         if ($type == 1) {
-            $queryofquiz = $conn->query($loadresult['resultcode']);
-            $queryofuser = $conn->query($code);
             try {
+                include_once "create_temptable.php";
+                $queryofquiz = $conn->query($loadresult['resultcode']);
+                $queryofuser = $conn->query($code);
                 if ($queryofquiz->num_rows != $queryofuser->num_rows) {
                     echo json_encode(array('status' => 'error', 'msg' => 'คำตอบของคุณไม่ถูกต้อง!'));
                     $droptable = $conn->query("DROP TABLE $usertable");
