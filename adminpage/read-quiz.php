@@ -99,7 +99,7 @@ if ($_SESSION['level'] != 2) {
                 <div class="text">
                     <div class="div-text p-2">
                         <div class="table-responsive">
-                            <form action="system/insert_userQuizSystem.php" method="post">
+                            <form action="system/insert_student.php" method="post" id="insertStudentForm">
                                 <button type="submit" class="btn btn-primary btn-sm float-end">Submit</button>
                                 <input type="hidden" name="quizId" value="<?php echo $_GET['quizId']; ?>">
                                 <table class="table" id="dataTable">
@@ -109,7 +109,7 @@ if ($_SESSION['level'] != 2) {
                                             <th scope="col">Email</th>
                                             <th scope="col">Username</th>
                                             <th scope="col">Status</th>
-                                            <th scope="col">Checkbox</th>
+                                            <th scope="col">Select Student</th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -132,6 +132,7 @@ if ($_SESSION['level'] != 2) {
                                                 </td>
                                                 <td scope="row">
                                                     <input type="checkbox" class="form-check-input" name="userId[]"
+                                                        data-id="<?php echo $row['userid']; ?>"
                                                         value="<?php echo $row['userid']; ?>">
                                                 </td>
                                             </tr>
@@ -146,9 +147,68 @@ if ($_SESSION['level'] != 2) {
 
             <script src="../change-mode.js"></script>
             <script src="https://code.jquery.com/jquery-3.7.1.js"></script>
+            <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
             <script src="https://cdn.datatables.net/2.0.8/js/dataTables.js"></script>
             <script>
                 let table = new DataTable('#dataTable');
+
+                $(document).ready(function () {
+                    var quizId = "<?php echo $_GET['quizId']; ?>";
+
+                    $.ajax({
+                        url: 'system/check_disabled.php',
+                        type: 'POST',
+                        data: { quizId: quizId },
+                        dataType: 'json',
+                        success: function (disabledItems) {
+                            $('.form-check-input').each(function () {
+                                var checkboxId = $(this).data('id');
+                                if (disabledItems.includes(checkboxId)) {
+                                    $(this).prop('disabled', true);
+                                }
+                            });
+                        },
+                        error: function (xhr, status, error) {
+                            console.error('AJAX Error:', status, error);
+                        }
+                    });
+
+                    $('#insertStudentForm').submit(function (e) {
+                        e.preventDefault();
+                        let formUrl = $(this).attr('action');
+                        let reqMethod = $(this).attr('method');
+                        let formData = $(this).serialize();
+
+                        $.ajax({
+                            type: reqMethod,
+                            url: formUrl,
+                            data: formData,
+                            success: function (data) {
+                                let results = JSON.parse(data);
+
+                                if (results.status == "success") {
+                                    Swal.fire({
+                                        icon: results.status,
+                                        title: results.title,
+                                        text: results.text,
+                                        showConfirmButton: false,
+                                        timer: 1000
+                                    }).then(function () {
+                                        window.location.reload();
+                                    });
+                                } else {
+                                    Swal.fire({
+                                        icon: results.status,
+                                        title: results.title,
+                                        text: results.text,
+                                        showConfirmButton: false,
+                                        timer: 1000
+                                    });
+                                }
+                            }
+                        });
+                    });
+                });
             </script>
         </body>
 

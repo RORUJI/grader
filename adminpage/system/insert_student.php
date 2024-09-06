@@ -4,8 +4,12 @@ session_start();
 include_once "../../dbconnect.php";
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    if (!isset($_POST['userId']) && !is_array($_POST['userId'])) {
-        header("location: ../home");
+    if (!isset($_POST['userId'])) {
+        echo json_encode(array(
+            'status' => 'error',
+            'title' => 'ผิดพลาด',
+            'text' => 'กรุณาเลือกนักเรียนที่ต้องการให้ทำโจทย์นี้ด้วย'
+        ));
     } else {
         $quizId = $_POST['quizId'];
         $userId = $_POST['userId'];
@@ -22,6 +26,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
             $stmt->close();
             $conn->close();
+
+            echo json_encode(array(
+                'status' => 'success',
+                'title' => 'สำเร็จ',
+                'text' => 'กำหนดนักเรียนที่จะทำโจทย์นี้เรียบร้อยแล้ว'
+            ));
         }
     }
 } else {

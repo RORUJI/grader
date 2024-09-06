@@ -7,8 +7,9 @@ if (!isset($_SESSION['userid']) && !isset($_SESSION['username']) && !isset($_SES
         header('location: ../index.php');
     } else {
         include_once "../dbconnect.php";
-        $sql = "SELECT * FROM user WHERE levelid = 1;";
-        $query = $conn->query($sql);
+
+        $sqlQuiz = "SELECT * FROM quiz";
+        $queryQuiz = $conn->query($sqlQuiz);
         ?>
 
         <!DOCTYPE html>
@@ -21,6 +22,7 @@ if (!isset($_SESSION['userid']) && !isset($_SESSION['username']) && !isset($_SES
             <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
             <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
                 integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+            <link rel="stylesheet" href="https://cdn.datatables.net/2.0.8/css/dataTables.dataTables.css" />
             <title>Grader</title>
         </head>
 
@@ -94,42 +96,74 @@ if (!isset($_SESSION['userid']) && !isset($_SESSION['username']) && !isset($_SES
 
             <section class="home">
                 <div class="text">
-                    <div class="div-text p-3">
-                        <h3>Members List</h3>
-                        <hr>
-                        <table class="table table-bordered" id="myTable">
-                            <thead>
-                                <tr>
-                                    <th scope="row">#</th>
-                                    <th scope="row">Username</th>
-                                    <th scope="row">Email</th>
-                                    <th scope="row">Phone Number</th>
-                                    <th scope="row"></th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <?php
-                                $i = 1;
-                                while ($row = $query->fetch_assoc()): ?>
+                    <div class="div-text p-2">
+                        <div class="table-reponstive">
+                            <table class="table table-bordered" id="myTable">
+                                <thead>
                                     <tr>
-                                        <td><?php echo $i++; ?></td>
-                                        <td><?php echo $row['username']; ?></td>
-                                        <td><?php echo $row['email']; ?></td>
-                                        <td><?php echo $row['tel']; ?></td>
-                                        <td>
-                                            <a href="view-score.php?userid=<?php echo $row['userid']; ?>" class="btn btn-primary">
-                                                View Score
-                                            </a>
-                                        </td>
+                                        <th scope="col">Username</th>
+                                        <th scope="col">Email</th>
+                                        <?php for ($i = 1; $i <= $queryQuiz->num_rows; $i++): ?>
+                                            <th scope="col">
+                                                โจทย์ของที่ <?php echo $i; ?>
+                                            </th>
+                                        <?php endfor; ?>
                                     </tr>
-                                <?php endwhile; ?>
-                            </tbody>
-                        </table>
+                                </thead>
+
+                                <tbody>
+                                    <?php
+                                    $sqlStudent = "SELECT * FROM user WHERE levelid = '1'";
+                                    $queryStudent = $conn->query($sqlStudent);
+                                    while ($rowStudent = $queryStudent->fetch_assoc()):
+                                        ?>
+                                        <tr>
+                                            <td scope="row">
+                                                <?php echo $rowStudent['username']; ?>
+                                            </td>
+                                            <td scope="row">
+                                                <?php echo $rowStudent['email']; ?>
+                                            </td>
+                                            <?php
+                                            $i = 1;
+                                            $sqlScore = "SELECT * FROM score WHERE userid = '" . $rowStudent['userid'] . "'
+                                            ORDER BY quizid";
+                                            $queryScore = $conn->query($sqlScore);
+                                            while ($rowScore = $queryScore->fetch_assoc()) {
+                                                for (;$i <= $queryQuiz->num_rows; $i++) {
+                                                    if ($rowScore['quizid'] == $i) {
+                                                        echo "<td>" . $rowScore['score'] . "/2</td>";
+                                                        
+                                                        if ($i < $queryScore->num_rows) {
+                                                            break;
+                                                        } else {
+                                                            continue;
+                                                        }
+                                                    } else {
+                                                        if ($i < $queryQuiz->num_rows) {
+                                                            echo "<td></td>";
+                                                        } else {
+                                                            continue;
+                                                        }
+                                                    }
+                                                }
+                                            }
+                                            ?>
+                                        </tr>
+                                    <?php endwhile; ?>
+                                </tbody>
+                            </table>
+                        </div>
                     </div>
                 </div>
             </section>
 
             <script src="../scipt.js"></script>
+            <script src="https://code.jquery.com/jquery-3.7.1.js"></script>
+            <script src="https://cdn.datatables.net/2.0.8/js/dataTables.js"></script>
+            <script>
+                let dataTable = new DataTable('#myTable');
+            </script>
         </body>
 
         </html>
