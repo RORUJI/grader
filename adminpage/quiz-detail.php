@@ -11,6 +11,10 @@ if ($_SESSION['level'] != 2) {
     $quizId = $_GET['quizId'];
     $sql = "SELECT * FROM user INNER JOIN level ON user.levelid = level.levelid WHERE user.levelid = '1'";
     $query = $conn->query($sql);
+
+    $sqlQuiz = "SELECT * FROM quiz INNER JOIN type ON quiz.typeid = type.typeid WHERE quizid = '$quizId' LIMIT 1";
+    $queryQuiz = $conn->query($sqlQuiz);
+    $resultQuiz = $queryQuiz->fetch_assoc();
     ?>
 
         <!DOCTYPE html>
@@ -98,9 +102,33 @@ if ($_SESSION['level'] != 2) {
             <section class="home">
                 <div class="text">
                     <div class="div-text p-2">
-                        <div class="table-responsive">
+                        <div class="quiz-detail p-2">
+                            <div class="row mb-2">
+                                <div class="col-auto rounded-4 p-2 type-select mx-2">
+                                    <label for="" class="form-label">ข้อที่</label>
+                                    <span class="form-control form-control-sm">
+                                    <?php echo $resultQuiz['quizid']; ?>
+                                    </span>
+                                </div>
+
+                                <div class="col rounded-4 p-2 type-select mx-2">
+                                    <label for="" class="form-label">สิ่งที่โจทย์ปัญหาต้องการ</label>
+                                    <span class="form-control form-control-sm">
+                                    <?php echo $resultQuiz['quiz']; ?>
+                                    </span>
+                                </div>
+
+                                <div class="col-auto rounded-4 p-2 type-select mx-2">
+                                    <label for="" class="form-label">ประเภทของโจทย์ปัญหา</label>
+                                    <span class="form-control form-control-sm">
+                                    <?php echo $resultQuiz['type']; ?>
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                        <hr>
+                        <div class="table-responsive p-2">
                             <form action="system/insert_student.php" method="post" id="insertStudentForm">
-                                <button type="submit" class="btn btn-primary btn-sm float-end">Submit</button>
                                 <input type="hidden" name="quizId" value="<?php echo $_GET['quizId']; ?>">
                                 <table class="table" id="dataTable">
                                     <thead>
@@ -109,7 +137,7 @@ if ($_SESSION['level'] != 2) {
                                             <th scope="col">Email</th>
                                             <th scope="col">Username</th>
                                             <th scope="col">Status</th>
-                                            <th scope="col">Select Student</th>
+                                            <th scope="col"></th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -139,6 +167,7 @@ if ($_SESSION['level'] != 2) {
                                     <?php endwhile; ?>
                                     </tbody>
                                 </table>
+                                <button type="submit" class="btn btn-primary btn-sm float-end">Submit</button>
                             </form>
                         </div>
                     </div>
