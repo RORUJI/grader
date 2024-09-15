@@ -96,7 +96,7 @@ if (!isset($_SESSION['userid']) && $_SESSION['level'] != 2) {
 
                     <div class="row mb-2">
                         <div class="col-auto">
-                            <a href="detail.php?quizId=<?php echo $quizId; ?>" class="btn btn-danger btn-sm">กลับ</a>
+                            <a href="quiz-detail.php?quizId=<?php echo $quizId; ?>" class="btn btn-danger btn-sm">กลับ</a>
                             <button type="submit" class="btn btn-success btn-sm">แก้ไข</button>
                         </div>
                     </div>
