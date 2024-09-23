@@ -42,8 +42,8 @@ if (!isset($_SESSION['userid']) && $_SESSION['level'] != 2) {
                     <div class="row mb-2">
                         <div class="col-auto">
                             <label for="" class="form-label">ข้อที่</label>
-                            <input type="number" name="quizId" id="quizId" class="form-control form-control-sm"
-                                value="<?php echo $quizId; ?>">
+                            <span class="form-control form-control-sm"><?php echo $quizId; ?></span>
+                            <input type="hidden" name="quizId" id="quizId" value="<?php echo $quizId; ?>">
                         </div>
 
                         <div class="col">
@@ -128,7 +128,7 @@ if (!isset($_SESSION['userid']) && $_SESSION['level'] != 2) {
                                         showConfirmButton: false,
                                         timer: 1000
                                     }).then(function () {
-                                        window.location.href = "detail.php?quizId=<?php echo $quizId; ?>";
+                                        window.location.href = "quiz-detail.php?quizId=<?php echo $quizId; ?>";
                                     });
                                 } else {
                                     Swal.fire({

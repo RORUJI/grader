@@ -8,8 +8,8 @@ if (!isset($_SESSION['userid'])) {
 } else {
 
     include_once "dbconnect.php";
-    $sql = "SELECT * FROM quiz";
-    $result = $conn->query($sql);
+    $sqlQuiz = "SELECT * FROM score WHERE userid = " . $_SESSION['userid'] . "";
+    $queryQuiz = $conn->query($sqlQuiz);
 
     ?>
 
@@ -103,10 +103,11 @@ if (!isset($_SESSION['userid'])) {
                             Ranking
                         </div>
                         <div class="col-4 Column3-question">
-                            <?php while ($row = $result->fetch_assoc()): ?>
+                            <?php while ($rowQuiz = $queryQuiz->fetch_assoc()): ?>
                                 <div class="graph3 col mx-1">
-                                    <a href="quiz/quiz.php?quizid=<?php echo $row['quizid']; ?>" class="graph3-text">ข้อที่
-                                        <?php echo $row['quizid']; ?></a>
+                                    <a href="quiz/test-quiz.php?quizId=<?php echo $rowQuiz['quizid']; ?>" class="graph3-text">
+                                        ข้อที่ <?php echo $rowQuiz['quizid']; ?>
+                                    </a>
                                 </div>
                             <?php endwhile; ?>
                         </div>

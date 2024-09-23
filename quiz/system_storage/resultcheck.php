@@ -3,7 +3,6 @@ if (!isset($_SESSION['username']) && !isset($_POST['code']) && !isset($_POST['qu
     header("location: ../../index.php");
 } else {
     $code = $_POST['code'];
-    $table = $_POST['table'];
     $type = $_POST['type'];
     $quizid = $_POST['quizid'];
     if ($code == "") {
