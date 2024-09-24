@@ -1,12 +1,11 @@
 <?php
-session_start();
 if (!isset($_SESSION['username']) && !isset($_POST['quizid'])) {
     header("location: ../../index.php");
 } else {
-    include_once "../../dbconnect.php";
-    $quizid = $_POST['quizid'];
+    /*include_once "../../dbconnect.php";
+    $quizid = $_POST['quizid'];*/
     //Load sql code from table.
-    $loadtable = $conn->query("SELECT * FROM quiz WHERE quizid = '$quizid' LIMIT 1");
+    $loadtable = $conn->query("SELECT * FROM quiz WHERE quizid = $quizId LIMIT 1");
     $loadresult = $loadtable->fetch_assoc();
     $userid = $_SESSION['userid'];
     $usertable = "temp$userid";
