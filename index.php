@@ -3,7 +3,7 @@ session_start();
 
 if (!isset($_SESSION['userid'])) {
 
-    header('location: login.php');
+    header('location: login2.php');
 
 } else {
 
@@ -102,7 +102,7 @@ if (!isset($_SESSION['userid'])) {
                             <a href="all_quiz.php">
                                 <div class="Column3">SQL</div>
                             </a>
-                            <a href="#">
+                            <a href="">
                                 <div class="Column4">Introduction to SQL</div>
                             </a>
                         </div>
