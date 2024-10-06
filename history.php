@@ -94,7 +94,7 @@ if (!isset($_SESSION['userid'])) {
 
         <section class="home">
             <div class="text">
-                <div class="div-text p-3"><br>
+                <div class="div-text p-3">
                     <h2>คะแนนของคุณ</h2>
                     <hr>
                     <table class="table table-bordered" id="myTable">
@@ -103,7 +103,6 @@ if (!isset($_SESSION['userid'])) {
                                 <th scope="row">#</th>
                                 <th scope="row">Quiz</th>
                                 <th scope="row">คะแนน</th>
-                                <th scope="row">Timestamp</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -113,7 +112,6 @@ if (!isset($_SESSION['userid'])) {
                                     <td><?php echo $row['quizid']; ?></td>
                                     <td><?php echo $row['quiz']; ?></td>
                                     <td><?php echo $row['score']; ?>/2</td>
-                                    <td><?php echo $row['recordtime']; ?></td>
                                 </tr>
                             <?php endwhile; ?>
                         </tbody>
