@@ -26,6 +26,17 @@ if (!isset($_SESSION['userid'])) {
         <title>Grader</title>
     </head>
 
+    <style>
+        .profile-field {
+            height: 95%;
+            width: 35vw;
+            margin: 1vw;
+            background: var(--sidebaer-color);
+            border-radius: 28px;
+            box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+        }
+    </style>
+
     <body>
         <nav class="sidebar">
             <header>
@@ -96,30 +107,62 @@ if (!isset($_SESSION['userid'])) {
 
         <section class="home">
             <div class="text">
-                <div class="div-text p-3">
-                    <div class="rounded-5 type-select text-center p-2 w-50">
+                <div class="profile-field row p-2">
+                    <div class="col p-2 rounded-5 type-select text-center">
                         <h2 class="fw-bold">Profile</h2>
                         <hr>
                         <div class="rounded p-2 text-start">
-                            <div class="input-group input-group-sm mb-3">
-                                <label for="username" class="input-group-text" style="width: 9vw; font-size: 1vw;">Username</label>
-                                <span class="form-control form-control-sm"><?php echo $result['username']; ?></span>
+                            <div class="mb-2">
+                                <label for="username" class="form-label">Username</label>
+                                <span class="form-control form-control-sm">
+                                    <?php echo $result['username']; ?>
+                                </span>
                             </div>
-                            <div class="input-group input-group-sm mb-3">
-                                <label for="email" class="input-group-text" style="width: 9vw; font-size: 1vw;">Email</label>
-                                <span class="form-control form-control-sm"><?php echo $result['email']; ?></span>
+
+                            <div class="mb-2">
+                                <label for="password" class="form-label">Password</label>
+                                <span class="form-control form-control-sm">
+                                    <?php
+                                    for ($i = 0; $i < strlen($result['password']); $i++) {
+                                        echo "*";
+                                    }
+                                    ?>
+                                </span>
                             </div>
-                            <div class="input-group input-group-sm mb-3">
-                                <label for="phoneNumber" class="input-group-text" style="width: 9vw; font-size: 1vw;">Phone Number</label>
-                                <span class="form-control form-control-sm"><?php echo $result['tel']; ?></span>
+
+                            <div class="mb-2">
+                                <label for="email" class="form-label">Email</label>
+                                <span class="form-control form-control-sm">
+                                    <?php echo $result['email']; ?>
+                                </span>
                             </div>
-                            <div class="input-group input-group-sm mb-3">
-                                <label for="status" class="input-group-text" style="width: 9vw; font-size: 1vw;">Status</label>
-                                <span class="form-control form-control-sm"><?php echo $result['levelname']; ?></span>
+
+                            <div class="mb-2">
+                                <label for="tel" class="form-label">Telephone Number</label>
+                                <span class="form-control form-control-sm">
+                                    <?php
+                                    $tel = substr_replace($result['tel'], '-', 3, 0);
+                                    $tel = substr_replace($tel, '-', 7, 0);
+                                    echo $tel;
+                                    ?>
+                                </span>
+                            </div>
+
+                            <div class="mb-3">
+                                <label for="status" class="form-label">Status</label>
+                                <span class="form-control form-control-sm">
+                                    <?php echo $result['levelname']; ?>
+                                </span>
+                            </div>
+
+                            <div class="mb-2">
+                                <a href="edit-profile.php" class="btn btn-sm btn-success">Edit Profile</a>
+                                <a href="change-password.php" class="btn btn-sm btn-danger">Change Password</a>
                             </div>
                         </div>
                     </div>
                 </div>
+            </div>
         </section>
 
         <script src="change-mode.js"></script>
