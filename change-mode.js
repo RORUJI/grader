@@ -13,8 +13,8 @@ modeSwtich.addEventListener("click", () => {
     body.classList.toggle("dark");
 
     if (body.classList.contains("dark")) {
-        modeText.innerText = "Light Mode"
+        modeText.innerText = "โหมดสว่าง"
     } else {
-        modeText.innerText = "Dark Mode"
+        modeText.innerText = "โหมดมืด"
     }
 });
