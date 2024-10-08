@@ -51,6 +51,7 @@ if ($_SERVER["REQUEST_METHOD"] != "POST") {
                         "msg" => "เปลี่ยน Password สำเร็จ"
                     )
                 );
+                $stmt->close();
             } else {
                 echo json_encode(
                     array(
@@ -58,6 +59,7 @@ if ($_SERVER["REQUEST_METHOD"] != "POST") {
                         "msg" => "เปลี่ยน Password ไม่สำเร็จ"
                     )
                 );
+                $stmt->close();
             }
         }
     }

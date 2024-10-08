@@ -1,19 +1,22 @@
 <?php
 session_start();
 
-include_once "dbconnect.php";
+include_once "../dbconnect.php";
 
-if (!isset($_SESSION['userid'])) {
+if (!isset($_SESSION['userid']) && $_SESSION['level'] != 2) {
     header("Location: index.php");
 } else {
     $userId = $_SESSION['userid'];
-    $username = $_SESSION['username'];
+    $sqlUserData = "SELECT * FROM user INNER JOIN level ON user.levelID = level.levelID WHERE userid = $userId";
+    $queryUserData = $conn->query($sqlUserData);
+    $userData = $queryUserData->fetch_assoc();
+
     ?>
 
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <link rel="stylesheet" href="style2.css?v<?php echo time(); ?>">
+        <link rel="stylesheet" href="../style2.css?v<?php echo time(); ?>">
         <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
@@ -22,7 +25,7 @@ if (!isset($_SESSION['userid'])) {
     </head>
 
     <style>
-        .change-password-field {
+        .profile-field {
             height: 95%;
             width: 35vw;
             margin: 1vw;
@@ -37,7 +40,7 @@ if (!isset($_SESSION['userid'])) {
             <header>
                 <div class="image-text">
                     <span class="image">
-                        <img src="User.jpg" alt="">
+                        <img src="../User.jpg" alt="">
                     </span>
 
                     <div class="text header-text">
@@ -67,19 +70,19 @@ if (!isset($_SESSION['userid'])) {
                         </a>
                     </li>
                     <li class="nav-link">
-                        <a href="history.php">
+                        <a href="sum-student-score.php">
                             <i class="bx bx-history icon"></i>
-                            <span class="text nav-text">คะแนนของคุณ</span>
+                            <span class="text nav-text">คะแนนรวม</span>
                         </a>
                     </li>
                     <li class="nav-link">
-                        <a href="about-us.php">
+                        <a href="../about-us.php">
                             <i class="bi bi-people-fill icon"></i>
                             <span class="text nav-text">เกี่ยวกับเรา</span>
                         </a>
                     </li>
                     <li class="nav-link">
-                        <a href="contact.php">
+                        <a href="../contact.php">
                             <i class="bx bxs-contact icon"></i>
                             <span class="text nav-text">ติดต่อเรา</span>
                         </a>
@@ -87,7 +90,7 @@ if (!isset($_SESSION['userid'])) {
                 </div>
                 <div class="bottom-content">
                     <li class="">
-                        <a href="system/logout_system.php" id="logout-button">
+                        <a href="../system/logout_system.php" id="logout-button">
                             <i class="bx bx-log-out icon"></i>
                             <span class="text nav-text">ล็อคเอาท์</span>
                         </a>
@@ -110,33 +113,44 @@ if (!isset($_SESSION['userid'])) {
 
         <section class="home">
             <div class="text">
-                <div class="change-password-field row p-2">
+                <div class="profile-field row p-2">
                     <div class="col p-2 rounded-5 type-select text-center">
-                        <form action="profile-systems/change-password-system.php" id="changePasswordForm" method="post">
-                            <h2 class="fw-bold">Change Password</h2>
+                        <form action="profile-systems/edit-profile-system.php" id="editProfileForm" method="post">
+                            <h2 class="fw-bold">Edit Profile</h2>
                             <hr>
                             <div class="rounded p-2 text-start">
                                 <div class="mb-2">
                                     <label for="username" class="form-label">Username</label>
-                                    <span class="form-control form-control-sm">
-                                        <?php echo $username; ?>
-                                    </span>
+                                    <input type="text" name="username" class="form-control form-control-sm"
+                                        value="<?php echo $userData['username']; ?>">
                                 </div>
-                                <hr>
+
                                 <div class="mb-2">
-                                    <label for="old-password" class="form-label">Old Password</label>
-                                    <input type="password" name="old-password" class="form-control form-control-sm"
-                                        placeholder="กรุณาใส่ Password ของคุณ">
+                                    <label for="password" class="form-label">Password</label>
+                                    <input type="password" name="password" class="form-control form-control-sm"
+                                        value="<?php echo $userData['password']; ?>" disabled>
+                                </div>
+
+                                <div class="mb-2">
+                                    <label for="email" class="form-label">Email</label>
+                                    <input type="text" name="email" class="form-control form-control-sm"
+                                        value="<?php echo $userData['email']; ?>">
+                                </div>
+
+                                <div class="mb-2">
+                                    <label for="tel" class="form-label">Telephone Number</label>
+                                    <input type="tel" name="tel" class="form-control form-control-sm"
+                                        value="<?php echo $userData['tel']; ?>">
                                 </div>
 
                                 <div class="mb-3">
-                                    <label for="new-password" class="form-label">New Password</label>
-                                    <input type="password" name="new-password" class="form-control form-control-sm"
-                                        placeholder="กรุณาใส่ Password ของคุณ">
+                                    <label for="status" class="form-label">Status</label>
+                                    <input type="text" name="status" class="form-control form-control-sm"
+                                        value="<?php echo $userData['levelname']; ?>" disabled>
                                 </div>
 
                                 <div class="mb-2">
-                                    <button type="submit" class="btn btn-sm btn-success">Change</button>
+                                    <button type="submit" class="btn btn-sm btn-success">Edit</button>
                                     <a href="profile.php" class="btn btn-sm btn-danger">Cancel</a>
                                 </div>
                             </div>
@@ -146,12 +160,12 @@ if (!isset($_SESSION['userid'])) {
             </div>
         </section>
 
-        <script src="change-mode.js?"></script>
+        <script src="../change-mode.js?"></script>
         <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
         <script>
             $(document).ready(function () {
-                $('#changePasswordForm').submit(function (e) {
+                $('#editProfileForm').submit(function (e) {
                     e.preventDefault();
                     let formUrl = $(this).attr('action');
                     let reqMethod = $(this).attr('method');

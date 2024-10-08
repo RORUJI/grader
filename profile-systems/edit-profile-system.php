@@ -63,6 +63,7 @@ if ($_SERVER["REQUEST_METHOD"] != "POST") {
             $stmt->bind_result($count);
             $stmt->fetch();
             $isUsernameTaken = $count > 0;
+            $stmt->close();
         }
 
         if ($email !== $currentUser['email']) {
@@ -73,6 +74,7 @@ if ($_SERVER["REQUEST_METHOD"] != "POST") {
             $stmt->bind_result($count);
             $stmt->fetch();
             $isEmailTaken = $count > 0;
+            $stmt->close();
         }
 
         if ($tel !== $currentUser['tel']) {
@@ -83,6 +85,7 @@ if ($_SERVER["REQUEST_METHOD"] != "POST") {
             $stmt->bind_result($count);
             $stmt->fetch();
             $isTelTaken = $count > 0;
+            $stmt->close();
         }
 
         if ($isUsernameTaken) {
@@ -127,6 +130,8 @@ if ($_SERVER["REQUEST_METHOD"] != "POST") {
                     )
                 );
             }
+            $stmt->close();
         }
     }
 }
+?>

@@ -115,7 +115,7 @@ if (!isset($_SESSION['userid'])) {
             <div class="text">
                 <div class="profile-field row p-2">
                     <div class="col p-2 rounded-5 type-select text-center">
-                        <form action="profile-system/edit-profile-system.php" id="editProfileForm" method="post">
+                        <form action="profile-systems/edit-profile-system.php" id="editProfileForm" method="post">
                             <h2 class="fw-bold">Edit Profile</h2>
                             <hr>
                             <div class="rounded p-2 text-start">
