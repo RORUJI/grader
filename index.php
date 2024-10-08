@@ -119,7 +119,7 @@ if (!isset($_SESSION['userid'])) {
                             <a href="all_quiz.php">
                                 <div class="Column3 text-center">แบบฝึกหัด<br>SQL</div>
                             </a>
-                            <a href="quiz/query-builder.php">
+                            <a href="query-builder/query-builder.php">
                                 <div class="Column4 text-center">Query<br>Builder</div>
                             </a>
                         </div>

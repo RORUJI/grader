@@ -107,7 +107,7 @@ if (!isset($_SESSION['userid'])) {
                         <div class="formField p-3">
                             <h2 class="fw-bold text-center">Query Bulider</h2>
                             <hr>
-                            <form action="system_storage/code_generator.php" method="post" id="generatorForm">
+                            <form action="systems/code-generator-system.php" method="post" id="generatorForm">
                                 <div class="mb" id="selectObject">
                                     <div class="row p-2">
                                         <div id="type-select" class="col-3 p-2 rounded mx-2 type-select">
@@ -116,7 +116,7 @@ if (!isset($_SESSION['userid'])) {
                                             $query = $conn->query($type);
                                             ?>
                                             <label for="type" class="form-label fw-bold">เลือกคำสั่ง</label>
-                                            <select name="type" class="form-select form-select-sm">
+                                            <select name="type" id="type" class="form-select form-select-sm">
                                                 <option value="">เลือกคำสั่ง</option>
                                                 <?php while ($row = $query->fetch_assoc()): ?>
                                                     <option value="<?php echo $row['typeID']; ?>">
@@ -155,12 +155,6 @@ if (!isset($_SESSION['userid'])) {
                             <form action="system_storage/resultcheck.php" method="post" id="insert-form"
                                 style="display: none;">
                                 <div class="mb" id="questionDetailForm"></div>
-                                <div class="row p-2" id="buttonField">
-                                    <div class="col p-2 mx-2 rounded type-select">
-                                        <button type="submit" class="btn btn-primary btn-sm w-100"
-                                            id="submit-btn">Submit</button>
-                                    </div>
-                                </div>
                             </form>
                         </div>
                     </div>
@@ -198,7 +192,7 @@ if (!isset($_SESSION['userid'])) {
                 let table = $('#table').val();
                 $.ajax({
                     type: 'POST',
-                    url: 'system_storage/selection_table.php',
+                    url: 'systems/select-table-system.php',
                     data: {
                         type: type,
                         table: table
@@ -243,7 +237,7 @@ if (!isset($_SESSION['userid'])) {
                                 if (r.isConfirmed) {
                                     $.ajax({
                                         type: 'POST',
-                                        url: 'form_storage/question_detail_form.php',
+                                        url: 'show-result-code.php',
                                         data: {
                                             table: result.table,
                                             type: result.type,

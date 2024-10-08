@@ -52,7 +52,7 @@ if (isset($_POST['condition-checkbox'])) {
                 console.log(clauseCountValue);
                 $.ajax({
                     type: "POST",
-                    url: "form_storage/clause-form.php",
+                    url: "forms/clause-form.php",
                     data: {
                         count: clauseCountValue,
                         table: table

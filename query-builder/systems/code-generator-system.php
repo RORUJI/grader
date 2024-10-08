@@ -3,7 +3,6 @@ session_start();
 include_once "../../dbconnect.php";
 $type = $_POST['type'];
 $table = $_POST['table'];
-$quizid = $_POST['quizid'];
 if ($type == 1) {
     if (!isset($_POST['data'])) {
         echo json_encode(array("status" => "error", "msg" => "กรุณาเลือกข้อมูลที่ต้องการ!"));
@@ -104,7 +103,6 @@ if ($type == 1) {
                                                     "msg" => "Generate sql code successfully.",
                                                     "code" => $code,
                                                     "type" => $type,
-                                                    "quizid" => $quizid,
                                                     "table" => $table
                                                 ));
                                             }
@@ -114,7 +112,6 @@ if ($type == 1) {
                                                 "msg" => "Generate sql code successfully.",
                                                 "code" => $code,
                                                 "type" => $type,
-                                                "quizid" => $quizid,
                                                 "table" => $table
                                             ));
                                         }
@@ -161,7 +158,6 @@ if ($type == 1) {
                                             "msg" => "Generate sql code successfully.",
                                             "code" => $code,
                                             "type" => $type,
-                                            "quizid" => $quizid,
                                             "table" => $table
                                         ));
                                     }
@@ -171,7 +167,6 @@ if ($type == 1) {
                                         "msg" => "Generate sql code successfully.",
                                         "code" => $code,
                                         "type" => $type,
-                                        "quizid" => $quizid,
                                         "table" => $table
                                     ));
                                 }
@@ -193,7 +188,6 @@ if ($type == 1) {
                                 "msg" => "Generate sql code successfully.",
                                 "code" => $code,
                                 "type" => $type,
-                                "quizid" => $quizid,
                                 "table" => $table
                             )
                         );
@@ -205,7 +199,6 @@ if ($type == 1) {
                             "msg" => "Generate sql code successfully.",
                             "code" => $code,
                             "type" => $type,
-                            "quizid" => $quizid,
                             "table" => $table
                         )
                     );
@@ -276,7 +269,6 @@ if ($type == 1) {
                                                 "msg" => "Generate sql code successfully.",
                                                 "code" => $code,
                                                 "type" => $type,
-                                                "quizid" => $quizid,
                                                 "table" => $table
                                             ));
                                         }
@@ -286,7 +278,6 @@ if ($type == 1) {
                                             "msg" => "Generate sql code successfully.",
                                             "code" => $code,
                                             "type" => $type,
-                                            "quizid" => $quizid,
                                             "table" => $table
                                         ));
                                     }
@@ -333,7 +324,6 @@ if ($type == 1) {
                                         "msg" => "Generate sql code successfully.",
                                         "code" => $code,
                                         "type" => $type,
-                                        "quizid" => $quizid,
                                         "table" => $table
                                     ));
                                 }
@@ -343,7 +333,6 @@ if ($type == 1) {
                                     "msg" => "Generate sql code successfully.",
                                     "code" => $code,
                                     "type" => $type,
-                                    "quizid" => $quizid,
                                     "table" => $table
                                 ));
                             }
@@ -366,7 +355,6 @@ if ($type == 1) {
                                 "msg" => "Generate sql code successfully.",
                                 "code" => $code,
                                 "type" => $type,
-                                "quizid" => $quizid,
                                 "table" => $table
                             )
                         );
@@ -378,7 +366,6 @@ if ($type == 1) {
                             "msg" => "Generate sql code successfully.",
                             "code" => $code,
                             "type" => $type,
-                            "quizid" => $quizid,
                             "table" => $table
                         )
                     );
@@ -420,7 +407,6 @@ if ($type == 1) {
                                             "msg" => "Generate sql code successfully.",
                                             "code" => $code,
                                             "type" => $type,
-                                            "quizid" => $quizid,
                                             "table" => $table
                                         )
                                     );
@@ -463,7 +449,6 @@ if ($type == 1) {
                                             "msg" => "Generate sql code successfully.",
                                             "code" => $code,
                                             "type" => $type,
-                                            "quizid" => $quizid,
                                             "table" => $table
                                         )
                                     );
@@ -506,7 +491,6 @@ if ($type == 1) {
                                         "msg" => "Generate sql code successfully.",
                                         "code" => $code,
                                         "type" => $type,
-                                        "quizid" => $quizid,
                                         "table" => $table
                                     )
                                 );
@@ -543,7 +527,6 @@ if ($type == 1) {
                                         "msg" => "Generate sql code successfully.",
                                         "code" => $code,
                                         "type" => $type,
-                                        "quizid" => $quizid,
                                         "table" => $table
                                     )
                                 );
@@ -589,7 +572,6 @@ if ($type == 1) {
                             "msg" => "Generate sql code successfully.",
                             "code" => $code,
                             "type" => $type,
-                            "quizid" => $quizid,
                             "table" => $table
                         )
                     );
@@ -632,7 +614,6 @@ if ($type == 1) {
                             "msg" => "Generate sql code successfully.",
                             "code" => $code,
                             "type" => $type,
-                            "quizid" => $quizid,
                             "table" => $table
                         )
                     );

@@ -56,7 +56,7 @@ $result = $conn->query($sql);
 
             $.ajax({
                 type: 'POST',
-                url: 'form_storage/condition_selection_form.php',
+                url: 'forms/where-condition-form.php',
                 data: formData,
                 success: function (data) {
                     if (data == "") {
@@ -73,7 +73,7 @@ $result = $conn->query($sql);
 
             $.ajax({
                 type: 'POST',
-                url: 'form_storage/sorting_selection_form.php',
+                url: 'forms/order-by-form.php',
                 data: formData,
                 success: function (data) {
                     if (data == "") {
@@ -90,7 +90,7 @@ $result = $conn->query($sql);
 
             $.ajax({
                 type: 'POST',
-                url: 'form_storage/joined_selection_form.php',
+                url: 'forms/join-table-form.php',
                 data: formData,
                 success: function (data) {
                     if (data == "") {

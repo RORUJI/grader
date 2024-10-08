@@ -39,7 +39,7 @@ $result = $conn->query($sql);
 
                 $.ajax({
                     type: 'POST',
-                    url: 'form_storage/data_delete_form.php',
+                    url: 'forms/delete-data-form.php',
                     data: datas,
                     success: function (data) {
                         if (data == "") {
@@ -60,7 +60,7 @@ $result = $conn->query($sql);
 
                 $.ajax({
                     type: 'POST',
-                    url: 'form_storage/data_delete_form.php',
+                    url: 'forms/delete-data-form.php',
                     data: datas,
                     success: function (data) {
                         if (data == "") {

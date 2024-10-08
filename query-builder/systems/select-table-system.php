@@ -8,13 +8,13 @@ $table = $_POST['table'];
 
 if (!empty($type) && !empty($table)) {
     if ($type == 1) {
-        include_once "../select_generator.php";
+        include_once "../forms/select-builder-form.php";
     } else if ($type == 2) {
-        include_once "../insert_generator.php";
+        include_once "../forms/insert-builder-form.php";
     } else if ($type == 3) {
-        include_once "../delete_generator.php";
+        include_once "../forms/delete-builder-form.php";
     } else {
-        include_once "../update_generator.php";
+        include_once "../forms/update-builder-form.php";
     }
 }
 ?>
