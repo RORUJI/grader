@@ -86,5 +86,6 @@ CREATE TABLE quiz (
 CREATE TABLE score (
     score INT(3) NOT NULL,
     userid INT(3) NOT NULL,
-    quizid INT(3) NOT NULL
+    quizid INT(3) NOT NULL,
+    record TIMESTAMP
 ) ENGINE = InnoDB DEFAULT CHARSET = utf8;

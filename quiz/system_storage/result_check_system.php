@@ -1,6 +1,8 @@
 <?php
 session_start();
 
+date_default_timezone_set('Asia/Bangkok');
+
 include_once "../../dbconnect.php";
 
 function changeCase($input, $wordsToUpper)
@@ -41,6 +43,7 @@ if (!isset($_SESSION['userid'])) {
     $quizId = $_POST['quizId'];
     $typeId = $_POST['typeId'];
     $code = $_POST['code'];
+    $record = date('Y-m-d h:i:sa');
 
     if ($code == "") {
         echo json_encode(
@@ -116,7 +119,7 @@ if (!isset($_SESSION['userid'])) {
                             } else {
                                 $score = 1;
                             }
-                            $score_update = "UPDATE score SET score = $score WHERE userid = $_SESSION[userid] 
+                            $score_update = "UPDATE score SET score = $score, record = '$record' WHERE userid = $_SESSION[userid] 
                                         AND quizid = $quizId";
                             $stmt = $conn->prepare($score_update);
                             $stmt->execute();
@@ -160,7 +163,7 @@ if (!isset($_SESSION['userid'])) {
                                 "text" => "คำตอบของคุณถูกต้อง"
                             );
 
-                            $score_update = "UPDATE score SET score = 2 WHERE userid = $_SESSION[userid] AND quizid = $quizId";
+                            $score_update = "UPDATE score SET score = 2, record = '$record' WHERE userid = $_SESSION[userid] AND quizid = $quizId";
                             $stmt = $conn->prepare($score_update);
                             $stmt->execute();
                         } else {
@@ -218,7 +221,7 @@ if (!isset($_SESSION['userid'])) {
                                 "text" => "คำตอบของคุณถูกต้อง"
                             );
 
-                            $score_update = "UPDATE score SET score = 2 WHERE userid = $_SESSION[userid] AND quizid = $quizId";
+                            $score_update = "UPDATE score SET score = 2, record = '$record' WHERE userid = $_SESSION[userid] AND quizid = $quizId";
                             $stmt = $conn->prepare($score_update);
                             $stmt->execute();
                         } else {
@@ -276,7 +279,7 @@ if (!isset($_SESSION['userid'])) {
                                 "text" => "คำตอบของคุณถูกต้อง"
                             );
 
-                            $score_update = "UPDATE score SET score = 2 WHERE userid = $_SESSION[userid] AND quizid = $quizId";
+                            $score_update = "UPDATE score SET score = 2, record = '$record' WHERE userid = $_SESSION[userid] AND quizid = $quizId";
                             $stmt = $conn->prepare($score_update);
                             $stmt->execute();
                         } else {

@@ -103,8 +103,8 @@
                                     placeholder="Create an telephone number">
                             </div>
                             <div>
-                                <button type="submit" name="signin-btn" id="signin-btn"
-                                    class="btn btn-primary fw-bold w-100">LOGIN</button>
+                                <button type="submit" name="signup-btn" id="signup-btn"
+                                    class="btn btn-primary fw-bold w-100">REGISTER</button>
                             </div>
                             <hr>
                             <div class="Register-text">

@@ -60,6 +60,12 @@ if (!isset($_SESSION['userid'])) {
                         </a>
                     </li>
                     <li class="nav-link">
+                        <a href="history.php">
+                            <i class="bx bx-history icon"></i>
+                            <span class="text nav-text">คะแนนของคุณ</span>
+                        </a>
+                    </li>
+                    <li class="nav-link">
                         <a href="about-us.php">
                             <i class="bi bi-people-fill icon"></i>
                             <span class="text nav-text">เกี่ยวกับเรา</span>
@@ -98,7 +104,18 @@ if (!isset($_SESSION['userid'])) {
         <section class="home">
             <div class="text">
                 <div class="div-text"><br>
-                    <div class="timeline">TimeLine</div><br>
+                    <div class="timeline">
+                        <div class="text-center">
+                            <?php
+                            $sql = "SELECT * FROM score INNER JOIN user ON score.userid = user.userid INNER JOIN quiz ON
+                            score.quizid = quiz.quizid ORDER BY record DESC LIMIT 2";
+                            $query = $conn->query($sql);
+                            while ($row = $query->fetch_assoc()) {
+                                echo "<h2>{$row['username']} ข้อที่ทำล่าสุด {$row['quizid']} เวลา {$row['record']}</h2>";
+                            }
+                            ?>
+                        </div>
+                    </div><br>
                     <div class="div-graph">
                         <div class="col-8 Column1">
                             <div class="text-center">
