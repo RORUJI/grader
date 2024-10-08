@@ -8,7 +8,7 @@ if (!isset($_SESSION['userid']) && $_SESSION['level'] != 2) {
     header("Location: view-quiz.php");
 } else {
     $quizId = $_GET['quizId'];
-    $sqlUser = "SELECT * FROM user INNER JOIN level ON user.levelID = level.levelID ORDER BY userid ASC";
+    $sqlUser = "SELECT * FROM user INNER JOIN level ON user.levelID = level.levelID WHERE user.levelID = 1 ORDER BY userid";
     $queryUser = $conn->query($sqlUser);
     ?>
 

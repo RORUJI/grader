@@ -7,8 +7,8 @@ if ($_SESSION['level'] != '2') {
     header("Location: ../system/logout_system.php");
 } else {
 
-    $sql = "SELECT SUM(score) FROM score INNER JOIN user ON score.userid = user.userid INNER JOIN 
-            quiz ON score.quizid = quiz.quizid GROUP BY score.userid";
+    $sql = "SELECT COUNT(score), SUM(score), username, email FROM score INNER JOIN user ON score.userid = user.userid 
+            INNER JOIN quiz ON score.quizid = quiz.quizid GROUP BY score.userid";
     $query = $conn->query($sql);
 
     ?>
@@ -33,9 +33,24 @@ if ($_SESSION['level'] != '2') {
                             <th scope="col">#</th>
                             <th scope="col">Username</th>
                             <th scope="col">Email</th>
-                            <th scope="col"></th>
+                            <th scope="col">คะแนนรวม</th>
                         </tr>
                     </thead>
+                    <tbody>
+                        <?php
+                        $count = 1;
+                        while ($row = $query->fetch_assoc()):
+                            ?>
+                            <tr>
+                                <td><?php echo $count; ?></td>
+                                <td><?php echo $row['username'] ?></td>
+                                <td><?php echo $row['email']; ?></td>
+                                <td><?php echo $row['SUM(score)'] . "/" . $row['COUNT(score)'] * 2; ?></td>
+                            </tr>
+                            <?php
+                            $count++;
+                        endwhile; ?>
+                    </tbody>
                 </table>
             </div>
         </div>

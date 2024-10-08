@@ -21,6 +21,7 @@ if (!isset($_SESSION['userid'])) {
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
             integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
         <link rel="stylesheet" href="https://cdn.datatables.net/2.0.8/css/dataTables.dataTables.css" />
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
         <title>Grader</title>
     </head>
 
@@ -46,34 +47,42 @@ if (!isset($_SESSION['userid'])) {
 
             <div class="menu-bar">
                 <div class="menu">
-                    <li class="search-box">
-                        <i class='bx bx-search icon'></i>
-                        <input type="search" placeholder="Search...">
-                    </li>
                     <li class="nav-link">
                         <a href="index.php">
                             <i class='bx bx-home icon'></i>
-                            <span class="text nav-text">Home</span>
+                            <span class="text nav-text">หน้าหลัก</span>
                         </a>
                     </li>
                     <li class="nav-link">
-                        <a href="#">
+                        <a href="profile.php">
                             <i class='bx bxs-user icon'></i>
-                            <span class="text nav-text">Profile</span>
+                            <span class="text nav-text">โปรไฟล์</span>
                         </a>
                     </li>
                     <li class="nav-link">
                         <a href="history.php">
-                            <i class='bx bx-history icon'></i>
-                            <span class="text nav-text">History</span>
+                            <i class="bx bx-history icon"></i>
+                            <span class="text nav-text">คะแนนของคุณ</span>
+                        </a>
+                    </li>
+                    <li class="nav-link">
+                        <a href="about-us.php">
+                            <i class="bi bi-people-fill icon"></i>
+                            <span class="text nav-text">เกี่ยวกับเรา</span>
+                        </a>
+                    </li>
+                    <li class="nav-link">
+                        <a href="contact.php">
+                            <i class="bx bxs-contact icon"></i>
+                            <span class="text nav-text">ติดต่อเรา</span>
                         </a>
                     </li>
                 </div>
                 <div class="bottom-content">
                     <li class="">
-                        <a href="login.php">
+                        <a href="system/logout_system.php" id="logout-button">
                             <i class="bx bx-log-out icon"></i>
-                            <span class="text nav-text">Logout</span>
+                            <span class="text nav-text">ล็อคเอาท์</span>
                         </a>
                     </li>
 
@@ -82,7 +91,7 @@ if (!isset($_SESSION['userid'])) {
                             <i class="bx bx-moon icon moon"></i>
                             <i class="bx bx-sun icon sun"></i>
                         </div>
-                        <span class="mode-text text">Dark Mode</span>
+                        <span class="mode-text text">โหมดมืด</span>
 
                         <div class="toggle-switch">
                             <span class="switch"></span>
@@ -144,28 +153,8 @@ if (!isset($_SESSION['userid'])) {
         <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
         <script src="https://cdn.datatables.net/2.0.8/js/dataTables.js"></script>
-
+        <script src="change-mode.js?"></script>
         <script>
-            const body = document.querySelector("body"),
-                sidebar = body.querySelector(".sidebar"),
-                toggle = body.querySelector(".toggle"),
-                searchBtn = body.querySelector(".search-box"),
-                modeSwtich = body.querySelector(".toggle-switch")
-            modeText = body.querySelector(".mode-text");
-
-            toggle.addEventListener("click", () => {
-                sidebar.classList.toggle("close");
-            });
-
-            modeSwtich.addEventListener("click", () => {
-                body.classList.toggle("dark");
-
-                if (body.classList.contains("dark")) {
-                    modeText.innerText = "Light Mode"
-                } else {
-                    modeText.innerText = "Drak Mode"
-                }
-            });
             let table = new DataTable('#myTable');
         </script>
 
