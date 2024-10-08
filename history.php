@@ -131,6 +131,7 @@ if (!isset($_SESSION['userid'])) {
                                 <td>สรุป</td>
                                 <td>คะแนนรวมทั้งหมด</td>
                                 <td><?php echo $yourscore['sum(score)']; ?>/<?php echo $sumscore['count(*)'] * 2; ?></td>
+                                <td></td>
                             </tr>
                         </tfoot>
                     </table>
