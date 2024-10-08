@@ -124,7 +124,7 @@ if (!isset($_SESSION['userid'])) {
                                 $query = $conn->query($sql);
                                 $yourscore = $query->fetch_assoc();
 
-                                $sql = "SELECT count(*) FROM quiz";
+                                $sql = "SELECT count(*) FROM score WHERE userid = '$_SESSION[userid]'";
                                 $query = $conn->query($sql);
                                 $sumscore = $query->fetch_assoc();
                                 ?>
