@@ -56,9 +56,9 @@ if (!isset($_SESSION['userid']) && !isset($_SESSION['username']) && !isset($_SES
                             </a>
                         </li>
                         <li class="nav-link">
-                            <a href="history.php">
+                            <a href="sum-student-score.php">
                                 <i class="bx bx-history icon"></i>
-                                <span class="text nav-text">คะแนนของคุณ</span>
+                                <span class="text nav-text">คะแนนรวม</span>
                             </a>
                         </li>
                         <li class="nav-link">
@@ -76,7 +76,7 @@ if (!isset($_SESSION['userid']) && !isset($_SESSION['username']) && !isset($_SES
                     </div>
                     <div class="bottom-content">
                         <li class="">
-                            <a href="system/logout_system.php" id="logout-button">
+                            <a href="../system/logout_system.php" id="logout-button">
                                 <i class="bx bx-log-out icon"></i>
                                 <span class="text nav-text">ล็อคเอาท์</span>
                             </a>
