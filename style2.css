@@ -509,3 +509,17 @@ body.dark .div-text .div-graph a:hover .Column4 {
   left: 88px;
   width: calc(100% - 88px);
 }
+
+.profile-field{
+  width: 100%;
+}
+
+.home .div-text .table th {
+  background: var(--primary-color-light);
+  color: var(--text-color);
+}
+
+.home .div-text .table td{
+  background: var(--primary-color-light);
+  color: var(--text-color);
+}
