@@ -94,6 +94,10 @@ if (!isset($_SESSION['userid'])) {
                                             showCancelButton: true,
                                             cancelButtonColor: '#d33',
                                             cancelButtonText: 'ภายหลัง'
+                                        }).then(function(r) {
+                                            if (r.isConfirmed) {
+                                                window.location.href = "../history.php";
+                                            }
                                         });
                                     } else {
                                         Swal.fire({
