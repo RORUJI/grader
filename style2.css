@@ -334,12 +334,17 @@ body.dark .switch::before {
   font-weight: 500;
   display: flex;
   align-items: center;
-  justify-content: center;
+  padding-left: 25%;
   height: 30%;
   margin-left: 1vw;
   margin-right: 1vw;
   background: var(--primary-color-light);
   border-radius: 18px;
+}
+
+.div-text .timeline h2{
+  font-size: 2vw;
+  transition: var(--tran-05);
 }
 
 .div-text-login .timeline {
@@ -390,11 +395,22 @@ body.dark .switch::before {
   font-weight: 500;
   display: flex;
   align-items: center;
-  justify-content: center;
+  padding-left: 20%;
   background: var(--primary-color-light);
   border-radius: 18px;
   width: 65%;
   margin-right: 1.2vw;
+  transition: var(--tran-05);
+}
+
+.div-text .div-graph .Column1 h1 {
+  font-size: 2vw;
+  transition: var(--tran-05);
+}
+
+.div-text .div-graph .Column1 h2 {
+  font-size: 2vw;
+  transition: var(--tran-05);
 }
 
 .div-text .div-graph .Column2 a {
@@ -403,6 +419,19 @@ body.dark .switch::before {
 }
 
 .div-text .div-graph .Column3 {
+  background: var(--primary-color-light);
+  height: 100%;
+  font-size: 3vw;
+  font-weight: 500;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 18px;
+  margin-bottom: 1vw;
+  transition: var(--tran-05);
+}
+
+.div-text .div-graph .ColumnA3 {
   background: var(--primary-color-light);
   height: 48%;
   font-size: 3vw;
@@ -431,7 +460,15 @@ body.dark .switch::before {
   background: var(--primary-color);
 }
 
+.div-text .div-graph a:hover .ColumnA3 {
+  background: var(--primary-color);
+}
+
 body.dark .div-text .div-graph a:hover .Column3 {
+  background: rgb(130, 130, 130);
+}
+
+body.dark .div-text .div-graph a:hover .ColumnA3 {
   background: rgb(130, 130, 130);
 }
 
@@ -440,9 +477,6 @@ body.dark .div-text .div-graph a:hover .Column3 {
   height: 100%;
   font-size: 1.5vw;
   font-weight: 500;
-  display: grid;
-  align-items: center;
-  justify-content: center;
   border-radius: 18px;
   margin-bottom: 1vw;
   transition: var(--tran-05);
@@ -455,7 +489,6 @@ body.dark .div-text .div-graph a:hover .Column3 {
   align-items: center;
   justify-content: center;
   background: var(--body-color);
-  width: 20vw;
   margin-bottom: 0.6vw;
   border-radius: 18px;
   box-shadow: 0px 0px 5px 0px rgba(0, 0, 0, 0.1);

@@ -107,7 +107,7 @@ if (!isset($_SESSION['userid']) && !isset($_SESSION['username']) && !isset($_SES
                             </div>
                             <div class="col-4 Column2">
                                 <a href="../generator/generator.php">
-                                    <div class="Column3">Quiz<br>Generator</div>
+                                    <div class="ColumnA3">Quiz<br>Generator</div>
                                 </a>
                                 <a href="view-quiz.php">
                                     <div class="Column4">View<br>Quiz</div>

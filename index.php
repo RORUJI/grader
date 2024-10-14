@@ -118,15 +118,15 @@ if (!isset($_SESSION['userid'])) {
                     </div><br>
                     <div class="div-graph">
                         <div class="col-8 Column1">
-                            <div class="text-center">
-                                <h1 class="fw-bold">จัดอันดับ</h1>
+                            <div class="H">
+                                <h1 class="fw-bold text-center">จัดอันดับ</h1>
                                 <?php
                                 $count = 1;
                                 $sql = "SELECT username, SUM(score) FROM score INNER JOIN user ON score.userid = user.userid
                                     GROUP BY score.userid ORDER BY SUM(score) DESC";
                                 $query = $conn->query($sql);
                                 while ($row = $query->fetch_assoc()) {
-                                    echo "<h$count>$count. {$row['username']} คะแนนรวม {$row['SUM(score)']}</h$count>";
+                                    echo "<h1>$count. {$row['username']} คะแนนรวม {$row['SUM(score)']}</h1>";
                                     $count++;
                                 }
                                 ?>
@@ -135,9 +135,6 @@ if (!isset($_SESSION['userid'])) {
                         <div class="col-4 Column2">
                             <a href="all_quiz.php">
                                 <div class="Column3 text-center">แบบฝึกหัด<br>SQL</div>
-                            </a>
-                            <a href="query-builder/query-builder.php">
-                                <div class="Column4 text-center">Query<br>Builder</div>
                             </a>
                         </div>
                     </div>
