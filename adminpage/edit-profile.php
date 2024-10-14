@@ -113,7 +113,7 @@ if (!isset($_SESSION['userid']) && $_SESSION['level'] != 2) {
 
         <section class="home">
             <div class="text">
-                <div class="profile-field row p-2">
+                <div class="div-text row p-2">
                     <div class="col p-2 rounded-5 type-select text-center">
                         <form action="profile-systems/edit-profile-system.php" id="editProfileForm" method="post">
                             <h2 class="fw-bold">Edit Profile</h2>

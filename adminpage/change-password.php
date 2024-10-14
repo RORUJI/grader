@@ -110,7 +110,7 @@ if (!isset($_SESSION['userid']) && $_SESSION['level'] != 2) {
 
         <section class="home">
             <div class="text">
-                <div class="change-password-field row p-2">
+                <div class="div-text row p-2">
                     <div class="col p-2 rounded-5 type-select text-center">
                         <form action="profile-systems/change-password-system.php" id="changePasswordForm" method="post">
                             <h2 class="fw-bold">Change Password</h2>
