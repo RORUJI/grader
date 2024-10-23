@@ -86,7 +86,7 @@ if (!isset($_SESSION['userid'])) {
                         array(
                             "status" => "error",
                             "title" => "ล้มเหลว",
-                            "text" => "คำตอบของคุณไม่ถูกต้อง"
+                            "text" => "ผลลัพธ์ของคุณไม่ถูกต้อง"
                         )
                     );
                 } else {
@@ -95,14 +95,14 @@ if (!isset($_SESSION['userid'])) {
                             $array = array(
                                 "status" => "success",
                                 "title" => "สำเร็จ",
-                                "text" => "คำตอบของคุณถูกต้อง"
+                                "text" => "ผลลัพธ์ของคุณถูกต้อง"
                             );
                             continue;
                         } else {
                             $array = array(
                                 "status" => "error",
                                 "title" => "ล้มเหลว",
-                                "text" => "คำตอบของคุณไม่ถูกต้อง"
+                                "text" => "ผลลัพธ์ของคุณไม่ถูกต้อง"
                             );
                             break;
                         }
@@ -135,7 +135,7 @@ if (!isset($_SESSION['userid'])) {
                 $array = array(
                     "status" => "error",
                     "title" => "ล้มเหลว",
-                    "text" => "คำตอบของคุณไม่ถูกต้อง"
+                    "text" => "คุณเขียนคำสั่ง SQL ไม่ถูกต้อง"
                 );
                 echo json_encode($array);
             }
@@ -160,7 +160,7 @@ if (!isset($_SESSION['userid'])) {
                             $array = array(
                                 "status" => "success",
                                 "title" => "สำเร็จ",
-                                "text" => "คำตอบของคุณถูกต้อง"
+                                "text" => "ผลลัพธ์ของคุณถูกต้อง"
                             );
 
                             $score_update = "UPDATE score SET score = 2, record = '$record' WHERE userid = $_SESSION[userid] AND quizid = $quizId";
@@ -170,28 +170,28 @@ if (!isset($_SESSION['userid'])) {
                             $array = array(
                                 "status" => "error",
                                 "title" => "ล้มเหลว",
-                                "text" => "คำตอบของคุณไม่ถูกต้อง"
+                                "text" => "ผลลัพธ์ของคุณไม่ถูกต้อง"
                             );
                         }
                     } else {
                         $array = array(
                             "status" => "error",
                             "title" => "ล้มเหลว",
-                            "text" => "คำตอบของคุณไม่ถูกต้อง"
+                            "text" => "ผลลัพธ์ของคุณไม่ถูกต้อง"
                         );
                     }
                 } catch (Exception $e) {
                     $array = array(
                         "status" => "error",
                         "title" => "ล้มเหลว",
-                        "text" => "คำตอบของคุณไม่ถูกต้อง"
+                        "text" => "ผลลัพธ์ของคุณไม่ถูกต้อง"
                     );
                 }
             } else {
                 $array = array(
                     "status" => "error",
                     "title" => "ล้มเหลว",
-                    "text" => "คำตอบของคุณไม่ถูกต้อง"
+                    "text" => "คุณเขียนคำสั่ง SQL ไม่ถูกต้อง"
                 );
             }
             $delete_temptable = $conn->query("DROP TABLE $usertable");

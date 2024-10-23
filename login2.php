@@ -19,66 +19,6 @@ session_start();
 </style>
 
 <body>
-    <nav class="sidebar">
-        <header>
-            <div class="image-text">
-                <span class="image">
-                    <img src="User.jpg" alt="">
-                </span>
-
-                <div class="text header-text">
-                    <span class="name">
-
-                    </span>
-                    <span class="profession">Web developer</span>
-                </div>
-            </div>
-
-            <i class='bx bx-chevron-right toggle'></i>
-
-        </header>
-
-        <div class="menu-bar">
-            <div class="menu">
-                <li class="search-box">
-                    <i class='bx bx-search icon'></i>
-                    <input type="search" placeholder="Search...">
-                </li>
-                <li class="nav-link">
-                    <a href="index.php">
-                        <i class='bx bx-home icon'></i>
-                        <span class="text nav-text">Home</span>
-                    </a>
-                </li>
-                <li class="nav-link">
-                    <a href="profile.php">
-                        <i class='bx bxs-user icon'></i>
-                        <span class="text nav-text">Profile</span>
-                    </a>
-                </li>
-                <li class="nav-link">
-                    <a href="history.php">
-                        <i class='bx bx-history icon'></i>
-                        <span class="text nav-text">History</span>
-                    </a>
-                </li>
-            </div>
-            <div class="bottom-content">
-
-                <li class="mode">
-                    <div class="moon-sun">
-                        <i class="bx bx-moon icon moon"></i>
-                        <i class="bx bx-sun icon sun"></i>
-                    </div>
-                    <span class="mode-text text">Dark Mode</span>
-
-                    <div class="toggle-switch">
-                        <span class="switch"></span>
-                    </div>
-                </li>
-            </div>
-        </div>
-    </nav>
     <section class="home">
         <div class="text">
             <div class="div-text-login">
