@@ -218,7 +218,7 @@ if (!isset($_SESSION['userid'])) {
                             $array = array(
                                 "status" => "success",
                                 "title" => "สำเร็จ",
-                                "text" => "คำตอบของคุณถูกต้อง"
+                                "text" => "ผลลัพธ์ของคุณถูกต้อง"
                             );
 
                             $score_update = "UPDATE score SET score = 2, record = '$record' WHERE userid = $_SESSION[userid] AND quizid = $quizId";
