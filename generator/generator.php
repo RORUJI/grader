@@ -12,7 +12,7 @@ if ($_SESSION['level'] != 2) {
     AND table_type = 'BASE TABLE' AND table_name NOT LIKE 'mysql_%' AND table_name NOT LIKE 
     'information_schema_%' AND table_name NOT LIKE 'performance_schema_%' AND table_name NOT LIKE 'sys_%' AND
     table_name != 'quiz' AND table_name != 'score' AND table_name != 'type' AND table_name != 'user' AND
-    table_name != 'level'";
+    table_name != 'level' AND table_name != 'quiz_record'";
     $tableQuery = $conn->query($tableSql);
     ?>
 

@@ -210,12 +210,35 @@ if (!isset($_SESSION['userid'])) {
                             $score_update = "UPDATE score SET score = 2, record = '$record' WHERE userid = $_SESSION[userid] AND quizid = $quizId";
                             $stmt = $conn->prepare($score_update);
                             $stmt->execute();
+                            $stmt->close();
+
+                            $score = 2;
+                            $status = "ถูกต้อง";
+                            $description = "ผลลัพธ์ของคุณถูกต้อง";
+                            $sql = "INSERT INTO quiz_record(score, userid, quizid, status, description) VALUES(?, ?, ?, ?, ?)";
+                            $stmt = $conn->prepare($sql);
+                            $stmt->bind_param("iiiss", $score, $_SESSION['userid'], $_POST['quizId'], $status, $description);
+
+                            if ($stmt->execute()) {
+                                $stmt->close();
+                            }
                         } else {
                             $array = array(
                                 "status" => "error",
                                 "title" => "ล้มเหลว",
                                 "text" => "ผลลัพธ์ของคุณไม่ถูกต้อง"
                             );
+
+                            $score = 0;
+                            $status = "ไม่ถูกต้อง";
+                            $description = "ผลลัพธ์ของคุณไม่ถูกต้อง";
+                            $sql = "INSERT INTO quiz_record(score, userid, quizid, status, description) VALUES(?, ?, ?, ?, ?)";
+                            $stmt = $conn->prepare($sql);
+                            $stmt->bind_param("iiiss", $score, $_SESSION['userid'], $_POST['quizId'], $status, $description);
+
+                            if ($stmt->execute()) {
+                                $stmt->close();
+                            }
                         }
                     } else {
                         $array = array(
@@ -223,6 +246,17 @@ if (!isset($_SESSION['userid'])) {
                             "title" => "ล้มเหลว",
                             "text" => "ผลลัพธ์ของคุณไม่ถูกต้อง"
                         );
+
+                        $score = 0;
+                        $status = "ไม่ถูกต้อง";
+                        $description = "ผลลัพธ์ของคุณไม่ถูกต้อง";
+                        $sql = "INSERT INTO quiz_record(score, userid, quizid, status, description) VALUES(?, ?, ?, ?, ?)";
+                        $stmt = $conn->prepare($sql);
+                        $stmt->bind_param("iiiss", $score, $_SESSION['userid'], $_POST['quizId'], $status, $description);
+
+                        if ($stmt->execute()) {
+                            $stmt->close();
+                        }
                     }
                 } catch (Exception $e) {
                     $array = array(
@@ -230,6 +264,17 @@ if (!isset($_SESSION['userid'])) {
                         "title" => "ล้มเหลว",
                         "text" => "ผลลัพธ์ของคุณไม่ถูกต้อง"
                     );
+
+                    $score = 0;
+                    $status = "ไม่ถูกต้อง";
+                    $description = "ผลลัพธ์ของคุณไม่ถูกต้อง";
+                    $sql = "INSERT INTO quiz_record(score, userid, quizid, status, description) VALUES(?, ?, ?, ?, ?)";
+                    $stmt = $conn->prepare($sql);
+                    $stmt->bind_param("iiiss", $score, $_SESSION['userid'], $_POST['quizId'], $status, $description);
+
+                    if ($stmt->execute()) {
+                        $stmt->close();
+                    }
                 }
             } else {
                 $array = array(
@@ -237,6 +282,17 @@ if (!isset($_SESSION['userid'])) {
                     "title" => "ล้มเหลว",
                     "text" => "คุณเขียนคำสั่ง SQL ไม่ถูกต้อง"
                 );
+
+                $score = 0;
+                $status = "ไม่ถูกต้อง";
+                $description = "คุณเขียนคำสั่ง SQL ไม่ถูกต้อง";
+                $sql = "INSERT INTO quiz_record(score, userid, quizid, status, description) VALUES(?, ?, ?, ?, ?)";
+                $stmt = $conn->prepare($sql);
+                $stmt->bind_param("iiiss", $score, $_SESSION['userid'], $_POST['quizId'], $status, $description);
+
+                if ($stmt->execute()) {
+                    $stmt->close();
+                }
             }
             $delete_temptable = $conn->query("DROP TABLE $usertable");
             echo json_encode(value: $array);
@@ -268,12 +324,35 @@ if (!isset($_SESSION['userid'])) {
                             $score_update = "UPDATE score SET score = 2, record = '$record' WHERE userid = $_SESSION[userid] AND quizid = $quizId";
                             $stmt = $conn->prepare($score_update);
                             $stmt->execute();
+                            $stmt->close();
+
+                            $score = 2;
+                            $status = "ถูกต้อง";
+                            $description = "ผลลัพธ์ของคุณถูกต้อง";
+                            $sql = "INSERT INTO quiz_record(score, userid, quizid, status, description) VALUES(?, ?, ?, ?, ?)";
+                            $stmt = $conn->prepare($sql);
+                            $stmt->bind_param("iiiss", $score, $_SESSION['userid'], $_POST['quizId'], $status, $description);
+
+                            if ($stmt->execute()) {
+                                $stmt->close();
+                            }
                         } else {
                             $array = array(
                                 "status" => "error",
                                 "title" => "ล้มเหลว",
                                 "text" => "คำตอบของคุณไม่ถูกต้อง"
                             );
+
+                            $score = 0;
+                            $status = "ไม่ถูกต้อง";
+                            $description = "ผลลัพธ์ของคุณไม่ถูกต้อง";
+                            $sql = "INSERT INTO quiz_record(score, userid, quizid, status, description) VALUES(?, ?, ?, ?, ?)";
+                            $stmt = $conn->prepare($sql);
+                            $stmt->bind_param("iiiss", $score, $_SESSION['userid'], $_POST['quizId'], $status, $description);
+
+                            if ($stmt->execute()) {
+                                $stmt->close();
+                            }
                         }
                     } else {
                         $array = array(
@@ -281,6 +360,17 @@ if (!isset($_SESSION['userid'])) {
                             "title" => "ล้มเหลว",
                             "text" => "คำตอบของคุณไม่ถูกต้อง"
                         );
+
+                        $score = 0;
+                        $status = "ไม่ถูกต้อง";
+                        $description = "ผลลัพธ์ของคุณไม่ถูกต้อง";
+                        $sql = "INSERT INTO quiz_record(score, userid, quizid, status, description) VALUES(?, ?, ?, ?, ?)";
+                        $stmt = $conn->prepare($sql);
+                        $stmt->bind_param("iiiss", $score, $_SESSION['userid'], $_POST['quizId'], $status, $description);
+
+                        if ($stmt->execute()) {
+                            $stmt->close();
+                        }
                     }
                 } catch (Exception $e) {
                     $array = array(
@@ -288,6 +378,17 @@ if (!isset($_SESSION['userid'])) {
                         "title" => "ล้มเหลว",
                         "text" => "คำตอบของคุณไม่ถูกต้อง"
                     );
+
+                    $score = 0;
+                    $status = "ไม่ถูกต้อง";
+                    $description = "ผลลัพธ์ของคุณไม่ถูกต้อง";
+                    $sql = "INSERT INTO quiz_record(score, userid, quizid, status, description) VALUES(?, ?, ?, ?, ?)";
+                    $stmt = $conn->prepare($sql);
+                    $stmt->bind_param("iiiss", $score, $_SESSION['userid'], $_POST['quizId'], $status, $description);
+
+                    if ($stmt->execute()) {
+                        $stmt->close();
+                    }
                 }
             } else {
                 $array = array(
@@ -295,6 +396,17 @@ if (!isset($_SESSION['userid'])) {
                     "title" => "ล้มเหลว",
                     "text" => "คำตอบของคุณไม่ถูกต้อง"
                 );
+
+                $score = 0;
+                $status = "ไม่ถูกต้อง";
+                $description = "คุณเขียนคำสั่ง SQL ไม่ถูกต้อง";
+                $sql = "INSERT INTO quiz_record(score, userid, quizid, status, description) VALUES(?, ?, ?, ?, ?)";
+                $stmt = $conn->prepare($sql);
+                $stmt->bind_param("iiiss", $score, $_SESSION['userid'], $_POST['quizId'], $status, $description);
+
+                if ($stmt->execute()) {
+                    $stmt->close();
+                }
             }
             echo json_encode(value: $array);
             $delete_temptable = $conn->query("DROP TABLE $usertable");
@@ -326,12 +438,35 @@ if (!isset($_SESSION['userid'])) {
                             $score_update = "UPDATE score SET score = 2, record = '$record' WHERE userid = $_SESSION[userid] AND quizid = $quizId";
                             $stmt = $conn->prepare($score_update);
                             $stmt->execute();
+                            $stmt->close();
+
+                            $score = 2;
+                            $status = "ถูกต้อง";
+                            $description = "ผลลัพธ์ของคุณถูกต้อง";
+                            $sql = "INSERT INTO quiz_record(score, userid, quizid, status, description) VALUES(?, ?, ?, ?, ?)";
+                            $stmt = $conn->prepare($sql);
+                            $stmt->bind_param("iiiss", $score, $_SESSION['userid'], $_POST['quizId'], $status, $description);
+
+                            if ($stmt->execute()) {
+                                $stmt->close();
+                            }
                         } else {
                             $array = array(
                                 "status" => "error",
                                 "title" => "ล้มเหลว",
                                 "text" => "คำตอบของคุณไม่ถูกต้อง"
                             );
+
+                            $score = 0;
+                            $status = "ไม่ถูกต้อง";
+                            $description = "ผลลัพธ์ของคุณไม่ถูกต้อง";
+                            $sql = "INSERT INTO quiz_record(score, userid, quizid, status, description) VALUES(?, ?, ?, ?, ?)";
+                            $stmt = $conn->prepare($sql);
+                            $stmt->bind_param("iiiss", $score, $_SESSION['userid'], $_POST['quizId'], $status, $description);
+
+                            if ($stmt->execute()) {
+                                $stmt->close();
+                            }
                         }
                     } else {
                         $array = array(
@@ -339,6 +474,17 @@ if (!isset($_SESSION['userid'])) {
                             "title" => "ล้มเหลว",
                             "text" => "คำตอบของคุณไม่ถูกต้อง"
                         );
+
+                        $score = 0;
+                        $status = "ไม่ถูกต้อง";
+                        $description = "ผลลัพธ์ของคุณไม่ถูกต้อง";
+                        $sql = "INSERT INTO quiz_record(score, userid, quizid, status, description) VALUES(?, ?, ?, ?, ?)";
+                        $stmt = $conn->prepare($sql);
+                        $stmt->bind_param("iiiss", $score, $_SESSION['userid'], $_POST['quizId'], $status, $description);
+
+                        if ($stmt->execute()) {
+                            $stmt->close();
+                        }
                     }
                 } catch (Exception $e) {
                     $array = array(
@@ -346,6 +492,17 @@ if (!isset($_SESSION['userid'])) {
                         "title" => "ล้มเหลว",
                         "text" => "คำตอบของคุณไม่ถูกต้อง"
                     );
+
+                    $score = 0;
+                    $status = "ไม่ถูกต้อง";
+                    $description = "ผลลัพธ์ของคุณไม่ถูกต้อง";
+                    $sql = "INSERT INTO quiz_record(score, userid, quizid, status, description) VALUES(?, ?, ?, ?, ?)";
+                    $stmt = $conn->prepare($sql);
+                    $stmt->bind_param("iiiss", $score, $_SESSION['userid'], $_POST['quizId'], $status, $description);
+
+                    if ($stmt->execute()) {
+                        $stmt->close();
+                    }
                 }
             } else {
                 $array = array(
@@ -353,6 +510,17 @@ if (!isset($_SESSION['userid'])) {
                     "title" => "ล้มเหลว",
                     "text" => "คำตอบของคุณไม่ถูกต้อง"
                 );
+
+                $score = 0;
+                $status = "ไม่ถูกต้อง";
+                $description = "คุณเขียนคำสั่ง SQL ไม่ถูกต้อง";
+                $sql = "INSERT INTO quiz_record(score, userid, quizid, status, description) VALUES(?, ?, ?, ?, ?)";
+                $stmt = $conn->prepare($sql);
+                $stmt->bind_param("iiiss", $score, $_SESSION['userid'], $_POST['quizId'], $status, $description);
+
+                if ($stmt->execute()) {
+                    $stmt->close();
+                }
             }
             $delete_temptable = $conn->query("DROP TABLE $usertable");
             echo json_encode(value: $array);

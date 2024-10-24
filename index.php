@@ -5,7 +5,7 @@ include_once "dbconnect.php";
 
 if (!isset($_SESSION['userid'])) {
 
-    header('location: login2.php');
+    header('location: login.php');
 
 } else {
 

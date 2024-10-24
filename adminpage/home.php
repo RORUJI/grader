@@ -130,7 +130,7 @@ if (!isset($_SESSION['userid']) && !isset($_SESSION['username']) && !isset($_SES
                                         <?php
                                         $sql = "SELECT * FROM quiz_record INNER JOIN user ON quiz_record.userid = user.userid
                                                 INNER JOIN quiz ON quiz_record.quizid = quiz.quizid ORDER BY created_at DESC
-                                                LIMIT 5";
+                                                LIMIT 2";
                                         $query = $conn->query($sql);
                                         while ($row = $query->fetch_assoc()):
                                             ?>
