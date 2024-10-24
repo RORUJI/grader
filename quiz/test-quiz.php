@@ -88,7 +88,7 @@ if (!isset($_SESSION['userid'])) {
                         </div>
                         <div class="bottom-content">
                             <li class="">
-                                <a href="system/logout_system.php" id="logout-button">
+                                <a href="../system/logout_system.php" id="logout-button">
                                     <i class="bx bx-log-out icon"></i>
                                     <span class="text nav-text">ล็อคเอาท์</span>
                                 </a>

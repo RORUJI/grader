@@ -202,7 +202,6 @@ body.dark li a:hover .text {
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  overflow: scroll;
 }
 
 .sidebar.close .menu-bar {
@@ -434,7 +433,7 @@ body.dark .switch::before {
 .div-text .div-graph .ColumnA3 {
   background: var(--primary-color-light);
   height: 48%;
-  font-size: 3vw;
+  font-size: 2.5vw;
   font-weight: 500;
   display: flex;
   align-items: center;

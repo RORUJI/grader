@@ -7,9 +7,9 @@
     $password = $_POST['password'];
 
     if (!$email) {
-        echo json_encode(array('status' => 'error', 'msg' => 'Please enter your email.'));
+        echo json_encode(array('status' => 'error', 'msg' => 'กรุณากรอก Email ของคุณ'));
     } else if (!$password) {
-        echo json_encode(array('status' => 'error', 'msg' => 'Please enter your password.'));
+        echo json_encode(array('status' => 'error', 'msg' => 'กรุณากรอก Password ของคุณ'));
     } else {
         try {
             $passwordenc = md5($password);
@@ -23,15 +23,15 @@
                 echo json_encode(
                     array(
                         'status' => 'success', 
-                        'msg' => 'SignIn Successfully!', 
+                        'msg' => 'เข้าสู่ระบบสำเร็จ', 
                         'level' => $_SESSION['level']
                     )
                 );
             } else {
-                echo json_encode(array('status' => 'error', 'msg' => 'Username or password is incorrect.'));
+                echo json_encode(array('status' => 'error', 'msg' => 'Email หรือ Password ของคุณไม่ถูกต้อง'));
             }
         } catch (PDOException $e) {
-            echo json_encode(array('status'=> 'error', 'msg'=> 'Something went wrong, please try again!'));
+            echo json_encode(array('status'=> 'error', 'msg'=> 'มีบางอย่างผิดพลาด โปรดลองอีกครั้ง'));
         }
     }
 ?>

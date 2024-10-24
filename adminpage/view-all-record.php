@@ -19,6 +19,7 @@ if (!isset($_SESSION['userid']) && !isset($_SESSION['username']) && !isset($_SES
             <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
                 integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
             <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+            <link rel="stylesheet" href="https://cdn.datatables.net/2.0.8/css/dataTables.dataTables.css" />
             <title>Grader</title>
         </head>
 
@@ -129,8 +130,7 @@ if (!isset($_SESSION['userid']) && !isset($_SESSION['username']) && !isset($_SES
                                     <tbody>
                                         <?php
                                         $sql = "SELECT * FROM quiz_record INNER JOIN user ON quiz_record.userid = user.userid
-                                                INNER JOIN quiz ON quiz_record.quizid = quiz.quizid ORDER BY created_at DESC
-                                                LIMIT 5";
+                                                INNER JOIN quiz ON quiz_record.quizid = quiz.quizid ORDER BY created_at DESC";
                                         $query = $conn->query($sql);
                                         while ($row = $query->fetch_assoc()):
                                             ?>
@@ -145,27 +145,7 @@ if (!isset($_SESSION['userid']) && !isset($_SESSION['username']) && !isset($_SES
 
                                         <?php endwhile; ?>
                                     </tbody>
-                                    <tfoot>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td class="text-center">ดูบันทึกทั้งหมด</td>
-                                        <td class="text-center">
-                                            <a href="view-all-record.php" class="btn btn-primary">ดูบันทึกทั้งหมด</a>
-                                        </td>
-                                    </tfoot>
                                 </table>
-                            </div>
-                            <div class="col-3 Column2">
-                                <a href="../generator/generator.php">
-                                    <div class="ColumnA3 p-2 text-center">ระบบสร้างโจทย์อัตโนมัติ</div>
-                                </a>
-                                <a href="view-quiz.php">
-                                    <div class="ColumnA3 p-2 text-center">จัดการโจทย์ปัญหา</div>
-                                </a>
-                                <a href="../table/view-table.php">
-                                    <div class="ColumnA3 p-2 text-center">จัดการตารางข้อมูล</div>
-                                </a>
                             </div>
                         </div>
                     </div>
@@ -173,6 +153,14 @@ if (!isset($_SESSION['userid']) && !isset($_SESSION['username']) && !isset($_SES
             </section>
 
             <script src="../change-mode.js?"></script>
+
+            <script src="https://code.jquery.com/jquery-3.7.1.js"></script>
+
+            <script src="https://cdn.datatables.net/2.0.8/js/dataTables.js"></script>
+
+            <script>
+                let myDataTable = new DataTable('.table');
+            </script>
         </body>
 
         </html>

@@ -89,3 +89,17 @@ CREATE TABLE score (
     quizid INT(3) NOT NULL,
     record TIMESTAMP
 ) ENGINE = InnoDB DEFAULT CHARSET = utf8;
+
+CREATE TABLE quiz_record (
+    quiz_record_id INT(3) NOT NULL AUTO_INCREMENT,
+    score INT(3) NOT NULL,
+    userid INT(3) NOT NULL,
+    quizid INT(3) NOT NULL,
+    status VARCHAR(255) NOT NULL,
+    description VARCHAR(255) NOT NULL,
+    created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+    updated_at DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    PRIMARY KEY(quiz_record_id),
+    FOREIGN KEY(userid) REFERENCES user(userid),
+    FOREIGN KEY(quizid) REFERENCES quiz(quizid)
+) ENGINE = InnoDB DEFAULT CHARSET = utf8;

@@ -134,7 +134,10 @@ if (!isset($_SESSION['userid'])) {
                         </div>
                         <div class="col-4 Column2">
                             <a href="all_quiz.php">
-                                <div class="Column3 text-center">แบบฝึกหัด<br>SQL</div>
+                                <div class="ColumnA3 p-2 text-center">โจทย์ปัญหา SQL</div>
+                            </a>
+                            <a href="table/view-table.php">
+                                <div class="ColumnA3 p-2 text-center">ดูตารางข้อมูลประกอบการฝึกเขียน Code</div>
                             </a>
                         </div>
                     </div>
