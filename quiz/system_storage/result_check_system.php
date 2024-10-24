@@ -26,13 +26,18 @@ function trimWhitespace($input)
 
 function extractTableName($sql)
 {
-    if (stripos($sql, "DELETE")) {
-        preg_match('/DELETE FROM\s+(\w+)/i', $sql, $matches);
-        return isset($matches[1]) ? $matches[1] : null;
-    } else {
-        preg_match('/UPDATE\s+(\w+)/i', $sql, $matches);
-        return isset($matches[1]) ? $matches[1] : null;
+    preg_match('/UPDATE\s+(\w+)/i', $sql, $matches);
+    return isset($matches[1]) ? $matches[1] : null;
+}
+
+function getTableNameFromSql($sql) {
+    $pattern = '/(?:FROM|JOIN)\s+([^\s;]+)/i';
+    
+    if (preg_match($pattern, $sql, $matches)) {
+        return $matches[1];
     }
+    
+    return null;
 }
 
 if (!isset($_SESSION['userid'])) {
@@ -305,7 +310,7 @@ if (!isset($_SESSION['userid'])) {
 
             if (strpos($modified, "DELETE") !== false) {
                 $result_check_code = str_replace("\$usertable", $usertable, $loadresult['resultcode']);
-                $tableName = extractTableName($loadresult['answercode']);
+                $tableName = getTableNameFromSql($loadresult['answercode']);
                 $deletefrom_temptable_code = str_replace("FROM $tableName", "FROM $usertable", $modified);
 
                 try {
@@ -376,12 +381,12 @@ if (!isset($_SESSION['userid'])) {
                     $array = array(
                         "status" => "error",
                         "title" => "ล้มเหลว",
-                        "text" => "คำตอบของคุณไม่ถูกต้อง"
+                        "text" => "คุณเขียนคำสั่ง SQL ไม่ถูกต้อง"
                     );
 
                     $score = 0;
                     $status = "ไม่ถูกต้อง";
-                    $description = "ผลลัพธ์ของคุณไม่ถูกต้อง";
+                    $description = "คุณเขียนคำสั่ง SQL ไม่ถูกต้อง";
                     $sql = "INSERT INTO quiz_record(score, userid, quizid, status, description) VALUES(?, ?, ?, ?, ?)";
                     $stmt = $conn->prepare($sql);
                     $stmt->bind_param("iiiss", $score, $_SESSION['userid'], $_POST['quizId'], $status, $description);
@@ -394,7 +399,7 @@ if (!isset($_SESSION['userid'])) {
                 $array = array(
                     "status" => "error",
                     "title" => "ล้มเหลว",
-                    "text" => "คำตอบของคุณไม่ถูกต้อง"
+                    "text" => "คุณเขียนคำสั่ง SQL ไม่ถูกต้อง"
                 );
 
                 $score = 0;
