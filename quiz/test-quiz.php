@@ -29,7 +29,7 @@ if (!isset($_SESSION['userid'])) {
                 <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
                 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
                 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
-                integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+                    integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
                 <title>Grader</title>
             </head>
 
@@ -43,7 +43,7 @@ if (!isset($_SESSION['userid'])) {
 
                             <div class="text header-text">
                                 <span class="name">
-                                    <?php echo $_SESSION['username']; ?>
+                                <?php echo $_SESSION['username']; ?>
                                 </span>
                                 <span class="profession">Web developer</span>
                             </div>
@@ -113,89 +113,217 @@ if (!isset($_SESSION['userid'])) {
                     <div class="text">
                         <div class="div-text"><br>
                             <div class="container">
-                            <form action="system_storage/result_check_system.php" method="post" class="p-2" id="testQuizForm">
-                                <input type="hidden" name="quizId" value="<?php echo $resultQuiz['quizid']; ?>">
-                                <input type="hidden" name="typeId" value="<?php echo $resultQuiz['typeID']; ?>">
-                                <div class="text-center">
-                                    <h3 class="fw-bold">แก้ไขโจทย์ปัญหา</h3>
-                                    <hr>
-                                </div>
-
-                                <div class="row mb-2">
-                                    <div class="col-auto">
-                                        <label for="" class="form-label">ข้อที่</label>
-                                        <span class="form-control form-control-sm">
-                                        <?php echo $resultQuiz['quizid']; ?>
-                                        </span>
+                                <form action="system_storage/result_check_system.php" method="post" class="p-2" id="testQuizForm">
+                                    <input type="hidden" name="quizId" value="<?php echo $resultQuiz['quizid']; ?>">
+                                    <input type="hidden" name="typeId" value="<?php echo $resultQuiz['typeID']; ?>">
+                                    <div class="text-center">
+                                        <h3 class="fw-bold">แก้ไขโจทย์ปัญหา</h3>
+                                        <hr>
                                     </div>
 
-                                    <div class="col">
-                                        <label for="" class="form-label">โจทย์กำหนดให้</label>
-                                        <span class="form-control form-control-sm">
-                                        <?php echo $resultQuiz['quiz']; ?>
-                                        </span>
-                                    </div>
-                                </div>
+                                    <div class="row mb-2">
+                                        <div class="col-auto">
+                                            <label for="" class="form-label">ข้อที่</label>
+                                            <span class="form-control form-control-sm">
+                                            <?php echo $resultQuiz['quizid']; ?>
+                                            </span>
+                                        </div>
 
-                                <div class="row mb-2">
-                                    <div class="col">
-                                        <label for="" class="form-label">SQL CODE</label>
-                                        <textarea name="code" id="" class="form-control form-control-sm" cols="30" rows="10"></textarea>
+                                        <div class="col">
+                                            <label for="" class="form-label">โจทย์กำหนดให้</label>
+                                            <span class="form-control form-control-sm">
+                                            <?php echo $resultQuiz['quiz']; ?>
+                                            </span>
+                                        </div>
                                     </div>
-                                </div>
 
-                                <button type="submit" class="btn btn-sm btn-primary">Submit</button>
-                            </form>
+                                    <div class="row mb-2">
+                                        <div class="col">
+                                            <label for="" class="form-label">SQL CODE</label>
+                                            <textarea name="code" id="" class="form-control form-control-sm" cols="30"
+                                                rows="10"></textarea>
+                                        </div>
+                                    </div>
+
+                                    <button type="submit" class="btn btn-sm btn-primary">Submit</button>
+                                </form>
                             </div>
                         </div>
                     </div>
 
-                <script src="../change-mode.js?"></script>
+                    <script src="../change-mode.js?"></script>
 
-                <script src="https://code.jquery.com/jquery-3.7.1.js"></script>
-                <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-                <script>
-                    $(document).ready(function () {
-                        $('#testQuizForm').submit(function (e) {
-                            e.preventDefault();
-                            let formUrl = $(this).attr('action');
-                            let reqMethod = $(this).attr('method');
-                            let formData = $(this).serialize();
+                    <script src="https://code.jquery.com/jquery-3.7.1.js"></script>
+                    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+                    <script>
+                        $(document).ready(function () {
+                            $('#testQuizForm').submit(function (e) {
+                                e.preventDefault();
+                                let formUrl = $(this).attr('action');
+                                let reqMethod = $(this).attr('method');
+                                let formData = $(this).serialize();
 
-                            $.ajax({
-                                type: reqMethod,
-                                url: formUrl,
-                                data: formData,
-                                success: function (data) {
-                                    let jsonData = JSON.parse(data);
+                                $.ajax({
+                                    type: reqMethod,
+                                    url: formUrl,
+                                    data: formData,
+                                    success: function (data) {
+                                        let jsonData = JSON.parse(data);
 
-                                    if (jsonData.status == "success") {
-                                        Swal.fire({
-                                            icon: jsonData.status,
-                                            title: jsonData.title,
-                                            text: jsonData.text,
-                                            confirmButtonColor: '#3085d6',
-                                            confirmButtonText: 'ดูคะแนน',
-                                            showCancelButton: true,
-                                            cancelButtonColor: '#d33',
-                                            cancelButtonText: 'ภายหลัง'
-                                        }).then(function(r) {
-                                            if (r.isConfirmed) {
-                                                window.location.href = "../history.php";
-                                            }
-                                        });
-                                    } else {
-                                        Swal.fire({
-                                            icon: jsonData.status,
-                                            title: jsonData.title,
-                                            text: jsonData.text
-                                        });
+                                        if (jsonData.status == "success") {
+                                            Swal.fire({
+                                                icon: jsonData.status,
+                                                title: jsonData.title,
+                                                text: jsonData.text,
+                                                confirmButtonColor: '#3085d6',
+                                                confirmButtonText: 'ดูผลลัพธ์',
+                                                showCancelButton: true,
+                                                cancelButtonColor: '#d33',
+                                                cancelButtonText: 'ภายหลัง'
+                                            }).then(function (r) {
+                                                if (jsonData.quiz_typeid == 1) {
+                                                    function postToResultPage() {
+                                                        // ข้อมูลที่ต้องการส่ง
+                                                        const data = {
+                                                            user_code: jsonData.user_code
+                                                        };
+
+                                                        // สร้างฟอร์มแบบไดนามิก
+                                                        const form = document.createElement("form");
+                                                        form.method = "POST";
+                                                        form.action = "select_result.php";  // หน้าเป้าหมาย
+
+                                                        // เพิ่ม input field สำหรับข้อมูลแต่ละรายการลงในฟอร์ม
+                                                        for (const key in data) {
+                                                            if (data.hasOwnProperty(key)) {
+                                                                const hiddenField = document.createElement("input");
+                                                                hiddenField.type = "hidden";
+                                                                hiddenField.name = key;
+                                                                hiddenField.value = data[key];
+                                                                form.appendChild(hiddenField);
+                                                            }
+                                                        }
+
+                                                        // เพิ่มฟอร์มลงใน body และทำการ submit
+                                                        document.body.appendChild(form);
+                                                        form.submit();
+                                                    }
+                                                } else {
+                                                    function postToResultPage() {
+                                                        // ข้อมูลที่ต้องการส่ง
+                                                        const data = {
+                                                            delete_temporarily_table: jsonData.delete_temporarily_table
+                                                        };
+
+                                                        // สร้างฟอร์มแบบไดนามิก
+                                                        const form = document.createElement("form");
+                                                        form.method = "POST";
+                                                        form.action = "idu_result.php";  // หน้าเป้าหมาย
+
+                                                        // เพิ่ม input field สำหรับข้อมูลแต่ละรายการลงในฟอร์ม
+                                                        for (const key in data) {
+                                                            if (data.hasOwnProperty(key)) {
+                                                                const hiddenField = document.createElement("input");
+                                                                hiddenField.type = "hidden";
+                                                                hiddenField.name = key;
+                                                                hiddenField.value = data[key];
+                                                                form.appendChild(hiddenField);
+                                                            }
+                                                        }
+
+                                                        // เพิ่มฟอร์มลงใน body และทำการ submit
+                                                        document.body.appendChild(form);
+                                                        form.submit();
+                                                    }
+                                                }
+
+                                                if (r.isConfirmed) {
+                                                    postToResultPage();
+                                                }
+                                            })
+                                        } else if (jsonData.status == "incorrect") {
+                                            Swal.fire({
+                                                icon: 'error',
+                                                title: jsonData.title,
+                                                text: jsonData.text,
+                                                confirmButtonColor: '#3085d6',
+                                                confirmButtonText: 'ดูผลลัพธ์',
+                                                showCancelButton: true,
+                                                cancelButtonColor: '#d33',
+                                                cancelButtonText: 'ภายหลัง'
+                                            }).then(function (r) {
+                                                if (jsonData.quiz_typeid == 1) {
+                                                    function postToResultPage() {
+                                                        // ข้อมูลที่ต้องการส่ง
+                                                        const data = {
+                                                            user_code: jsonData.user_code
+                                                        };
+
+                                                        // สร้างฟอร์มแบบไดนามิก
+                                                        const form = document.createElement("form");
+                                                        form.method = "POST";
+                                                        form.action = "select_result.php";  // หน้าเป้าหมาย
+
+                                                        // เพิ่ม input field สำหรับข้อมูลแต่ละรายการลงในฟอร์ม
+                                                        for (const key in data) {
+                                                            if (data.hasOwnProperty(key)) {
+                                                                const hiddenField = document.createElement("input");
+                                                                hiddenField.type = "hidden";
+                                                                hiddenField.name = key;
+                                                                hiddenField.value = data[key];
+                                                                form.appendChild(hiddenField);
+                                                            }
+                                                        }
+
+                                                        // เพิ่มฟอร์มลงใน body และทำการ submit
+                                                        document.body.appendChild(form);
+                                                        form.submit();
+                                                    }
+                                                } else {
+                                                    function postToResultPage() {
+                                                        // ข้อมูลที่ต้องการส่ง
+                                                        const data = {
+                                                            delete_temporarily_table: jsonData.delete_temporarily_table
+                                                        };
+
+                                                        // สร้างฟอร์มแบบไดนามิก
+                                                        const form = document.createElement("form");
+                                                        form.method = "POST";
+                                                        form.action = "idu_result.php";  // หน้าเป้าหมาย
+
+                                                        // เพิ่ม input field สำหรับข้อมูลแต่ละรายการลงในฟอร์ม
+                                                        for (const key in data) {
+                                                            if (data.hasOwnProperty(key)) {
+                                                                const hiddenField = document.createElement("input");
+                                                                hiddenField.type = "hidden";
+                                                                hiddenField.name = key;
+                                                                hiddenField.value = data[key];
+                                                                form.appendChild(hiddenField);
+                                                            }
+                                                        }
+
+                                                        // เพิ่มฟอร์มลงใน body และทำการ submit
+                                                        document.body.appendChild(form);
+                                                        form.submit();
+                                                    }
+                                                }
+
+                                                if (r.isConfirmed) {
+                                                    postToResultPage();
+                                                }
+                                            });
+                                        } else {
+                                            Swal.fire({
+                                                icon: 'error',
+                                                title: jsonData.title,
+                                                text: jsonData.text
+                                            });
+                                        }
                                     }
-                                }
+                                });
                             });
                         });
-                    });
-                </script>
+                    </script>
 
             </body>
 

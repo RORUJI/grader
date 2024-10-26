@@ -149,7 +149,7 @@ if (!isset($_SESSION['userid']) && !isset($_SESSION['username']) && !isset($_SES
                                         <td></td>
                                         <td></td>
                                         <td></td>
-                                        <td class="text-center">ดูบันทึกทั้งหมด</td>
+                                        <td class="text-center"></td>
                                         <td class="text-center">
                                             <a href="view-all-record.php" class="btn btn-primary">ดูบันทึกทั้งหมด</a>
                                         </td>

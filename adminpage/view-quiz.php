@@ -152,7 +152,7 @@ if (!isset($_SESSION['userid']) && $_SESSION['level'] != 2) {
                                             </td>
                                             <td scope="row" style="width: 5vw; text-align: center;">
                                                 <a data-id="<?php echo $rowQuiz['quizid']; ?>"
-                                                    href="delete_quiz_system.php?quizId=<?php echo $rowQuiz['quizid']; ?>"
+                                                    href="system/delete_quiz_system.php?quizId=<?php echo $rowQuiz['quizid']; ?>"
                                                     class="btn btn-sm btn-danger delete-btn">
                                                     ลบ
                                                 </a>
@@ -173,7 +173,7 @@ if (!isset($_SESSION['userid']) && $_SESSION['level'] != 2) {
         <script src="https://cdn.datatables.net/2.0.8/js/dataTables.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
         <script>
-            let myDataTable = new DataTable('#myDataTable');
+            //let myDataTable = new DataTable('#myDataTable');
 
             $('.delete-btn').click(function(e) {
                 var quizId = $(this).data('id');

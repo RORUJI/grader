@@ -30,13 +30,14 @@ function extractTableName($sql)
     return isset($matches[1]) ? $matches[1] : null;
 }
 
-function getTableNameFromSql($sql) {
+function getTableNameFromSql($sql)
+{
     $pattern = '/(?:FROM|JOIN)\s+([^\s;]+)/i';
-    
+
     if (preg_match($pattern, $sql, $matches)) {
         return $matches[1];
     }
-    
+
     return null;
 }
 
@@ -100,9 +101,11 @@ if (!isset($_SESSION['userid'])) {
                 if (count($system_item) != count($user_item)) {
                     echo json_encode(
                         array(
-                            "status" => "error",
+                            "status" => "incorrect",
                             "title" => "ล้มเหลว",
-                            "text" => "ผลลัพธ์ของคุณไม่ถูกต้อง"
+                            "text" => "ผลลัพธ์ของคุณไม่ถูกต้อง",
+                            "quiz_typeid" => $typeId,
+                            "user_code" => $code
                         )
                     );
 
@@ -122,14 +125,18 @@ if (!isset($_SESSION['userid'])) {
                             $array = array(
                                 "status" => "success",
                                 "title" => "สำเร็จ",
-                                "text" => "ผลลัพธ์ของคุณถูกต้อง"
+                                "text" => "ผลลัพธ์ของคุณถูกต้อง",
+                                "quiz_typeid" => $typeId,
+                                "user_code" => $code
                             );
                             continue;
                         } else {
                             $array = array(
-                                "status" => "error",
+                                "status" => "incorrect",
                                 "title" => "ล้มเหลว",
-                                "text" => "ผลลัพธ์ของคุณไม่ถูกต้อง"
+                                "text" => "ผลลัพธ์ของคุณไม่ถูกต้อง",
+                                "quiz_typeid" => $typeId,
+                                "user_code" => $code
                             );
                             break;
                         }
@@ -190,6 +197,7 @@ if (!isset($_SESSION['userid'])) {
             }
         } else if ($typeId == 2) {
             include_once "create_temptable.php";
+            $delete_temptable = "DROP TABLE $usertable";
             $wordsToUpper = ["insert", "into", "values"];
 
             $modified = changeCase($code, $wordsToUpper);
@@ -209,7 +217,10 @@ if (!isset($_SESSION['userid'])) {
                             $array = array(
                                 "status" => "success",
                                 "title" => "สำเร็จ",
-                                "text" => "ผลลัพธ์ของคุณถูกต้อง"
+                                "text" => "ผลลัพธ์ของคุณถูกต้อง",
+                                "quiz_typeid" => $typeId,
+                                "result_check_code" => $temptable,
+                                "delete_temporarily_table" => $delete_temptable
                             );
 
                             $score_update = "UPDATE score SET score = 2, record = '$record' WHERE userid = $_SESSION[userid] AND quizid = $quizId";
@@ -229,9 +240,12 @@ if (!isset($_SESSION['userid'])) {
                             }
                         } else {
                             $array = array(
-                                "status" => "error",
+                                "status" => "incorrect",
                                 "title" => "ล้มเหลว",
-                                "text" => "ผลลัพธ์ของคุณไม่ถูกต้อง"
+                                "text" => "ผลลัพธ์ของคุณไม่ถูกต้อง",
+                                "quiz_typeid" => $typeId,
+                                "result_check_code" => $temptable,
+                                "delete_temporarily_table" => $delete_temptable
                             );
 
                             $score = 0;
@@ -249,7 +263,9 @@ if (!isset($_SESSION['userid'])) {
                         $array = array(
                             "status" => "error",
                             "title" => "ล้มเหลว",
-                            "text" => "ผลลัพธ์ของคุณไม่ถูกต้อง"
+                            "text" => "ผลลัพธ์ของคุณไม่ถูกต้อง",
+                            "quiz_typeid" => $type,
+                            "delete_temporarily_table" => $delete_temptable
                         );
 
                         $score = 0;
@@ -299,10 +315,10 @@ if (!isset($_SESSION['userid'])) {
                     $stmt->close();
                 }
             }
-            $delete_temptable = $conn->query("DROP TABLE $usertable");
             echo json_encode(value: $array);
         } else if ($typeId == 3) {
             include_once "create_temptable.php";
+            $delete_temptable = "DROP TABLE $usertable";
             $wordsToUpper = ["delete", "from", "where"];
 
             $modified = changeCase($code, $wordsToUpper);
@@ -323,7 +339,10 @@ if (!isset($_SESSION['userid'])) {
                             $array = array(
                                 "status" => "success",
                                 "title" => "สำเร็จ",
-                                "text" => "ผลลัพธ์ของคุณถูกต้อง"
+                                "text" => "ผลลัพธ์ของคุณถูกต้อง",
+                                "quiz_typeid" => $typeId,
+                                "result_check_code" => $temptable,
+                                "delete_temporarily_table" => $delete_temptable
                             );
 
                             $score_update = "UPDATE score SET score = 2, record = '$record' WHERE userid = $_SESSION[userid] AND quizid = $quizId";
@@ -343,9 +362,12 @@ if (!isset($_SESSION['userid'])) {
                             }
                         } else {
                             $array = array(
-                                "status" => "error",
+                                "status" => "incorrect",
                                 "title" => "ล้มเหลว",
-                                "text" => "คำตอบของคุณไม่ถูกต้อง"
+                                "text" => "คำตอบของคุณไม่ถูกต้อง",
+                                "quiz_typeid" => $typeId,
+                                "result_check_code" => $temptable,
+                                "delete_temporarily_table" => $delete_temptable
                             );
 
                             $score = 0;
@@ -363,7 +385,9 @@ if (!isset($_SESSION['userid'])) {
                         $array = array(
                             "status" => "error",
                             "title" => "ล้มเหลว",
-                            "text" => "คำตอบของคุณไม่ถูกต้อง"
+                            "text" => "คำตอบของคุณไม่ถูกต้อง",
+                            "quiz_typeid" => $type,
+                            "delete_temporarily_table" => $delete_temptable
                         );
 
                         $score = 0;
@@ -414,9 +438,9 @@ if (!isset($_SESSION['userid'])) {
                 }
             }
             echo json_encode(value: $array);
-            $delete_temptable = $conn->query("DROP TABLE $usertable");
         } else {
             include_once "create_temptable.php";
+            $delete_temptable = "DROP TABLE $usertable";
             $wordsToUpper = ["update", "set", "where"];
 
             $modified = changeCase($code, $wordsToUpper);
@@ -437,7 +461,10 @@ if (!isset($_SESSION['userid'])) {
                             $array = array(
                                 "status" => "success",
                                 "title" => "สำเร็จ",
-                                "text" => "คำตอบของคุณถูกต้อง"
+                                "text" => "คำตอบของคุณถูกต้อง",
+                                "quiz_typeid" => $typeId,
+                                "result_check_code" => $temptable,
+                                "delete_temporarily_table" => $delete_temptable
                             );
 
                             $score_update = "UPDATE score SET score = 2, record = '$record' WHERE userid = $_SESSION[userid] AND quizid = $quizId";
@@ -457,9 +484,12 @@ if (!isset($_SESSION['userid'])) {
                             }
                         } else {
                             $array = array(
-                                "status" => "error",
+                                "status" => "incorrect",
                                 "title" => "ล้มเหลว",
-                                "text" => "คำตอบของคุณไม่ถูกต้อง"
+                                "text" => "คำตอบของคุณไม่ถูกต้อง",
+                                "quiz_typeid" => $typeId,
+                                "result_check_code" => $temptable,
+                                "delete_temporarily_table" => $delete_temptable
                             );
 
                             $score = 0;
@@ -527,7 +557,6 @@ if (!isset($_SESSION['userid'])) {
                     $stmt->close();
                 }
             }
-            $delete_temptable = $conn->query("DROP TABLE $usertable");
             echo json_encode(value: $array);
         }
     }
