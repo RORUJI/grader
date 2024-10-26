@@ -283,7 +283,8 @@ if (!isset($_SESSION['userid'])) {
                     $array = array(
                         "status" => "error",
                         "title" => "ล้มเหลว",
-                        "text" => "ผลลัพธ์ของคุณไม่ถูกต้อง"
+                        "text" => "ผลลัพธ์ของคุณไม่ถูกต้อง",
+                        "quiz_typeid" => $typeId
                     );
 
                     $score = 0;
@@ -301,7 +302,8 @@ if (!isset($_SESSION['userid'])) {
                 $array = array(
                     "status" => "error",
                     "title" => "ล้มเหลว",
-                    "text" => "คุณเขียนคำสั่ง SQL ไม่ถูกต้อง"
+                    "text" => "คุณเขียนคำสั่ง SQL ไม่ถูกต้อง",
+                    "quiz_typeid" => $typeId
                 );
 
                 $score = 0;
@@ -405,7 +407,8 @@ if (!isset($_SESSION['userid'])) {
                     $array = array(
                         "status" => "error",
                         "title" => "ล้มเหลว",
-                        "text" => "คุณเขียนคำสั่ง SQL ไม่ถูกต้อง"
+                        "text" => "คุณเขียนคำสั่ง SQL ไม่ถูกต้อง",
+                        "quiz_typeid" => $typeId
                     );
 
                     $score = 0;
@@ -423,7 +426,8 @@ if (!isset($_SESSION['userid'])) {
                 $array = array(
                     "status" => "error",
                     "title" => "ล้มเหลว",
-                    "text" => "คุณเขียนคำสั่ง SQL ไม่ถูกต้อง"
+                    "text" => "คุณเขียนคำสั่ง SQL ไม่ถูกต้อง",
+                    "quiz_typeid" => $typeId
                 );
 
                 $score = 0;
@@ -525,7 +529,8 @@ if (!isset($_SESSION['userid'])) {
                     $array = array(
                         "status" => "error",
                         "title" => "ล้มเหลว",
-                        "text" => "คำตอบของคุณไม่ถูกต้อง"
+                        "text" => "ผลลัพธ์ของคุณไม่ถูกต้อง",
+                        "quiz_typeid" => $typeId
                     );
 
                     $score = 0;

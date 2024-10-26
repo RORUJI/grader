@@ -239,6 +239,16 @@ if (!isset($_SESSION['userid'])) {
 
                                                 if (r.isConfirmed) {
                                                     postToResultPage();
+                                                } else {
+                                                    if (jsonData.quiz_typeid > 1) {
+                                                        $.ajax({
+                                                            url: 'system_storage/delete_temporarily_table.php',
+                                                            type: 'POST',
+                                                            success: function (response) {
+
+                                                            }
+                                                        });
+                                                    }
                                                 }
                                             })
                                         } else if (jsonData.status == "incorrect") {
@@ -310,13 +320,35 @@ if (!isset($_SESSION['userid'])) {
 
                                                 if (r.isConfirmed) {
                                                     postToResultPage();
+                                                } else {
+                                                    if (jsonData.quiz_typeid > 1) {
+                                                        $.ajax({
+                                                            url: 'system_storage/delete_temporarily_table.php',
+                                                            type: 'POST',
+                                                            success: function (response) {
+
+                                                            }
+                                                        });
+                                                    }
                                                 }
                                             });
                                         } else {
                                             Swal.fire({
                                                 icon: 'error',
                                                 title: jsonData.title,
-                                                text: jsonData.text
+                                                text: jsonData.text,
+                                                showConfirmButton: false,
+                                                timer: 1200
+                                            }).then(function () {
+                                                if (jsonData.quiz_typeid > 1) {
+                                                    $.ajax({
+                                                        url: 'system_storage/delete_temporarily_table.php',
+                                                        type: 'POST',
+                                                        success: function (response) {
+
+                                                        }
+                                                    });
+                                                }
                                             });
                                         }
                                     }
