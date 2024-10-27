@@ -53,6 +53,11 @@ if ($type == 1) {
             $question = $question . " " . $selectStr[$i] . " ";
         }
     }
+    $question = preg_replace(
+        ["/([\w]+)%/", "/%([\w]+)/"], // ตรวจสอบ % ตามด้วยตัวอักษรและตัวอักษรตามด้วย %
+        ["ขึ้นต้นด้วย $1", "ลงท้ายด้วย $1"], // แทนที่
+        $question
+    );
     echo json_encode(
         array(
             "status" => "success",
