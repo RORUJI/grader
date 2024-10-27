@@ -443,6 +443,19 @@ body.dark .switch::before {
   transition: var(--tran-05);
 }
 
+.div-text .div-graph .ColumnB3 {
+  background: var(--primary-color-light);
+  height: 35%;
+  font-size: 2.5vw;
+  font-weight: 500;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 18px;
+  margin-bottom: 1vw;
+  transition: var(--tran-05);
+}
+
 .div-text .div-graph .Column4 {
   font-size: 5vw;
   font-weight: 500;
@@ -460,6 +473,10 @@ body.dark .switch::before {
 }
 
 .div-text .div-graph a:hover .ColumnA3 {
+  background: var(--primary-color);
+}
+
+.div-text .div-graph a:hover .ColumnB3 {
   background: var(--primary-color);
 }
 

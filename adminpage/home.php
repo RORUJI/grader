@@ -157,14 +157,17 @@ if (!isset($_SESSION['userid']) && !isset($_SESSION['username']) && !isset($_SES
                                 </table>
                             </div>
                             <div class="col-3 Column2">
+                                <a href="create-quiz-myself.php">
+                                    <div class="ColumnB3 p-2 text-center">ระบบสร้างโจทย์ตัวตนเอง</div>
+                                </a>
                                 <a href="../generator/generator.php">
-                                    <div class="ColumnA3 p-2 text-center">ระบบสร้างโจทย์อัตโนมัติ</div>
+                                    <div class="ColumnB3 p-2 text-center">ระบบสร้างโจทย์อัตโนมัติ</div>
                                 </a>
                                 <a href="view-quiz.php">
-                                    <div class="ColumnA3 p-2 text-center">จัดการโจทย์ปัญหา</div>
+                                    <div class="ColumnB3 p-2 text-center">จัดการโจทย์ปัญหา</div>
                                 </a>
                                 <a href="../table/view-table.php">
-                                    <div class="ColumnA3 p-2 text-center">จัดการตารางข้อมูล</div>
+                                    <div class="ColumnB3 p-2 text-center">จัดการตารางข้อมูล</div>
                                 </a>
                             </div>
                         </div>
